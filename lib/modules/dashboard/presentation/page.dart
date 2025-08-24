@@ -39,8 +39,14 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: seriesAsync.when(
-                    loading: () => const SizedBox(height: 260, child: Center(child: CircularProgressIndicator())),
-                    error: (e, st) => SizedBox(height: 260, child: Center(child: Text('Failed: $e'))),
+                    loading: () => const SizedBox(
+                      height: 260,
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                    error: (e, st) => SizedBox(
+                      height: 260,
+                      child: Center(child: Text('Failed: $e')),
+                    ),
                     data: (series) => SizedBox(
                       height: 300,
                       child: AppLineChart(
@@ -76,7 +82,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
               ChoiceChip(
                 label: Text(k.label),
                 selected: k.id == selectedId,
-                onSelected: (_) => ref.read(selectedKpiIdProvider.notifier).state = k.id,
+                onSelected: (_) =>
+                    ref.read(selectedKpiIdProvider.notifier).state = k.id,
                 selectedColor: AppTokens.chartColors[0].withValues(alpha: 0.15),
               ),
           ],
@@ -96,7 +103,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             ListTile(
               title: const Text('Filters'),
               trailing: IconButton(
-                icon: Icon(showFilters ? Icons.chevron_right : Icons.chevron_left),
+                icon: Icon(
+                  showFilters ? Icons.chevron_right : Icons.chevron_left,
+                ),
                 onPressed: () => setState(() => showFilters = !showFilters),
               ),
             ),
@@ -135,7 +144,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         OutlinedButton(
           onPressed: pickRange,
           child: Text(
-            '${filters.dateRange.start.toString().substring(0,10)}  →  ${filters.dateRange.end.toString().substring(0,10)}',
+            '${filters.dateRange.start.toString().substring(0, 10)}  →  ${filters.dateRange.end.toString().substring(0, 10)}',
           ),
         ),
         const SizedBox(height: 12),
@@ -145,7 +154,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         plants.when(
           loading: () => const LinearProgressIndicator(minHeight: 2),
           error: (e, _) => Text('Error: $e'),
-          data: (options) => _dropdown(value: filters.plant, items: options, onChanged: ctrl.updatePlant),
+          data: (options) => _dropdown(
+            value: filters.plant,
+            items: options,
+            onChanged: ctrl.updatePlant,
+          ),
         ),
         const SizedBox(height: 12),
 
@@ -154,7 +167,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         segments.when(
           loading: () => const LinearProgressIndicator(minHeight: 2),
           error: (e, _) => Text('Error: $e'),
-          data: (options) => _dropdown(value: filters.segment, items: options, onChanged: ctrl.updateSegment),
+          data: (options) => _dropdown(
+            value: filters.segment,
+            items: options,
+            onChanged: ctrl.updateSegment,
+          ),
         ),
         const SizedBox(height: 12),
 
@@ -163,7 +180,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         lines.when(
           loading: () => const LinearProgressIndicator(minHeight: 2),
           error: (e, _) => Text('Error: $e'),
-          data: (options) => _dropdown(value: filters.line, items: options, onChanged: ctrl.updateLine),
+          data: (options) => _dropdown(
+            value: filters.line,
+            items: options,
+            onChanged: ctrl.updateLine,
+          ),
         ),
         const SizedBox(height: 12),
 
@@ -172,7 +193,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         machines.when(
           loading: () => const LinearProgressIndicator(minHeight: 2),
           error: (e, _) => Text('Error: $e'),
-          data: (options) => _dropdown(value: filters.machine, items: options, onChanged: ctrl.updateMachine),
+          data: (options) => _dropdown(
+            value: filters.machine,
+            items: options,
+            onChanged: ctrl.updateMachine,
+          ),
         ),
         const SizedBox(height: 16),
 
@@ -186,11 +211,19 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  Widget _dropdown({required String value, required List<String> items, required void Function(String) onChanged}) {
+  Widget _dropdown({
+    required String value,
+    required List<String> items,
+    required void Function(String) onChanged,
+  }) {
     return DropdownButtonFormField<String>(
       value: value,
-      items: [for (final i in items) DropdownMenuItem(value: i, child: Text(i))],
-      onChanged: (v) { if (v != null) onChanged(v); },
+      items: [
+        for (final i in items) DropdownMenuItem(value: i, child: Text(i)),
+      ],
+      onChanged: (v) {
+        if (v != null) onChanged(v);
+      },
       isExpanded: true,
     );
   }

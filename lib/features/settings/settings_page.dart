@@ -12,10 +12,7 @@ class SettingsPage extends StatelessWidget {
         children: [
           Text(
             'Settings',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 16),
           Card(

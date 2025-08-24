@@ -6,10 +6,7 @@ class ChartRegistry {
   ChartRegistry({
     required this.defaultFactory,
     Map<String, ChartAdapterFactory>? additionalFactories,
-  }) : _factories = {
-          'default': defaultFactory,
-          ...?additionalFactories,
-        };
+  }) : _factories = {'default': defaultFactory, ...?additionalFactories};
 
   final ChartAdapterFactory defaultFactory;
   final Map<String, ChartAdapterFactory> _factories;
@@ -40,7 +37,8 @@ final chartRegistryProvider = Provider<ChartRegistry>((ref) {
 });
 
 /// Provider for the active chart adapter factory
-final activeChartFactoryProvider = Provider.family<ChartAdapterFactory, String?>((ref, name) {
-  final registry = ref.watch(chartRegistryProvider);
-  return registry.getFactory(name);
-});
+final activeChartFactoryProvider =
+    Provider.family<ChartAdapterFactory, String?>((ref, name) {
+      final registry = ref.watch(chartRegistryProvider);
+      return registry.getFactory(name);
+    });

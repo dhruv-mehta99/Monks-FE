@@ -15,18 +15,14 @@ class Series with _$Series {
     @NullableColorConverter() Color? color,
   }) = _Series;
 
-  factory Series.fromJson(Map<String, dynamic> json) =>
-      _$SeriesFromJson(json);
+  factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
 }
 
 /// A single data point in a series
 @freezed
 class DataPoint with _$DataPoint {
-  const factory DataPoint({
-    required dynamic x,
-    required num y,
-    String? label,
-  }) = _DataPoint;
+  const factory DataPoint({required dynamic x, required num y, String? label}) =
+      _DataPoint;
 
   factory DataPoint.fromJson(Map<String, dynamic> json) =>
       _$DataPointFromJson(json);

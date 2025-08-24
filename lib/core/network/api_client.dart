@@ -7,11 +7,13 @@ class ApiClient {
   final Dio dio;
 
   static ApiClient create() {
-    final dio = Dio(BaseOptions(
-      baseUrl: AppConfig.apiBaseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 20),
-    ));
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: AppConfig.apiBaseUrl,
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 20),
+      ),
+    );
     dio.interceptors.add(LogInterceptor(responseBody: false));
     return ApiClient._(dio);
   }

@@ -51,12 +51,17 @@ class FlChartBarAdapter extends BarChartAdapter {
       final rods = <BarChartRodData>[];
       for (var s in series) {
         final y = (s.data[index].y as num).toDouble();
-        rods.add(BarChartRodData(
-          toY: y,
-          color: s.color ?? AppTokens.chartColors[series.indexOf(s) % AppTokens.chartColors.length],
-          width: AppTokens.chartBarWidth,
-          borderRadius: BorderRadius.circular(AppTokens.barRadius),
-        ));
+        rods.add(
+          BarChartRodData(
+            toY: y,
+            color:
+                s.color ??
+                AppTokens.chartColors[series.indexOf(s) %
+                    AppTokens.chartColors.length],
+            width: AppTokens.chartBarWidth,
+            borderRadius: BorderRadius.circular(AppTokens.barRadius),
+          ),
+        );
       }
 
       return BarChartGroupData(
@@ -112,7 +117,9 @@ class FlChartBarAdapter extends BarChartAdapter {
         getTooltipItem: (group, groupIndex, rod, rodIndex) {
           final s = series[rodIndex];
           final dataPoint = s.data[group.x.toInt()];
-          final text = tooltip?.formatter?.call(dataPoint.x, dataPoint.y) ?? '${s.name}: ${dataPoint.y}';
+          final text =
+              tooltip?.formatter?.call(dataPoint.x, dataPoint.y) ??
+              '${s.name}: ${dataPoint.y}';
           return BarTooltipItem(text, AppTokens.chartTooltip);
         },
       ),

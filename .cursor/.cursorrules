@@ -1,0 +1,156 @@
+# MFG Dashboard - Cursor Rules
+
+## Project Structure
+This is a Flutter web application for manufacturing dashboard with page-based organization and Riverpod state management.
+
+## Code Organization Rules
+
+### 1. Page-Based Structure
+- **Each page is self-contained** with its own logic, state, and UI
+- **No cross-page dependencies** - pages only depend on core
+- **Page folders contain**: `*_page.dart`, `*_controller.dart`, `*_state.dart`
+
+### 2. Core Components
+- **`core/shared_widgets/`**: Reusable widgets used across multiple pages
+- **`core/theme/`**: Material theme configuration and custom themes
+- **`core/constants/`**: App-wide constants (breakpoints, colors, etc.)
+- **`core/utils/`**: Helper functions and utilities
+
+### 3. State Management
+- **Use Riverpod with code generation** (`@riverpod` annotation)
+- **StateNotifier for complex state** with `@riverpod` annotation
+- **FutureProvider for async operations** with `@riverpod` annotation
+- **Keep state close to where it's used**
+
+### 4. Data Models
+- **Use Freezed for immutable models** with `@freezed` annotation
+- **JSON serialization** with `@JsonSerializable` annotation
+- **Models in `models/` folder** organized by domain
+
+### 5. File Naming Conventions
+- **Pages**: `*_page.dart`
+- **Controllers**: `*_controller.dart`
+- **States**: `*_state.dart`
+- **Widgets**: `*_widget.dart`
+- **Models**: `*_model.dart`
+- **Services**: `*_service.dart`
+- **Providers**: `*_provider.dart`
+
+## Coding Standards
+
+### 1. Flutter/Dart
+- **Use Material 3** design system
+- **Responsive design** with breakpoints
+- **Null safety** - always use non-nullable types when possible
+- **Const constructors** for immutable widgets
+
+### 2. State Management
+- **Provider naming**: `*Provider` for simple providers, `*NotifierProvider` for complex state
+- **State immutability**: Use Freezed for all state classes
+- **Async handling**: Use `AsyncValue` for loading/error states
+
+### 3. Widget Structure
+- **Extract reusable widgets** to `core/shared_widgets/`
+- **Keep page widgets** simple and focused on layout
+- **Use composition** over inheritance
+
+### 4. Error Handling
+- **Graceful error states** in UI
+- **User-friendly error messages**
+- **Fallback data** when possible
+
+## Development Workflow
+
+### 1. When Adding New Features
+1. **Create page folder** in `pages/` if it's a new screen
+2. **Add shared widgets** to `core/shared_widgets/` if reusable
+3. **Update routing** in `router.dart`
+4. **Add state management** with Riverpod generators
+
+### 2. When Modifying Existing Features
+1. **Keep changes within page boundaries**
+2. **Update shared widgets** if interface changes
+3. **Maintain backward compatibility** for shared components
+
+### 3. Code Generation
+- **Run `flutter packages pub run build_runner build`** after model changes
+- **Use `--delete-conflicting-outputs`** flag if needed
+- **Generated files** are in `.g.dart` and `.freezed.dart` files
+
+## Testing Guidelines
+
+### 1. Unit Tests
+- **Test business logic** in controllers
+- **Test state management** with Riverpod test utilities
+- **Mock external dependencies**
+
+### 2. Widget Tests
+- **Test shared widgets** thoroughly
+- **Test page integration** with mocked providers
+- **Test responsive behavior**
+
+### 3. Integration Tests
+- **Test complete user flows**
+- **Test navigation** between pages
+- **Test filter interactions**
+
+## Performance Considerations
+
+### 1. Widget Optimization
+- **Use `const` constructors** where possible
+- **Extract expensive computations** to providers
+- **Lazy load** data when appropriate
+
+### 2. State Management
+- **Minimize provider rebuilds** with proper state design
+- **Use `select`** to watch only needed state changes
+- **Cache expensive operations** in providers
+
+## Common Patterns
+
+### 1. Filter State Management
+```dart
+@riverpod
+class FilterNotifier extends _$FilterNotifier {
+  @override
+  FilterState build() => const FilterState();
+  
+  void updatePlant(String plantId) {
+    state = state.copyWith(plantId: plantId);
+  }
+}
+```
+
+### 2. Async Data Loading
+```dart
+@riverpod
+Future<List<KpiData>> kpiData(KpiDataRef ref, FilterState filters) async {
+  return await ref.read(kpiServiceProvider).getData(filters);
+}
+```
+
+### 3. Responsive Layout
+```dart
+LayoutBuilder(
+  builder: (context, constraints) {
+    if (constraints.maxWidth < Breakpoints.md) {
+      return MobileLayout();
+    }
+    return DesktopLayout();
+  },
+)
+```
+
+## Dependencies
+- **State Management**: `hooks_riverpod`, `riverpod_annotation`
+- **Code Generation**: `freezed`, `json_annotation`, `riverpod_generator`
+- **Charts**: `fl_chart`, `syncfusion_flutter_charts`
+- **Routing**: `go_router`
+- **HTTP**: `dio`
+
+## Remember
+- **Keep it simple** - this is an MVP
+- **Page-based organization** for clarity
+- **Reusable components** in core
+- **Riverpod generators** for clean code
+- **Material 3** for consistent design

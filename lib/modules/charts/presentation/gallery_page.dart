@@ -13,9 +13,21 @@ final stackedBarProvider = Provider<List<Series>>((ref) {
   List<DataPoint> mkSeries(List<num> ys) =>
       List.generate(days.length, (i) => DataPoint(x: days[i], y: ys[i]));
   return [
-    Series(name: 'Series A', color: AppTokens.chartColors[0], data: mkSeries([5, 7, 6, 9, 8])),
-    Series(name: 'Series B', color: AppTokens.chartColors[1], data: mkSeries([3, 4, 5, 6, 7])),
-    Series(name: 'Series C', color: AppTokens.chartColors[2], data: mkSeries([2, 3, 4, 3, 2])),
+    Series(
+      name: 'Series A',
+      color: AppTokens.chartColors[0],
+      data: mkSeries([5, 7, 6, 9, 8]),
+    ),
+    Series(
+      name: 'Series B',
+      color: AppTokens.chartColors[1],
+      data: mkSeries([3, 4, 5, 6, 7]),
+    ),
+    Series(
+      name: 'Series C',
+      color: AppTokens.chartColors[2],
+      data: mkSeries([2, 3, 4, 3, 2]),
+    ),
   ];
 });
 
@@ -24,20 +36,57 @@ final groupedBarProvider = Provider<List<Series>>((ref) {
   List<DataPoint> mk(List<num> ys) =>
       List.generate(months.length, (i) => DataPoint(x: months[i], y: ys[i]));
   return [
-    Series(name: 'Product X', color: AppTokens.chartColors[0], data: mk([10, 12, 9, 14, 16, 18])),
-    Series(name: 'Product Y', color: AppTokens.chartColors[1], data: mk([8, 9, 11, 10, 12, 15])),
-    Series(name: 'Product Z', color: AppTokens.chartColors[2], data: mk([6, 7, 8, 9, 10, 12])),
+    Series(
+      name: 'Product X',
+      color: AppTokens.chartColors[0],
+      data: mk([10, 12, 9, 14, 16, 18]),
+    ),
+    Series(
+      name: 'Product Y',
+      color: AppTokens.chartColors[1],
+      data: mk([8, 9, 11, 10, 12, 15]),
+    ),
+    Series(
+      name: 'Product Z',
+      color: AppTokens.chartColors[2],
+      data: mk([6, 7, 8, 9, 10, 12]),
+    ),
   ];
 });
 
 final multiLineProvider = Provider<List<Series>>((ref) {
-  final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  final months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   List<DataPoint> mk(List<num> ys) =>
       List.generate(months.length, (i) => DataPoint(x: months[i], y: ys[i]));
   return [
-    Series(name: 'North', color: AppTokens.chartColors[0], data: mk([5,6,7,8,7,8,9,8,7,6,5,6])),
-    Series(name: 'Central', color: AppTokens.chartColors[1], data: mk([4,5,6,6,7,7,8,8,7,6,5,5])),
-    Series(name: 'South', color: AppTokens.chartColors[2], data: mk([6,6,7,7,8,9,9,10,9,8,7,7])),
+    Series(
+      name: 'North',
+      color: AppTokens.chartColors[0],
+      data: mk([5, 6, 7, 8, 7, 8, 9, 8, 7, 6, 5, 6]),
+    ),
+    Series(
+      name: 'Central',
+      color: AppTokens.chartColors[1],
+      data: mk([4, 5, 6, 6, 7, 7, 8, 8, 7, 6, 5, 5]),
+    ),
+    Series(
+      name: 'South',
+      color: AppTokens.chartColors[2],
+      data: mk([6, 6, 7, 7, 8, 9, 9, 10, 9, 8, 7, 7]),
+    ),
   ];
 });
 
@@ -48,7 +97,14 @@ final heatmapProvider = Provider<List<HeatCell>>((ref) {
   final List<HeatCell> cells = [];
   for (int y = 0; y < machines; y++) {
     for (int x = 0; x < shifts; x++) {
-      cells.add(HeatCell(x: x, y: y, value: (y + 1) * (x + 2) + (x * 0.5), label: 'M${y+1}-S${x+1}'));
+      cells.add(
+        HeatCell(
+          x: x,
+          y: y,
+          value: (y + 1) * (x + 2) + (x * 0.5),
+          label: 'M${y + 1}-S${x + 1}',
+        ),
+      );
     }
   }
   return cells;
@@ -78,15 +134,26 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
       children: [
         Row(
           children: [
-            const Text('Charts Gallery', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const Text(
+              'Charts Gallery',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
             const Spacer(),
-            Row(children: [
-              const Text('Tooltips'),
-              Switch(value: showTooltips, onChanged: (v) => setState(() => showTooltips = v)),
-              const SizedBox(width: 16),
-              const Text('Legend'),
-              Switch(value: showLegend, onChanged: (v) => setState(() => showLegend = v)),
-            ]),
+            Row(
+              children: [
+                const Text('Tooltips'),
+                Switch(
+                  value: showTooltips,
+                  onChanged: (v) => setState(() => showTooltips = v),
+                ),
+                const SizedBox(width: 16),
+                const Text('Legend'),
+                Switch(
+                  value: showLegend,
+                  onChanged: (v) => setState(() => showLegend = v),
+                ),
+              ],
+            ),
           ],
         ),
         const SizedBox(height: 16),
@@ -148,7 +215,10 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
   }
 
   List<Series> _applyVisibility(List<Series> input) {
-    return [for (final s in input) if (!hiddenSeries.contains(s.name)) s];
+    return [
+      for (final s in input)
+        if (!hiddenSeries.contains(s.name)) s,
+    ];
   }
 
   Widget _legend(List<Series> series) {
@@ -176,7 +246,10 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
                     height: 12,
                     margin: const EdgeInsets.only(right: 6),
                     decoration: BoxDecoration(
-                      color: s.color ?? AppTokens.chartColors[series.indexOf(s) % AppTokens.chartColors.length],
+                      color:
+                          s.color ??
+                          AppTokens.chartColors[series.indexOf(s) %
+                              AppTokens.chartColors.length],
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -184,7 +257,7 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
                 ],
               ),
             ),
-          )
+          ),
       ],
     );
   }
@@ -198,10 +271,7 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(title, style: AppTokens.chartTitle),
-            if (legend != null) ...[
-              const SizedBox(height: 8),
-              legend,
-            ],
+            if (legend != null) ...[const SizedBox(height: 8), legend],
             const SizedBox(height: 12),
             SizedBox(height: 260, child: child),
           ],

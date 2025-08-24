@@ -16,18 +16,36 @@ void main() {
 
   testWidgets('AppBarChart renders with mock series', (tester) async {
     final series = [
-      Series(name: 'A', data: [DataPoint(x: 'Jan', y: 1), DataPoint(x: 'Feb', y: 2)]),
-      Series(name: 'B', data: [DataPoint(x: 'Jan', y: 3), DataPoint(x: 'Feb', y: 4)]),
+      Series(
+        name: 'A',
+        data: [
+          DataPoint(x: 'Jan', y: 1),
+          DataPoint(x: 'Feb', y: 2),
+        ],
+      ),
+      Series(
+        name: 'B',
+        data: [
+          DataPoint(x: 'Jan', y: 3),
+          DataPoint(x: 'Feb', y: 4),
+        ],
+      ),
     ];
 
-    await tester.pumpWidget(ProviderScope(
-      overrides: [registryOverride],
-      child: MaterialApp(home: Scaffold(body: AppBarChart(
-        series: series,
-        xAxis: const AxisFormat(title: 'X'),
-        yAxis: const AxisFormat(title: 'Y'),
-      ))),
-    ));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [registryOverride],
+        child: MaterialApp(
+          home: Scaffold(
+            body: AppBarChart(
+              series: series,
+              xAxis: const AxisFormat(title: 'X'),
+              yAxis: const AxisFormat(title: 'Y'),
+            ),
+          ),
+        ),
+      ),
+    );
 
     await tester.pumpAndSettle();
     expect(find.byType(AppBarChart), findsOneWidget);
@@ -35,18 +53,36 @@ void main() {
 
   testWidgets('AppLineChart renders with mock series', (tester) async {
     final series = [
-      Series(name: 'A', data: [DataPoint(x: 'Jan', y: 1), DataPoint(x: 'Feb', y: 2)]),
-      Series(name: 'B', data: [DataPoint(x: 'Jan', y: 3), DataPoint(x: 'Feb', y: 4)]),
+      Series(
+        name: 'A',
+        data: [
+          DataPoint(x: 'Jan', y: 1),
+          DataPoint(x: 'Feb', y: 2),
+        ],
+      ),
+      Series(
+        name: 'B',
+        data: [
+          DataPoint(x: 'Jan', y: 3),
+          DataPoint(x: 'Feb', y: 4),
+        ],
+      ),
     ];
 
-    await tester.pumpWidget(ProviderScope(
-      overrides: [registryOverride],
-      child: MaterialApp(home: Scaffold(body: AppLineChart(
-        series: series,
-        xAxis: const AxisFormat(title: 'X'),
-        yAxis: const AxisFormat(title: 'Y'),
-      ))),
-    ));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [registryOverride],
+        child: MaterialApp(
+          home: Scaffold(
+            body: AppLineChart(
+              series: series,
+              xAxis: const AxisFormat(title: 'X'),
+              yAxis: const AxisFormat(title: 'Y'),
+            ),
+          ),
+        ),
+      ),
+    );
 
     await tester.pumpAndSettle();
     expect(find.byType(AppLineChart), findsOneWidget);
@@ -60,18 +96,24 @@ void main() {
       HeatCell(x: 1, y: 1, value: 4),
     ];
 
-    await tester.pumpWidget(ProviderScope(
-      overrides: [registryOverride],
-      child: MaterialApp(home: Scaffold(body: AppHeatmap(
-        cells: cells,
-        xAxis: const AxisFormat(title: 'X'),
-        yAxis: const AxisFormat(title: 'Y'),
-        colorStops: const [
-          HeatScaleStop(value: 0.0, color: Color(0xFFECEFF1)),
-          HeatScaleStop(value: 1.0, color: Color(0xFF1976D2)),
-        ],
-      ))),
-    ));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [registryOverride],
+        child: MaterialApp(
+          home: Scaffold(
+            body: AppHeatmap(
+              cells: cells,
+              xAxis: const AxisFormat(title: 'X'),
+              yAxis: const AxisFormat(title: 'Y'),
+              colorStops: const [
+                HeatScaleStop(value: 0.0, color: Color(0xFFECEFF1)),
+                HeatScaleStop(value: 1.0, color: Color(0xFF1976D2)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
 
     await tester.pumpAndSettle();
     expect(find.byType(AppHeatmap), findsOneWidget);

@@ -2,7 +2,12 @@ class Result<T> {
   Result._();
 
   factory Result.success(T data) = Success<T>;
-  factory Result.failure(String message, {int? statusCode, Object? error, StackTrace? stackTrace}) = Failure<T>;
+  factory Result.failure(
+    String message, {
+    int? statusCode,
+    Object? error,
+    StackTrace? stackTrace,
+  }) = Failure<T>;
 
   bool get isSuccess => this is Success<T>;
   bool get isFailure => this is Failure<T>;
@@ -17,7 +22,8 @@ class Success<T> extends Result<T> {
 }
 
 class Failure<T> extends Result<T> {
-  Failure(this.message, {this.statusCode, this.error, this.stackTrace}) : super._();
+  Failure(this.message, {this.statusCode, this.error, this.stackTrace})
+    : super._();
   final String message;
   final int? statusCode;
   final Object? error;

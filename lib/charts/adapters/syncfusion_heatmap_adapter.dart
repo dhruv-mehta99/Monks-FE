@@ -26,7 +26,7 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
     final maxY = cells.map((c) => c.y).fold<int>(0, (p, c) => c > p ? c : p);
 
     // Build a matrix for quick lookup
-    final Map<(int,int), HeatCell> cellMap = {
+    final Map<(int, int), HeatCell> cellMap = {
       for (final c in cells) (c.x, c.y): c,
     };
 
@@ -46,7 +46,9 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
       for (final s in stops) {
         if (t <= s.value) {
           if (prev == null) return s.color;
-          final localT = (t - prev!.value) / ((s.value - prev!.value) == 0 ? 1 : (s.value - prev!.value));
+          final localT =
+              (t - prev!.value) /
+              ((s.value - prev!.value) == 0 ? 1 : (s.value - prev!.value));
           return Color.lerp(prev!.color, s.color, localT) ?? s.color;
         }
         prev = s;
@@ -69,9 +71,13 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
       );
       if (!tooltipEnabled || c == null) return cell;
       return Tooltip(
-        message: c.label ?? '(${x+1}, ${y+1}): ${c.value.toStringAsFixed(1)}',
+        message:
+            c.label ?? '(${x + 1}, ${y + 1}): ${c.value.toStringAsFixed(1)}',
         textStyle: AppTokens.chartTooltip,
-        decoration: BoxDecoration(color: AppTokens.tooltipBg, borderRadius: BorderRadius.circular(AppTokens.tooltipRadius)),
+        decoration: BoxDecoration(
+          color: AppTokens.tooltipBg,
+          borderRadius: BorderRadius.circular(AppTokens.tooltipRadius),
+        ),
         child: cell,
       );
     }
@@ -97,9 +103,11 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          if (yAxis.title != null) Text(yAxis.title!, style: AppTokens.chartAxisLabel),
+          if (yAxis.title != null)
+            Text(yAxis.title!, style: AppTokens.chartAxisLabel),
           const Spacer(),
-          if (xAxis.title != null) Text(xAxis.title!, style: AppTokens.chartAxisLabel),
+          if (xAxis.title != null)
+            Text(xAxis.title!, style: AppTokens.chartAxisLabel),
         ],
       ),
     );
@@ -121,12 +129,7 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        axisTitles,
-        animated,
-        const SizedBox(height: 8),
-        legend,
-      ],
+      children: [axisTitles, animated, const SizedBox(height: 8), legend],
     );
   }
 
@@ -155,8 +158,14 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
         Wrap(
           spacing: 8,
           children: [
-            Text(stops.first.value.toStringAsFixed(1), style: AppTokens.chartAxisLabel),
-            Text(stops.last.value.toStringAsFixed(1), style: AppTokens.chartAxisLabel),
+            Text(
+              stops.first.value.toStringAsFixed(1),
+              style: AppTokens.chartAxisLabel,
+            ),
+            Text(
+              stops.last.value.toStringAsFixed(1),
+              style: AppTokens.chartAxisLabel,
+            ),
           ],
         ),
       ],

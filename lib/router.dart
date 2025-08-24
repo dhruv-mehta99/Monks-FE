@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'modules/charts/charts.dart' as charts;
-import 'modules/dashboard/dashboard.dart' as dashboard;
+import 'pages/home/home_page.dart';
+import 'pages/dashboard/dashboard_page.dart';
 import 'modules/shell/shell_scaffold.dart';
 
 part 'router.g.dart';
@@ -11,6 +11,7 @@ part 'router.g.dart';
 @riverpod
 GoRouter router(RouterRef ref) {
   return GoRouter(
+    initialLocation: '/',
     routes: [
       ShellRoute(
         builder: (context, state, child) {
@@ -22,11 +23,11 @@ GoRouter router(RouterRef ref) {
         routes: [
           GoRoute(
             path: '/',
-            builder: (context, state) => const dashboard.DashboardPage(),
+            builder: (context, state) => const HomePage(),
           ),
           GoRoute(
-            path: '/charts',
-            builder: (context, state) => const charts.ChartsGalleryPage(),
+            path: '/dashboard',
+            builder: (context, state) => const DashboardPage(),
           ),
         ],
       ),

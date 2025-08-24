@@ -27,8 +27,16 @@ class FlChartLineAdapter extends LineChartAdapter {
           gridData: FlGridData(
             show: true,
             drawVerticalLine: xAxis.showGrid,
-            getDrawingHorizontalLine: (v) => FlLine(color: AppTokens.gridColor, strokeWidth: 1, dashArray: [4, 4]),
-            getDrawingVerticalLine: (v) => FlLine(color: AppTokens.gridColor, strokeWidth: 1, dashArray: [4, 4]),
+            getDrawingHorizontalLine: (v) => FlLine(
+              color: AppTokens.gridColor,
+              strokeWidth: 1,
+              dashArray: [4, 4],
+            ),
+            getDrawingVerticalLine: (v) => FlLine(
+              color: AppTokens.gridColor,
+              strokeWidth: 1,
+              dashArray: [4, 4],
+            ),
           ),
           borderData: FlBorderData(show: false),
           lineTouchData: _createTouchData(),
@@ -39,12 +47,12 @@ class FlChartLineAdapter extends LineChartAdapter {
 
   List<LineChartBarData> _createLineBarsData() {
     return series.map((s) {
-      final color = s.color ?? AppTokens.chartColors[series.indexOf(s) % AppTokens.chartColors.length];
+      final color =
+          s.color ??
+          AppTokens.chartColors[series.indexOf(s) %
+              AppTokens.chartColors.length];
       final spots = s.data.asMap().entries.map((e) {
-        return FlSpot(
-          e.key.toDouble(),
-          (e.value.y as num).toDouble(),
-        );
+        return FlSpot(e.key.toDouble(), (e.value.y as num).toDouble());
       }).toList();
 
       return LineChartBarData(
@@ -66,7 +74,10 @@ class FlChartLineAdapter extends LineChartAdapter {
         belowBarData: BarAreaData(
           show: fillArea,
           gradient: LinearGradient(
-            colors: [color.withOpacity(AppTokens.areaOpacity), Colors.transparent],
+            colors: [
+              color.withOpacity(AppTokens.areaOpacity),
+              Colors.transparent,
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -120,7 +131,9 @@ class FlChartLineAdapter extends LineChartAdapter {
           return touchedSpots.map((spot) {
             final s = this.series[spot.barIndex];
             final dataPoint = s.data[spot.x.toInt()];
-            final text = tooltip?.formatter?.call(dataPoint.x, dataPoint.y) ?? '${s.name}: ${dataPoint.y}';
+            final text =
+                tooltip?.formatter?.call(dataPoint.x, dataPoint.y) ??
+                '${s.name}: ${dataPoint.y}';
             return LineTooltipItem(text, AppTokens.chartTooltip);
           }).toList();
         },

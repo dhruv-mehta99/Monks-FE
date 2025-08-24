@@ -21,6 +21,60 @@ class ShellScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('MFG Dashboard'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              // TODO: Implement refresh functionality
+            },
+          ),
+          PopupMenuButton<String>(
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Your watchlist'),
+                  Icon(Icons.arrow_drop_down),
+                ],
+              ),
+            ),
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: '24h',
+                child: Text('24H'),
+              ),
+              const PopupMenuItem(
+                value: '7d',
+                child: Text('7D'),
+              ),
+              const PopupMenuItem(
+                value: '1m',
+                child: Text('1M'),
+              ),
+              const PopupMenuItem(
+                value: '6m',
+                child: Text('6M'),
+              ),
+              const PopupMenuItem(
+                value: 'shift',
+                child: Text('Shift'),
+              ),
+              const PopupMenuItem(
+                value: 'custom',
+                child: Text('Custom'),
+              ),
+            ],
+            onSelected: (value) {
+              // TODO: Implement time range selection
+            },
+          ),
+          const CircleAvatar(
+            radius: 16,
+            backgroundColor: Colors.blue,
+            child: Icon(Icons.person, color: Colors.white),
+          ),
+        ],
       ),
       body: Row(
         children: [
@@ -29,12 +83,12 @@ class ShellScaffold extends StatelessWidget {
               extended: !isMediumScreen,
               destinations: const [
                 NavigationRailDestination(
-                  icon: Icon(Icons.dashboard),
-                  label: Text('Dashboard'),
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.bar_chart),
-                  label: Text('Charts'),
+                  icon: Icon(Icons.dashboard),
+                  label: Text('Dashboard'),
                 ),
               ],
               selectedIndex: _getSelectedIndex(currentPath),
@@ -44,7 +98,7 @@ class ShellScaffold extends StatelessWidget {
                     context.go('/');
                     break;
                   case 1:
-                    context.go('/charts');
+                    context.go('/dashboard');
                     break;
                 }
               },
@@ -56,12 +110,12 @@ class ShellScaffold extends StatelessWidget {
           ? NavigationBar(
               destinations: const [
                 NavigationDestination(
-                  icon: Icon(Icons.dashboard),
-                  label: 'Dashboard',
+                  icon: Icon(Icons.home),
+                  label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.bar_chart),
-                  label: 'Charts',
+                  icon: Icon(Icons.dashboard),
+                  label: 'Dashboard',
                 ),
               ],
               selectedIndex: _getSelectedIndex(currentPath),
@@ -71,7 +125,7 @@ class ShellScaffold extends StatelessWidget {
                     context.go('/');
                     break;
                   case 1:
-                    context.go('/charts');
+                    context.go('/dashboard');
                     break;
                 }
               },
@@ -84,7 +138,7 @@ class ShellScaffold extends StatelessWidget {
     switch (path) {
       case '/':
         return 0;
-      case '/charts':
+      case '/dashboard':
         return 1;
       default:
         return 0;

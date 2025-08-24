@@ -678,10 +678,10 @@ OutputResult _$OutputResultFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OutputResult {
   String get machineId => throw _privateConstructorUsedError;
-  int get totalOutputQty => throw _privateConstructorUsedError;
-  int get rejectedOutputQty => throw _privateConstructorUsedError;
-  int get goodOutputQty => throw _privateConstructorUsedError;
-  double get yieldRatio => throw _privateConstructorUsedError;
+  int? get totalOutputQty => throw _privateConstructorUsedError;
+  int? get rejectedOutputQty => throw _privateConstructorUsedError;
+  int? get goodOutputQty => throw _privateConstructorUsedError;
+  double? get yieldRatio => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -697,10 +697,10 @@ abstract class $OutputResultCopyWith<$Res> {
   @useResult
   $Res call(
       {String machineId,
-      int totalOutputQty,
-      int rejectedOutputQty,
-      int goodOutputQty,
-      double yieldRatio});
+      int? totalOutputQty,
+      int? rejectedOutputQty,
+      int? goodOutputQty,
+      double? yieldRatio});
 }
 
 /// @nodoc
@@ -717,32 +717,32 @@ class _$OutputResultCopyWithImpl<$Res, $Val extends OutputResult>
   @override
   $Res call({
     Object? machineId = null,
-    Object? totalOutputQty = null,
-    Object? rejectedOutputQty = null,
-    Object? goodOutputQty = null,
-    Object? yieldRatio = null,
+    Object? totalOutputQty = freezed,
+    Object? rejectedOutputQty = freezed,
+    Object? goodOutputQty = freezed,
+    Object? yieldRatio = freezed,
   }) {
     return _then(_value.copyWith(
       machineId: null == machineId
           ? _value.machineId
           : machineId // ignore: cast_nullable_to_non_nullable
               as String,
-      totalOutputQty: null == totalOutputQty
+      totalOutputQty: freezed == totalOutputQty
           ? _value.totalOutputQty
           : totalOutputQty // ignore: cast_nullable_to_non_nullable
-              as int,
-      rejectedOutputQty: null == rejectedOutputQty
+              as int?,
+      rejectedOutputQty: freezed == rejectedOutputQty
           ? _value.rejectedOutputQty
           : rejectedOutputQty // ignore: cast_nullable_to_non_nullable
-              as int,
-      goodOutputQty: null == goodOutputQty
+              as int?,
+      goodOutputQty: freezed == goodOutputQty
           ? _value.goodOutputQty
           : goodOutputQty // ignore: cast_nullable_to_non_nullable
-              as int,
-      yieldRatio: null == yieldRatio
+              as int?,
+      yieldRatio: freezed == yieldRatio
           ? _value.yieldRatio
           : yieldRatio // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -757,10 +757,10 @@ abstract class _$$OutputResultImplCopyWith<$Res>
   @useResult
   $Res call(
       {String machineId,
-      int totalOutputQty,
-      int rejectedOutputQty,
-      int goodOutputQty,
-      double yieldRatio});
+      int? totalOutputQty,
+      int? rejectedOutputQty,
+      int? goodOutputQty,
+      double? yieldRatio});
 }
 
 /// @nodoc
@@ -775,32 +775,32 @@ class __$$OutputResultImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? machineId = null,
-    Object? totalOutputQty = null,
-    Object? rejectedOutputQty = null,
-    Object? goodOutputQty = null,
-    Object? yieldRatio = null,
+    Object? totalOutputQty = freezed,
+    Object? rejectedOutputQty = freezed,
+    Object? goodOutputQty = freezed,
+    Object? yieldRatio = freezed,
   }) {
     return _then(_$OutputResultImpl(
       machineId: null == machineId
           ? _value.machineId
           : machineId // ignore: cast_nullable_to_non_nullable
               as String,
-      totalOutputQty: null == totalOutputQty
+      totalOutputQty: freezed == totalOutputQty
           ? _value.totalOutputQty
           : totalOutputQty // ignore: cast_nullable_to_non_nullable
-              as int,
-      rejectedOutputQty: null == rejectedOutputQty
+              as int?,
+      rejectedOutputQty: freezed == rejectedOutputQty
           ? _value.rejectedOutputQty
           : rejectedOutputQty // ignore: cast_nullable_to_non_nullable
-              as int,
-      goodOutputQty: null == goodOutputQty
+              as int?,
+      goodOutputQty: freezed == goodOutputQty
           ? _value.goodOutputQty
           : goodOutputQty // ignore: cast_nullable_to_non_nullable
-              as int,
-      yieldRatio: null == yieldRatio
+              as int?,
+      yieldRatio: freezed == yieldRatio
           ? _value.yieldRatio
           : yieldRatio // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
@@ -810,10 +810,10 @@ class __$$OutputResultImplCopyWithImpl<$Res>
 class _$OutputResultImpl implements _OutputResult {
   const _$OutputResultImpl(
       {required this.machineId,
-      required this.totalOutputQty,
-      required this.rejectedOutputQty,
-      required this.goodOutputQty,
-      required this.yieldRatio});
+      this.totalOutputQty,
+      this.rejectedOutputQty,
+      this.goodOutputQty,
+      this.yieldRatio});
 
   factory _$OutputResultImpl.fromJson(Map<String, dynamic> json) =>
       _$$OutputResultImplFromJson(json);
@@ -821,13 +821,13 @@ class _$OutputResultImpl implements _OutputResult {
   @override
   final String machineId;
   @override
-  final int totalOutputQty;
+  final int? totalOutputQty;
   @override
-  final int rejectedOutputQty;
+  final int? rejectedOutputQty;
   @override
-  final int goodOutputQty;
+  final int? goodOutputQty;
   @override
-  final double yieldRatio;
+  final double? yieldRatio;
 
   @override
   String toString() {
@@ -873,10 +873,10 @@ class _$OutputResultImpl implements _OutputResult {
 abstract class _OutputResult implements OutputResult {
   const factory _OutputResult(
       {required final String machineId,
-      required final int totalOutputQty,
-      required final int rejectedOutputQty,
-      required final int goodOutputQty,
-      required final double yieldRatio}) = _$OutputResultImpl;
+      final int? totalOutputQty,
+      final int? rejectedOutputQty,
+      final int? goodOutputQty,
+      final double? yieldRatio}) = _$OutputResultImpl;
 
   factory _OutputResult.fromJson(Map<String, dynamic> json) =
       _$OutputResultImpl.fromJson;
@@ -884,13 +884,13 @@ abstract class _OutputResult implements OutputResult {
   @override
   String get machineId;
   @override
-  int get totalOutputQty;
+  int? get totalOutputQty;
   @override
-  int get rejectedOutputQty;
+  int? get rejectedOutputQty;
   @override
-  int get goodOutputQty;
+  int? get goodOutputQty;
   @override
-  double get yieldRatio;
+  double? get yieldRatio;
   @override
   @JsonKey(ignore: true)
   _$$OutputResultImplCopyWith<_$OutputResultImpl> get copyWith =>
@@ -1284,7 +1284,12 @@ OutputDataPoint _$OutputDataPointFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OutputDataPoint {
   DateTime get timestamp => throw _privateConstructorUsedError;
-  double get value => throw _privateConstructorUsedError;
+  int? get totalOutputQty => throw _privateConstructorUsedError;
+  int? get rejectedOutputQty => throw _privateConstructorUsedError;
+  int? get goodOutputQty => throw _privateConstructorUsedError;
+  double? get yieldRatio =>
+      throw _privateConstructorUsedError; // For backward compatibility with charts
+  double? get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1298,7 +1303,13 @@ abstract class $OutputDataPointCopyWith<$Res> {
           OutputDataPoint value, $Res Function(OutputDataPoint) then) =
       _$OutputDataPointCopyWithImpl<$Res, OutputDataPoint>;
   @useResult
-  $Res call({DateTime timestamp, double value});
+  $Res call(
+      {DateTime timestamp,
+      int? totalOutputQty,
+      int? rejectedOutputQty,
+      int? goodOutputQty,
+      double? yieldRatio,
+      double? value});
 }
 
 /// @nodoc
@@ -1315,17 +1326,37 @@ class _$OutputDataPointCopyWithImpl<$Res, $Val extends OutputDataPoint>
   @override
   $Res call({
     Object? timestamp = null,
-    Object? value = null,
+    Object? totalOutputQty = freezed,
+    Object? rejectedOutputQty = freezed,
+    Object? goodOutputQty = freezed,
+    Object? yieldRatio = freezed,
+    Object? value = freezed,
   }) {
     return _then(_value.copyWith(
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      value: null == value
+      totalOutputQty: freezed == totalOutputQty
+          ? _value.totalOutputQty
+          : totalOutputQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rejectedOutputQty: freezed == rejectedOutputQty
+          ? _value.rejectedOutputQty
+          : rejectedOutputQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      goodOutputQty: freezed == goodOutputQty
+          ? _value.goodOutputQty
+          : goodOutputQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      yieldRatio: freezed == yieldRatio
+          ? _value.yieldRatio
+          : yieldRatio // ignore: cast_nullable_to_non_nullable
+              as double?,
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -1338,7 +1369,13 @@ abstract class _$$OutputDataPointImplCopyWith<$Res>
       __$$OutputDataPointImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime timestamp, double value});
+  $Res call(
+      {DateTime timestamp,
+      int? totalOutputQty,
+      int? rejectedOutputQty,
+      int? goodOutputQty,
+      double? yieldRatio,
+      double? value});
 }
 
 /// @nodoc
@@ -1353,25 +1390,52 @@ class __$$OutputDataPointImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? timestamp = null,
-    Object? value = null,
+    Object? totalOutputQty = freezed,
+    Object? rejectedOutputQty = freezed,
+    Object? goodOutputQty = freezed,
+    Object? yieldRatio = freezed,
+    Object? value = freezed,
   }) {
     return _then(_$OutputDataPointImpl(
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      value: null == value
+      totalOutputQty: freezed == totalOutputQty
+          ? _value.totalOutputQty
+          : totalOutputQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rejectedOutputQty: freezed == rejectedOutputQty
+          ? _value.rejectedOutputQty
+          : rejectedOutputQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      goodOutputQty: freezed == goodOutputQty
+          ? _value.goodOutputQty
+          : goodOutputQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      yieldRatio: freezed == yieldRatio
+          ? _value.yieldRatio
+          : yieldRatio // ignore: cast_nullable_to_non_nullable
+              as double?,
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$OutputDataPointImpl implements _OutputDataPoint {
-  const _$OutputDataPointImpl({required this.timestamp, required this.value});
+class _$OutputDataPointImpl extends _OutputDataPoint {
+  const _$OutputDataPointImpl(
+      {required this.timestamp,
+      this.totalOutputQty,
+      this.rejectedOutputQty,
+      this.goodOutputQty,
+      this.yieldRatio,
+      this.value})
+      : super._();
 
   factory _$OutputDataPointImpl.fromJson(Map<String, dynamic> json) =>
       _$$OutputDataPointImplFromJson(json);
@@ -1379,11 +1443,20 @@ class _$OutputDataPointImpl implements _OutputDataPoint {
   @override
   final DateTime timestamp;
   @override
-  final double value;
+  final int? totalOutputQty;
+  @override
+  final int? rejectedOutputQty;
+  @override
+  final int? goodOutputQty;
+  @override
+  final double? yieldRatio;
+// For backward compatibility with charts
+  @override
+  final double? value;
 
   @override
   String toString() {
-    return 'OutputDataPoint(timestamp: $timestamp, value: $value)';
+    return 'OutputDataPoint(timestamp: $timestamp, totalOutputQty: $totalOutputQty, rejectedOutputQty: $rejectedOutputQty, goodOutputQty: $goodOutputQty, yieldRatio: $yieldRatio, value: $value)';
   }
 
   @override
@@ -1393,12 +1466,21 @@ class _$OutputDataPointImpl implements _OutputDataPoint {
             other is _$OutputDataPointImpl &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
+            (identical(other.totalOutputQty, totalOutputQty) ||
+                other.totalOutputQty == totalOutputQty) &&
+            (identical(other.rejectedOutputQty, rejectedOutputQty) ||
+                other.rejectedOutputQty == rejectedOutputQty) &&
+            (identical(other.goodOutputQty, goodOutputQty) ||
+                other.goodOutputQty == goodOutputQty) &&
+            (identical(other.yieldRatio, yieldRatio) ||
+                other.yieldRatio == yieldRatio) &&
             (identical(other.value, value) || other.value == value));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, timestamp, value);
+  int get hashCode => Object.hash(runtimeType, timestamp, totalOutputQty,
+      rejectedOutputQty, goodOutputQty, yieldRatio, value);
 
   @JsonKey(ignore: true)
   @override
@@ -1415,10 +1497,15 @@ class _$OutputDataPointImpl implements _OutputDataPoint {
   }
 }
 
-abstract class _OutputDataPoint implements OutputDataPoint {
+abstract class _OutputDataPoint extends OutputDataPoint {
   const factory _OutputDataPoint(
       {required final DateTime timestamp,
-      required final double value}) = _$OutputDataPointImpl;
+      final int? totalOutputQty,
+      final int? rejectedOutputQty,
+      final int? goodOutputQty,
+      final double? yieldRatio,
+      final double? value}) = _$OutputDataPointImpl;
+  const _OutputDataPoint._() : super._();
 
   factory _OutputDataPoint.fromJson(Map<String, dynamic> json) =
       _$OutputDataPointImpl.fromJson;
@@ -1426,7 +1513,15 @@ abstract class _OutputDataPoint implements OutputDataPoint {
   @override
   DateTime get timestamp;
   @override
-  double get value;
+  int? get totalOutputQty;
+  @override
+  int? get rejectedOutputQty;
+  @override
+  int? get goodOutputQty;
+  @override
+  double? get yieldRatio;
+  @override // For backward compatibility with charts
+  double? get value;
   @override
   @JsonKey(ignore: true)
   _$$OutputDataPointImplCopyWith<_$OutputDataPointImpl> get copyWith =>
@@ -2358,5 +2453,1082 @@ abstract class _PerformanceDataPoint implements PerformanceDataPoint {
   @override
   @JsonKey(ignore: true)
   _$$PerformanceDataPointImplCopyWith<_$PerformanceDataPointImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+AvailabilityAggregateResponse _$AvailabilityAggregateResponseFromJson(
+    Map<String, dynamic> json) {
+  return _AvailabilityAggregateResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailabilityAggregateResponse {
+  DateTime get startTime => throw _privateConstructorUsedError;
+  DateTime get endTime => throw _privateConstructorUsedError;
+  String get groupBy => throw _privateConstructorUsedError;
+  List<AvailabilityResult> get results => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailabilityAggregateResponseCopyWith<AvailabilityAggregateResponse>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailabilityAggregateResponseCopyWith<$Res> {
+  factory $AvailabilityAggregateResponseCopyWith(
+          AvailabilityAggregateResponse value,
+          $Res Function(AvailabilityAggregateResponse) then) =
+      _$AvailabilityAggregateResponseCopyWithImpl<$Res,
+          AvailabilityAggregateResponse>;
+  @useResult
+  $Res call(
+      {DateTime startTime,
+      DateTime endTime,
+      String groupBy,
+      List<AvailabilityResult> results});
+}
+
+/// @nodoc
+class _$AvailabilityAggregateResponseCopyWithImpl<$Res,
+        $Val extends AvailabilityAggregateResponse>
+    implements $AvailabilityAggregateResponseCopyWith<$Res> {
+  _$AvailabilityAggregateResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? groupBy = null,
+    Object? results = null,
+  }) {
+    return _then(_value.copyWith(
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      groupBy: null == groupBy
+          ? _value.groupBy
+          : groupBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      results: null == results
+          ? _value.results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<AvailabilityResult>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AvailabilityAggregateResponseImplCopyWith<$Res>
+    implements $AvailabilityAggregateResponseCopyWith<$Res> {
+  factory _$$AvailabilityAggregateResponseImplCopyWith(
+          _$AvailabilityAggregateResponseImpl value,
+          $Res Function(_$AvailabilityAggregateResponseImpl) then) =
+      __$$AvailabilityAggregateResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {DateTime startTime,
+      DateTime endTime,
+      String groupBy,
+      List<AvailabilityResult> results});
+}
+
+/// @nodoc
+class __$$AvailabilityAggregateResponseImplCopyWithImpl<$Res>
+    extends _$AvailabilityAggregateResponseCopyWithImpl<$Res,
+        _$AvailabilityAggregateResponseImpl>
+    implements _$$AvailabilityAggregateResponseImplCopyWith<$Res> {
+  __$$AvailabilityAggregateResponseImplCopyWithImpl(
+      _$AvailabilityAggregateResponseImpl _value,
+      $Res Function(_$AvailabilityAggregateResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? groupBy = null,
+    Object? results = null,
+  }) {
+    return _then(_$AvailabilityAggregateResponseImpl(
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      groupBy: null == groupBy
+          ? _value.groupBy
+          : groupBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      results: null == results
+          ? _value._results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<AvailabilityResult>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AvailabilityAggregateResponseImpl
+    implements _AvailabilityAggregateResponse {
+  const _$AvailabilityAggregateResponseImpl(
+      {required this.startTime,
+      required this.endTime,
+      required this.groupBy,
+      required final List<AvailabilityResult> results})
+      : _results = results;
+
+  factory _$AvailabilityAggregateResponseImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$AvailabilityAggregateResponseImplFromJson(json);
+
+  @override
+  final DateTime startTime;
+  @override
+  final DateTime endTime;
+  @override
+  final String groupBy;
+  final List<AvailabilityResult> _results;
+  @override
+  List<AvailabilityResult> get results {
+    if (_results is EqualUnmodifiableListView) return _results;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_results);
+  }
+
+  @override
+  String toString() {
+    return 'AvailabilityAggregateResponse(startTime: $startTime, endTime: $endTime, groupBy: $groupBy, results: $results)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AvailabilityAggregateResponseImpl &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.groupBy, groupBy) || other.groupBy == groupBy) &&
+            const DeepCollectionEquality().equals(other._results, _results));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, startTime, endTime, groupBy,
+      const DeepCollectionEquality().hash(_results));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AvailabilityAggregateResponseImplCopyWith<
+          _$AvailabilityAggregateResponseImpl>
+      get copyWith => __$$AvailabilityAggregateResponseImplCopyWithImpl<
+          _$AvailabilityAggregateResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AvailabilityAggregateResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AvailabilityAggregateResponse
+    implements AvailabilityAggregateResponse {
+  const factory _AvailabilityAggregateResponse(
+          {required final DateTime startTime,
+          required final DateTime endTime,
+          required final String groupBy,
+          required final List<AvailabilityResult> results}) =
+      _$AvailabilityAggregateResponseImpl;
+
+  factory _AvailabilityAggregateResponse.fromJson(Map<String, dynamic> json) =
+      _$AvailabilityAggregateResponseImpl.fromJson;
+
+  @override
+  DateTime get startTime;
+  @override
+  DateTime get endTime;
+  @override
+  String get groupBy;
+  @override
+  List<AvailabilityResult> get results;
+  @override
+  @JsonKey(ignore: true)
+  _$$AvailabilityAggregateResponseImplCopyWith<
+          _$AvailabilityAggregateResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+AvailabilityResult _$AvailabilityResultFromJson(Map<String, dynamic> json) {
+  return _AvailabilityResult.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailabilityResult {
+  String get machineId => throw _privateConstructorUsedError;
+  double get availabilityPercentage => throw _privateConstructorUsedError;
+  double get uptimeHours => throw _privateConstructorUsedError;
+  double get downtimeHours => throw _privateConstructorUsedError;
+  int get totalShifts => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailabilityResultCopyWith<AvailabilityResult> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailabilityResultCopyWith<$Res> {
+  factory $AvailabilityResultCopyWith(
+          AvailabilityResult value, $Res Function(AvailabilityResult) then) =
+      _$AvailabilityResultCopyWithImpl<$Res, AvailabilityResult>;
+  @useResult
+  $Res call(
+      {String machineId,
+      double availabilityPercentage,
+      double uptimeHours,
+      double downtimeHours,
+      int totalShifts});
+}
+
+/// @nodoc
+class _$AvailabilityResultCopyWithImpl<$Res, $Val extends AvailabilityResult>
+    implements $AvailabilityResultCopyWith<$Res> {
+  _$AvailabilityResultCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? machineId = null,
+    Object? availabilityPercentage = null,
+    Object? uptimeHours = null,
+    Object? downtimeHours = null,
+    Object? totalShifts = null,
+  }) {
+    return _then(_value.copyWith(
+      machineId: null == machineId
+          ? _value.machineId
+          : machineId // ignore: cast_nullable_to_non_nullable
+              as String,
+      availabilityPercentage: null == availabilityPercentage
+          ? _value.availabilityPercentage
+          : availabilityPercentage // ignore: cast_nullable_to_non_nullable
+              as double,
+      uptimeHours: null == uptimeHours
+          ? _value.uptimeHours
+          : uptimeHours // ignore: cast_nullable_to_non_nullable
+              as double,
+      downtimeHours: null == downtimeHours
+          ? _value.downtimeHours
+          : downtimeHours // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalShifts: null == totalShifts
+          ? _value.totalShifts
+          : totalShifts // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AvailabilityResultImplCopyWith<$Res>
+    implements $AvailabilityResultCopyWith<$Res> {
+  factory _$$AvailabilityResultImplCopyWith(_$AvailabilityResultImpl value,
+          $Res Function(_$AvailabilityResultImpl) then) =
+      __$$AvailabilityResultImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String machineId,
+      double availabilityPercentage,
+      double uptimeHours,
+      double downtimeHours,
+      int totalShifts});
+}
+
+/// @nodoc
+class __$$AvailabilityResultImplCopyWithImpl<$Res>
+    extends _$AvailabilityResultCopyWithImpl<$Res, _$AvailabilityResultImpl>
+    implements _$$AvailabilityResultImplCopyWith<$Res> {
+  __$$AvailabilityResultImplCopyWithImpl(_$AvailabilityResultImpl _value,
+      $Res Function(_$AvailabilityResultImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? machineId = null,
+    Object? availabilityPercentage = null,
+    Object? uptimeHours = null,
+    Object? downtimeHours = null,
+    Object? totalShifts = null,
+  }) {
+    return _then(_$AvailabilityResultImpl(
+      machineId: null == machineId
+          ? _value.machineId
+          : machineId // ignore: cast_nullable_to_non_nullable
+              as String,
+      availabilityPercentage: null == availabilityPercentage
+          ? _value.availabilityPercentage
+          : availabilityPercentage // ignore: cast_nullable_to_non_nullable
+              as double,
+      uptimeHours: null == uptimeHours
+          ? _value.uptimeHours
+          : uptimeHours // ignore: cast_nullable_to_non_nullable
+              as double,
+      downtimeHours: null == downtimeHours
+          ? _value.downtimeHours
+          : downtimeHours // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalShifts: null == totalShifts
+          ? _value.totalShifts
+          : totalShifts // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AvailabilityResultImpl implements _AvailabilityResult {
+  const _$AvailabilityResultImpl(
+      {required this.machineId,
+      required this.availabilityPercentage,
+      required this.uptimeHours,
+      required this.downtimeHours,
+      required this.totalShifts});
+
+  factory _$AvailabilityResultImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AvailabilityResultImplFromJson(json);
+
+  @override
+  final String machineId;
+  @override
+  final double availabilityPercentage;
+  @override
+  final double uptimeHours;
+  @override
+  final double downtimeHours;
+  @override
+  final int totalShifts;
+
+  @override
+  String toString() {
+    return 'AvailabilityResult(machineId: $machineId, availabilityPercentage: $availabilityPercentage, uptimeHours: $uptimeHours, downtimeHours: $downtimeHours, totalShifts: $totalShifts)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AvailabilityResultImpl &&
+            (identical(other.machineId, machineId) ||
+                other.machineId == machineId) &&
+            (identical(other.availabilityPercentage, availabilityPercentage) ||
+                other.availabilityPercentage == availabilityPercentage) &&
+            (identical(other.uptimeHours, uptimeHours) ||
+                other.uptimeHours == uptimeHours) &&
+            (identical(other.downtimeHours, downtimeHours) ||
+                other.downtimeHours == downtimeHours) &&
+            (identical(other.totalShifts, totalShifts) ||
+                other.totalShifts == totalShifts));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, machineId,
+      availabilityPercentage, uptimeHours, downtimeHours, totalShifts);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AvailabilityResultImplCopyWith<_$AvailabilityResultImpl> get copyWith =>
+      __$$AvailabilityResultImplCopyWithImpl<_$AvailabilityResultImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AvailabilityResultImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AvailabilityResult implements AvailabilityResult {
+  const factory _AvailabilityResult(
+      {required final String machineId,
+      required final double availabilityPercentage,
+      required final double uptimeHours,
+      required final double downtimeHours,
+      required final int totalShifts}) = _$AvailabilityResultImpl;
+
+  factory _AvailabilityResult.fromJson(Map<String, dynamic> json) =
+      _$AvailabilityResultImpl.fromJson;
+
+  @override
+  String get machineId;
+  @override
+  double get availabilityPercentage;
+  @override
+  double get uptimeHours;
+  @override
+  double get downtimeHours;
+  @override
+  int get totalShifts;
+  @override
+  @JsonKey(ignore: true)
+  _$$AvailabilityResultImplCopyWith<_$AvailabilityResultImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AvailabilityTimeseriesResponse _$AvailabilityTimeseriesResponseFromJson(
+    Map<String, dynamic> json) {
+  return _AvailabilityTimeseriesResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailabilityTimeseriesResponse {
+  DateTime get startTime => throw _privateConstructorUsedError;
+  DateTime get endTime => throw _privateConstructorUsedError;
+  String get interval => throw _privateConstructorUsedError;
+  List<AvailabilityTimeseries> get series => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailabilityTimeseriesResponseCopyWith<AvailabilityTimeseriesResponse>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailabilityTimeseriesResponseCopyWith<$Res> {
+  factory $AvailabilityTimeseriesResponseCopyWith(
+          AvailabilityTimeseriesResponse value,
+          $Res Function(AvailabilityTimeseriesResponse) then) =
+      _$AvailabilityTimeseriesResponseCopyWithImpl<$Res,
+          AvailabilityTimeseriesResponse>;
+  @useResult
+  $Res call(
+      {DateTime startTime,
+      DateTime endTime,
+      String interval,
+      List<AvailabilityTimeseries> series});
+}
+
+/// @nodoc
+class _$AvailabilityTimeseriesResponseCopyWithImpl<$Res,
+        $Val extends AvailabilityTimeseriesResponse>
+    implements $AvailabilityTimeseriesResponseCopyWith<$Res> {
+  _$AvailabilityTimeseriesResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? interval = null,
+    Object? series = null,
+  }) {
+    return _then(_value.copyWith(
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      interval: null == interval
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as String,
+      series: null == series
+          ? _value.series
+          : series // ignore: cast_nullable_to_non_nullable
+              as List<AvailabilityTimeseries>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AvailabilityTimeseriesResponseImplCopyWith<$Res>
+    implements $AvailabilityTimeseriesResponseCopyWith<$Res> {
+  factory _$$AvailabilityTimeseriesResponseImplCopyWith(
+          _$AvailabilityTimeseriesResponseImpl value,
+          $Res Function(_$AvailabilityTimeseriesResponseImpl) then) =
+      __$$AvailabilityTimeseriesResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {DateTime startTime,
+      DateTime endTime,
+      String interval,
+      List<AvailabilityTimeseries> series});
+}
+
+/// @nodoc
+class __$$AvailabilityTimeseriesResponseImplCopyWithImpl<$Res>
+    extends _$AvailabilityTimeseriesResponseCopyWithImpl<$Res,
+        _$AvailabilityTimeseriesResponseImpl>
+    implements _$$AvailabilityTimeseriesResponseImplCopyWith<$Res> {
+  __$$AvailabilityTimeseriesResponseImplCopyWithImpl(
+      _$AvailabilityTimeseriesResponseImpl _value,
+      $Res Function(_$AvailabilityTimeseriesResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? interval = null,
+    Object? series = null,
+  }) {
+    return _then(_$AvailabilityTimeseriesResponseImpl(
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      interval: null == interval
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as String,
+      series: null == series
+          ? _value._series
+          : series // ignore: cast_nullable_to_non_nullable
+              as List<AvailabilityTimeseries>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AvailabilityTimeseriesResponseImpl
+    implements _AvailabilityTimeseriesResponse {
+  const _$AvailabilityTimeseriesResponseImpl(
+      {required this.startTime,
+      required this.endTime,
+      required this.interval,
+      required final List<AvailabilityTimeseries> series})
+      : _series = series;
+
+  factory _$AvailabilityTimeseriesResponseImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$AvailabilityTimeseriesResponseImplFromJson(json);
+
+  @override
+  final DateTime startTime;
+  @override
+  final DateTime endTime;
+  @override
+  final String interval;
+  final List<AvailabilityTimeseries> _series;
+  @override
+  List<AvailabilityTimeseries> get series {
+    if (_series is EqualUnmodifiableListView) return _series;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_series);
+  }
+
+  @override
+  String toString() {
+    return 'AvailabilityTimeseriesResponse(startTime: $startTime, endTime: $endTime, interval: $interval, series: $series)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AvailabilityTimeseriesResponseImpl &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.interval, interval) ||
+                other.interval == interval) &&
+            const DeepCollectionEquality().equals(other._series, _series));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, startTime, endTime, interval,
+      const DeepCollectionEquality().hash(_series));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AvailabilityTimeseriesResponseImplCopyWith<
+          _$AvailabilityTimeseriesResponseImpl>
+      get copyWith => __$$AvailabilityTimeseriesResponseImplCopyWithImpl<
+          _$AvailabilityTimeseriesResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AvailabilityTimeseriesResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AvailabilityTimeseriesResponse
+    implements AvailabilityTimeseriesResponse {
+  const factory _AvailabilityTimeseriesResponse(
+          {required final DateTime startTime,
+          required final DateTime endTime,
+          required final String interval,
+          required final List<AvailabilityTimeseries> series}) =
+      _$AvailabilityTimeseriesResponseImpl;
+
+  factory _AvailabilityTimeseriesResponse.fromJson(Map<String, dynamic> json) =
+      _$AvailabilityTimeseriesResponseImpl.fromJson;
+
+  @override
+  DateTime get startTime;
+  @override
+  DateTime get endTime;
+  @override
+  String get interval;
+  @override
+  List<AvailabilityTimeseries> get series;
+  @override
+  @JsonKey(ignore: true)
+  _$$AvailabilityTimeseriesResponseImplCopyWith<
+          _$AvailabilityTimeseriesResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+AvailabilityTimeseries _$AvailabilityTimeseriesFromJson(
+    Map<String, dynamic> json) {
+  return _AvailabilityTimeseries.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailabilityTimeseries {
+  String get machineId => throw _privateConstructorUsedError;
+  List<AvailabilityDataPoint> get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailabilityTimeseriesCopyWith<AvailabilityTimeseries> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailabilityTimeseriesCopyWith<$Res> {
+  factory $AvailabilityTimeseriesCopyWith(AvailabilityTimeseries value,
+          $Res Function(AvailabilityTimeseries) then) =
+      _$AvailabilityTimeseriesCopyWithImpl<$Res, AvailabilityTimeseries>;
+  @useResult
+  $Res call({String machineId, List<AvailabilityDataPoint> data});
+}
+
+/// @nodoc
+class _$AvailabilityTimeseriesCopyWithImpl<$Res,
+        $Val extends AvailabilityTimeseries>
+    implements $AvailabilityTimeseriesCopyWith<$Res> {
+  _$AvailabilityTimeseriesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? machineId = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      machineId: null == machineId
+          ? _value.machineId
+          : machineId // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<AvailabilityDataPoint>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AvailabilityTimeseriesImplCopyWith<$Res>
+    implements $AvailabilityTimeseriesCopyWith<$Res> {
+  factory _$$AvailabilityTimeseriesImplCopyWith(
+          _$AvailabilityTimeseriesImpl value,
+          $Res Function(_$AvailabilityTimeseriesImpl) then) =
+      __$$AvailabilityTimeseriesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String machineId, List<AvailabilityDataPoint> data});
+}
+
+/// @nodoc
+class __$$AvailabilityTimeseriesImplCopyWithImpl<$Res>
+    extends _$AvailabilityTimeseriesCopyWithImpl<$Res,
+        _$AvailabilityTimeseriesImpl>
+    implements _$$AvailabilityTimeseriesImplCopyWith<$Res> {
+  __$$AvailabilityTimeseriesImplCopyWithImpl(
+      _$AvailabilityTimeseriesImpl _value,
+      $Res Function(_$AvailabilityTimeseriesImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? machineId = null,
+    Object? data = null,
+  }) {
+    return _then(_$AvailabilityTimeseriesImpl(
+      machineId: null == machineId
+          ? _value.machineId
+          : machineId // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<AvailabilityDataPoint>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AvailabilityTimeseriesImpl implements _AvailabilityTimeseries {
+  const _$AvailabilityTimeseriesImpl(
+      {required this.machineId,
+      required final List<AvailabilityDataPoint> data})
+      : _data = data;
+
+  factory _$AvailabilityTimeseriesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AvailabilityTimeseriesImplFromJson(json);
+
+  @override
+  final String machineId;
+  final List<AvailabilityDataPoint> _data;
+  @override
+  List<AvailabilityDataPoint> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'AvailabilityTimeseries(machineId: $machineId, data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AvailabilityTimeseriesImpl &&
+            (identical(other.machineId, machineId) ||
+                other.machineId == machineId) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, machineId, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AvailabilityTimeseriesImplCopyWith<_$AvailabilityTimeseriesImpl>
+      get copyWith => __$$AvailabilityTimeseriesImplCopyWithImpl<
+          _$AvailabilityTimeseriesImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AvailabilityTimeseriesImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AvailabilityTimeseries implements AvailabilityTimeseries {
+  const factory _AvailabilityTimeseries(
+          {required final String machineId,
+          required final List<AvailabilityDataPoint> data}) =
+      _$AvailabilityTimeseriesImpl;
+
+  factory _AvailabilityTimeseries.fromJson(Map<String, dynamic> json) =
+      _$AvailabilityTimeseriesImpl.fromJson;
+
+  @override
+  String get machineId;
+  @override
+  List<AvailabilityDataPoint> get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$AvailabilityTimeseriesImplCopyWith<_$AvailabilityTimeseriesImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+AvailabilityDataPoint _$AvailabilityDataPointFromJson(
+    Map<String, dynamic> json) {
+  return _AvailabilityDataPoint.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailabilityDataPoint {
+  DateTime get timestamp => throw _privateConstructorUsedError;
+  double get availabilityRatio => throw _privateConstructorUsedError;
+  int get totalMinutes => throw _privateConstructorUsedError;
+  int get actualProductionMinutes => throw _privateConstructorUsedError;
+  int get plannedProductionMinutes => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailabilityDataPointCopyWith<AvailabilityDataPoint> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailabilityDataPointCopyWith<$Res> {
+  factory $AvailabilityDataPointCopyWith(AvailabilityDataPoint value,
+          $Res Function(AvailabilityDataPoint) then) =
+      _$AvailabilityDataPointCopyWithImpl<$Res, AvailabilityDataPoint>;
+  @useResult
+  $Res call(
+      {DateTime timestamp,
+      double availabilityRatio,
+      int totalMinutes,
+      int actualProductionMinutes,
+      int plannedProductionMinutes});
+}
+
+/// @nodoc
+class _$AvailabilityDataPointCopyWithImpl<$Res,
+        $Val extends AvailabilityDataPoint>
+    implements $AvailabilityDataPointCopyWith<$Res> {
+  _$AvailabilityDataPointCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? timestamp = null,
+    Object? availabilityRatio = null,
+    Object? totalMinutes = null,
+    Object? actualProductionMinutes = null,
+    Object? plannedProductionMinutes = null,
+  }) {
+    return _then(_value.copyWith(
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      availabilityRatio: null == availabilityRatio
+          ? _value.availabilityRatio
+          : availabilityRatio // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalMinutes: null == totalMinutes
+          ? _value.totalMinutes
+          : totalMinutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      actualProductionMinutes: null == actualProductionMinutes
+          ? _value.actualProductionMinutes
+          : actualProductionMinutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      plannedProductionMinutes: null == plannedProductionMinutes
+          ? _value.plannedProductionMinutes
+          : plannedProductionMinutes // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AvailabilityDataPointImplCopyWith<$Res>
+    implements $AvailabilityDataPointCopyWith<$Res> {
+  factory _$$AvailabilityDataPointImplCopyWith(
+          _$AvailabilityDataPointImpl value,
+          $Res Function(_$AvailabilityDataPointImpl) then) =
+      __$$AvailabilityDataPointImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {DateTime timestamp,
+      double availabilityRatio,
+      int totalMinutes,
+      int actualProductionMinutes,
+      int plannedProductionMinutes});
+}
+
+/// @nodoc
+class __$$AvailabilityDataPointImplCopyWithImpl<$Res>
+    extends _$AvailabilityDataPointCopyWithImpl<$Res,
+        _$AvailabilityDataPointImpl>
+    implements _$$AvailabilityDataPointImplCopyWith<$Res> {
+  __$$AvailabilityDataPointImplCopyWithImpl(_$AvailabilityDataPointImpl _value,
+      $Res Function(_$AvailabilityDataPointImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? timestamp = null,
+    Object? availabilityRatio = null,
+    Object? totalMinutes = null,
+    Object? actualProductionMinutes = null,
+    Object? plannedProductionMinutes = null,
+  }) {
+    return _then(_$AvailabilityDataPointImpl(
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      availabilityRatio: null == availabilityRatio
+          ? _value.availabilityRatio
+          : availabilityRatio // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalMinutes: null == totalMinutes
+          ? _value.totalMinutes
+          : totalMinutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      actualProductionMinutes: null == actualProductionMinutes
+          ? _value.actualProductionMinutes
+          : actualProductionMinutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      plannedProductionMinutes: null == plannedProductionMinutes
+          ? _value.plannedProductionMinutes
+          : plannedProductionMinutes // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AvailabilityDataPointImpl implements _AvailabilityDataPoint {
+  const _$AvailabilityDataPointImpl(
+      {required this.timestamp,
+      required this.availabilityRatio,
+      required this.totalMinutes,
+      required this.actualProductionMinutes,
+      required this.plannedProductionMinutes});
+
+  factory _$AvailabilityDataPointImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AvailabilityDataPointImplFromJson(json);
+
+  @override
+  final DateTime timestamp;
+  @override
+  final double availabilityRatio;
+  @override
+  final int totalMinutes;
+  @override
+  final int actualProductionMinutes;
+  @override
+  final int plannedProductionMinutes;
+
+  @override
+  String toString() {
+    return 'AvailabilityDataPoint(timestamp: $timestamp, availabilityRatio: $availabilityRatio, totalMinutes: $totalMinutes, actualProductionMinutes: $actualProductionMinutes, plannedProductionMinutes: $plannedProductionMinutes)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AvailabilityDataPointImpl &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp) &&
+            (identical(other.availabilityRatio, availabilityRatio) ||
+                other.availabilityRatio == availabilityRatio) &&
+            (identical(other.totalMinutes, totalMinutes) ||
+                other.totalMinutes == totalMinutes) &&
+            (identical(
+                    other.actualProductionMinutes, actualProductionMinutes) ||
+                other.actualProductionMinutes == actualProductionMinutes) &&
+            (identical(
+                    other.plannedProductionMinutes, plannedProductionMinutes) ||
+                other.plannedProductionMinutes == plannedProductionMinutes));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, timestamp, availabilityRatio,
+      totalMinutes, actualProductionMinutes, plannedProductionMinutes);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AvailabilityDataPointImplCopyWith<_$AvailabilityDataPointImpl>
+      get copyWith => __$$AvailabilityDataPointImplCopyWithImpl<
+          _$AvailabilityDataPointImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AvailabilityDataPointImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AvailabilityDataPoint implements AvailabilityDataPoint {
+  const factory _AvailabilityDataPoint(
+          {required final DateTime timestamp,
+          required final double availabilityRatio,
+          required final int totalMinutes,
+          required final int actualProductionMinutes,
+          required final int plannedProductionMinutes}) =
+      _$AvailabilityDataPointImpl;
+
+  factory _AvailabilityDataPoint.fromJson(Map<String, dynamic> json) =
+      _$AvailabilityDataPointImpl.fromJson;
+
+  @override
+  DateTime get timestamp;
+  @override
+  double get availabilityRatio;
+  @override
+  int get totalMinutes;
+  @override
+  int get actualProductionMinutes;
+  @override
+  int get plannedProductionMinutes;
+  @override
+  @JsonKey(ignore: true)
+  _$$AvailabilityDataPointImplCopyWith<_$AvailabilityDataPointImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

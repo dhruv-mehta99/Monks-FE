@@ -20,10 +20,14 @@ Plant _$PlantFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Plant {
+  @JsonKey(name: 'plant_id')
   String get plantId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'plant_name')
   String get plantName => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,11 +41,11 @@ abstract class $PlantCopyWith<$Res> {
       _$PlantCopyWithImpl<$Res, Plant>;
   @useResult
   $Res call(
-      {String plantId,
-      String plantName,
+      {@JsonKey(name: 'plant_id') String plantId,
+      @JsonKey(name: 'plant_name') String plantName,
       String? location,
-      DateTime createdAt,
-      DateTime updatedAt});
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -96,11 +100,11 @@ abstract class _$$PlantImplCopyWith<$Res> implements $PlantCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String plantId,
-      String plantName,
+      {@JsonKey(name: 'plant_id') String plantId,
+      @JsonKey(name: 'plant_name') String plantName,
       String? location,
-      DateTime createdAt,
-      DateTime updatedAt});
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -149,24 +153,28 @@ class __$$PlantImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PlantImpl implements _Plant {
   const _$PlantImpl(
-      {required this.plantId,
-      required this.plantName,
+      {@JsonKey(name: 'plant_id') required this.plantId,
+      @JsonKey(name: 'plant_name') required this.plantName,
       this.location,
-      required this.createdAt,
-      required this.updatedAt});
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt});
 
   factory _$PlantImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlantImplFromJson(json);
 
   @override
+  @JsonKey(name: 'plant_id')
   final String plantId;
   @override
+  @JsonKey(name: 'plant_name')
   final String plantName;
   @override
   final String? location;
   @override
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   @override
@@ -211,23 +219,28 @@ class _$PlantImpl implements _Plant {
 
 abstract class _Plant implements Plant {
   const factory _Plant(
-      {required final String plantId,
-      required final String plantName,
-      final String? location,
-      required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$PlantImpl;
+          {@JsonKey(name: 'plant_id') required final String plantId,
+          @JsonKey(name: 'plant_name') required final String plantName,
+          final String? location,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'updated_at') required final DateTime updatedAt}) =
+      _$PlantImpl;
 
   factory _Plant.fromJson(Map<String, dynamic> json) = _$PlantImpl.fromJson;
 
   @override
+  @JsonKey(name: 'plant_id')
   String get plantId;
   @override
+  @JsonKey(name: 'plant_name')
   String get plantName;
   @override
   String? get location;
   @override
+  @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
@@ -241,10 +254,15 @@ Unit _$UnitFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Unit {
+  @JsonKey(name: 'unit_id')
   String get unitId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'plant_id')
   String get plantId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'unit_name')
   String get unitName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -258,11 +276,11 @@ abstract class $UnitCopyWith<$Res> {
       _$UnitCopyWithImpl<$Res, Unit>;
   @useResult
   $Res call(
-      {String unitId,
-      String plantId,
-      String unitName,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'unit_id') String unitId,
+      @JsonKey(name: 'plant_id') String plantId,
+      @JsonKey(name: 'unit_name') String unitName,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -317,11 +335,11 @@ abstract class _$$UnitImplCopyWith<$Res> implements $UnitCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String unitId,
-      String plantId,
-      String unitName,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'unit_id') String unitId,
+      @JsonKey(name: 'plant_id') String plantId,
+      @JsonKey(name: 'unit_name') String unitName,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -369,24 +387,29 @@ class __$$UnitImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UnitImpl implements _Unit {
   const _$UnitImpl(
-      {required this.unitId,
-      required this.plantId,
-      required this.unitName,
-      required this.createdAt,
-      required this.updatedAt});
+      {@JsonKey(name: 'unit_id') required this.unitId,
+      @JsonKey(name: 'plant_id') required this.plantId,
+      @JsonKey(name: 'unit_name') required this.unitName,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt});
 
   factory _$UnitImpl.fromJson(Map<String, dynamic> json) =>
       _$$UnitImplFromJson(json);
 
   @override
+  @JsonKey(name: 'unit_id')
   final String unitId;
   @override
+  @JsonKey(name: 'plant_id')
   final String plantId;
   @override
+  @JsonKey(name: 'unit_name')
   final String unitName;
   @override
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   @override
@@ -430,23 +453,29 @@ class _$UnitImpl implements _Unit {
 
 abstract class _Unit implements Unit {
   const factory _Unit(
-      {required final String unitId,
-      required final String plantId,
-      required final String unitName,
-      required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$UnitImpl;
+          {@JsonKey(name: 'unit_id') required final String unitId,
+          @JsonKey(name: 'plant_id') required final String plantId,
+          @JsonKey(name: 'unit_name') required final String unitName,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'updated_at') required final DateTime updatedAt}) =
+      _$UnitImpl;
 
   factory _Unit.fromJson(Map<String, dynamic> json) = _$UnitImpl.fromJson;
 
   @override
+  @JsonKey(name: 'unit_id')
   String get unitId;
   @override
+  @JsonKey(name: 'plant_id')
   String get plantId;
   @override
+  @JsonKey(name: 'unit_name')
   String get unitName;
   @override
+  @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
@@ -460,10 +489,15 @@ Segment _$SegmentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Segment {
+  @JsonKey(name: 'segment_id')
   String get segmentId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'unit_id')
   String get unitId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'segment_name')
   String get segmentName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -477,11 +511,11 @@ abstract class $SegmentCopyWith<$Res> {
       _$SegmentCopyWithImpl<$Res, Segment>;
   @useResult
   $Res call(
-      {String segmentId,
-      String unitId,
-      String segmentName,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'segment_id') String segmentId,
+      @JsonKey(name: 'unit_id') String unitId,
+      @JsonKey(name: 'segment_name') String segmentName,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -536,11 +570,11 @@ abstract class _$$SegmentImplCopyWith<$Res> implements $SegmentCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String segmentId,
-      String unitId,
-      String segmentName,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'segment_id') String segmentId,
+      @JsonKey(name: 'unit_id') String unitId,
+      @JsonKey(name: 'segment_name') String segmentName,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -589,24 +623,29 @@ class __$$SegmentImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SegmentImpl implements _Segment {
   const _$SegmentImpl(
-      {required this.segmentId,
-      required this.unitId,
-      required this.segmentName,
-      required this.createdAt,
-      required this.updatedAt});
+      {@JsonKey(name: 'segment_id') required this.segmentId,
+      @JsonKey(name: 'unit_id') required this.unitId,
+      @JsonKey(name: 'segment_name') required this.segmentName,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt});
 
   factory _$SegmentImpl.fromJson(Map<String, dynamic> json) =>
       _$$SegmentImplFromJson(json);
 
   @override
+  @JsonKey(name: 'segment_id')
   final String segmentId;
   @override
+  @JsonKey(name: 'unit_id')
   final String unitId;
   @override
+  @JsonKey(name: 'segment_name')
   final String segmentName;
   @override
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   @override
@@ -651,23 +690,29 @@ class _$SegmentImpl implements _Segment {
 
 abstract class _Segment implements Segment {
   const factory _Segment(
-      {required final String segmentId,
-      required final String unitId,
-      required final String segmentName,
-      required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$SegmentImpl;
+          {@JsonKey(name: 'segment_id') required final String segmentId,
+          @JsonKey(name: 'unit_id') required final String unitId,
+          @JsonKey(name: 'segment_name') required final String segmentName,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'updated_at') required final DateTime updatedAt}) =
+      _$SegmentImpl;
 
   factory _Segment.fromJson(Map<String, dynamic> json) = _$SegmentImpl.fromJson;
 
   @override
+  @JsonKey(name: 'segment_id')
   String get segmentId;
   @override
+  @JsonKey(name: 'unit_id')
   String get unitId;
   @override
+  @JsonKey(name: 'segment_name')
   String get segmentName;
   @override
+  @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
@@ -681,10 +726,15 @@ Line _$LineFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Line {
+  @JsonKey(name: 'line_id')
   String get lineId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'segment_id')
   String get segmentId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'line_name')
   String get lineName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -698,11 +748,11 @@ abstract class $LineCopyWith<$Res> {
       _$LineCopyWithImpl<$Res, Line>;
   @useResult
   $Res call(
-      {String lineId,
-      String segmentId,
-      String lineName,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'line_id') String lineId,
+      @JsonKey(name: 'segment_id') String segmentId,
+      @JsonKey(name: 'line_name') String lineName,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -757,11 +807,11 @@ abstract class _$$LineImplCopyWith<$Res> implements $LineCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String lineId,
-      String segmentId,
-      String lineName,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'line_id') String lineId,
+      @JsonKey(name: 'segment_id') String segmentId,
+      @JsonKey(name: 'line_name') String lineName,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -809,24 +859,29 @@ class __$$LineImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LineImpl implements _Line {
   const _$LineImpl(
-      {required this.lineId,
-      required this.segmentId,
-      required this.lineName,
-      required this.createdAt,
-      required this.updatedAt});
+      {@JsonKey(name: 'line_id') required this.lineId,
+      @JsonKey(name: 'segment_id') required this.segmentId,
+      @JsonKey(name: 'line_name') required this.lineName,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt});
 
   factory _$LineImpl.fromJson(Map<String, dynamic> json) =>
       _$$LineImplFromJson(json);
 
   @override
+  @JsonKey(name: 'line_id')
   final String lineId;
   @override
+  @JsonKey(name: 'segment_id')
   final String segmentId;
   @override
+  @JsonKey(name: 'line_name')
   final String lineName;
   @override
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   @override
@@ -871,23 +926,29 @@ class _$LineImpl implements _Line {
 
 abstract class _Line implements Line {
   const factory _Line(
-      {required final String lineId,
-      required final String segmentId,
-      required final String lineName,
-      required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$LineImpl;
+          {@JsonKey(name: 'line_id') required final String lineId,
+          @JsonKey(name: 'segment_id') required final String segmentId,
+          @JsonKey(name: 'line_name') required final String lineName,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'updated_at') required final DateTime updatedAt}) =
+      _$LineImpl;
 
   factory _Line.fromJson(Map<String, dynamic> json) = _$LineImpl.fromJson;
 
   @override
+  @JsonKey(name: 'line_id')
   String get lineId;
   @override
+  @JsonKey(name: 'segment_id')
   String get segmentId;
   @override
+  @JsonKey(name: 'line_name')
   String get lineName;
   @override
+  @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
@@ -901,11 +962,25 @@ Machine _$MachineFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Machine {
+  @JsonKey(name: 'machine_id')
   String get machineId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'line_id')
   String get lineId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'machine_name')
   String get machineName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'machine_type')
+  String? get machineType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'machine_location')
+  String? get machineLocation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'machine_status')
   MachineStatus get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'commissioned_on')
+  DateTime? get commissionedOn => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_maintenance_date')
+  DateTime? get lastMaintenanceDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -919,12 +994,16 @@ abstract class $MachineCopyWith<$Res> {
       _$MachineCopyWithImpl<$Res, Machine>;
   @useResult
   $Res call(
-      {String machineId,
-      String lineId,
-      String machineName,
-      MachineStatus status,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'machine_id') String machineId,
+      @JsonKey(name: 'line_id') String lineId,
+      @JsonKey(name: 'machine_name') String machineName,
+      @JsonKey(name: 'machine_type') String? machineType,
+      @JsonKey(name: 'machine_location') String? machineLocation,
+      @JsonKey(name: 'machine_status') MachineStatus status,
+      @JsonKey(name: 'commissioned_on') DateTime? commissionedOn,
+      @JsonKey(name: 'last_maintenance_date') DateTime? lastMaintenanceDate,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -943,7 +1022,11 @@ class _$MachineCopyWithImpl<$Res, $Val extends Machine>
     Object? machineId = null,
     Object? lineId = null,
     Object? machineName = null,
+    Object? machineType = freezed,
+    Object? machineLocation = freezed,
     Object? status = null,
+    Object? commissionedOn = freezed,
+    Object? lastMaintenanceDate = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -960,10 +1043,26 @@ class _$MachineCopyWithImpl<$Res, $Val extends Machine>
           ? _value.machineName
           : machineName // ignore: cast_nullable_to_non_nullable
               as String,
+      machineType: freezed == machineType
+          ? _value.machineType
+          : machineType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      machineLocation: freezed == machineLocation
+          ? _value.machineLocation
+          : machineLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as MachineStatus,
+      commissionedOn: freezed == commissionedOn
+          ? _value.commissionedOn
+          : commissionedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      lastMaintenanceDate: freezed == lastMaintenanceDate
+          ? _value.lastMaintenanceDate
+          : lastMaintenanceDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -984,12 +1083,16 @@ abstract class _$$MachineImplCopyWith<$Res> implements $MachineCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String machineId,
-      String lineId,
-      String machineName,
-      MachineStatus status,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@JsonKey(name: 'machine_id') String machineId,
+      @JsonKey(name: 'line_id') String lineId,
+      @JsonKey(name: 'machine_name') String machineName,
+      @JsonKey(name: 'machine_type') String? machineType,
+      @JsonKey(name: 'machine_location') String? machineLocation,
+      @JsonKey(name: 'machine_status') MachineStatus status,
+      @JsonKey(name: 'commissioned_on') DateTime? commissionedOn,
+      @JsonKey(name: 'last_maintenance_date') DateTime? lastMaintenanceDate,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -1006,7 +1109,11 @@ class __$$MachineImplCopyWithImpl<$Res>
     Object? machineId = null,
     Object? lineId = null,
     Object? machineName = null,
+    Object? machineType = freezed,
+    Object? machineLocation = freezed,
     Object? status = null,
+    Object? commissionedOn = freezed,
+    Object? lastMaintenanceDate = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -1023,10 +1130,26 @@ class __$$MachineImplCopyWithImpl<$Res>
           ? _value.machineName
           : machineName // ignore: cast_nullable_to_non_nullable
               as String,
+      machineType: freezed == machineType
+          ? _value.machineType
+          : machineType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      machineLocation: freezed == machineLocation
+          ? _value.machineLocation
+          : machineLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as MachineStatus,
+      commissionedOn: freezed == commissionedOn
+          ? _value.commissionedOn
+          : commissionedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      lastMaintenanceDate: freezed == lastMaintenanceDate
+          ? _value.lastMaintenanceDate
+          : lastMaintenanceDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1043,32 +1166,54 @@ class __$$MachineImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MachineImpl implements _Machine {
   const _$MachineImpl(
-      {required this.machineId,
-      required this.lineId,
-      required this.machineName,
-      required this.status,
-      required this.createdAt,
-      required this.updatedAt});
+      {@JsonKey(name: 'machine_id') required this.machineId,
+      @JsonKey(name: 'line_id') required this.lineId,
+      @JsonKey(name: 'machine_name') required this.machineName,
+      @JsonKey(name: 'machine_type') this.machineType,
+      @JsonKey(name: 'machine_location') this.machineLocation,
+      @JsonKey(name: 'machine_status') required this.status,
+      @JsonKey(name: 'commissioned_on') this.commissionedOn,
+      @JsonKey(name: 'last_maintenance_date') this.lastMaintenanceDate,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt});
 
   factory _$MachineImpl.fromJson(Map<String, dynamic> json) =>
       _$$MachineImplFromJson(json);
 
   @override
+  @JsonKey(name: 'machine_id')
   final String machineId;
   @override
+  @JsonKey(name: 'line_id')
   final String lineId;
   @override
+  @JsonKey(name: 'machine_name')
   final String machineName;
   @override
+  @JsonKey(name: 'machine_type')
+  final String? machineType;
+  @override
+  @JsonKey(name: 'machine_location')
+  final String? machineLocation;
+  @override
+  @JsonKey(name: 'machine_status')
   final MachineStatus status;
   @override
+  @JsonKey(name: 'commissioned_on')
+  final DateTime? commissionedOn;
+  @override
+  @JsonKey(name: 'last_maintenance_date')
+  final DateTime? lastMaintenanceDate;
+  @override
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Machine(machineId: $machineId, lineId: $lineId, machineName: $machineName, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Machine(machineId: $machineId, lineId: $lineId, machineName: $machineName, machineType: $machineType, machineLocation: $machineLocation, status: $status, commissionedOn: $commissionedOn, lastMaintenanceDate: $lastMaintenanceDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -1081,7 +1226,15 @@ class _$MachineImpl implements _Machine {
             (identical(other.lineId, lineId) || other.lineId == lineId) &&
             (identical(other.machineName, machineName) ||
                 other.machineName == machineName) &&
+            (identical(other.machineType, machineType) ||
+                other.machineType == machineType) &&
+            (identical(other.machineLocation, machineLocation) ||
+                other.machineLocation == machineLocation) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.commissionedOn, commissionedOn) ||
+                other.commissionedOn == commissionedOn) &&
+            (identical(other.lastMaintenanceDate, lastMaintenanceDate) ||
+                other.lastMaintenanceDate == lastMaintenanceDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -1090,8 +1243,18 @@ class _$MachineImpl implements _Machine {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, machineId, lineId, machineName,
-      status, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      machineId,
+      lineId,
+      machineName,
+      machineType,
+      machineLocation,
+      status,
+      commissionedOn,
+      lastMaintenanceDate,
+      createdAt,
+      updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -1109,26 +1272,50 @@ class _$MachineImpl implements _Machine {
 
 abstract class _Machine implements Machine {
   const factory _Machine(
-      {required final String machineId,
-      required final String lineId,
-      required final String machineName,
-      required final MachineStatus status,
-      required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$MachineImpl;
+          {@JsonKey(name: 'machine_id') required final String machineId,
+          @JsonKey(name: 'line_id') required final String lineId,
+          @JsonKey(name: 'machine_name') required final String machineName,
+          @JsonKey(name: 'machine_type') final String? machineType,
+          @JsonKey(name: 'machine_location') final String? machineLocation,
+          @JsonKey(name: 'machine_status') required final MachineStatus status,
+          @JsonKey(name: 'commissioned_on') final DateTime? commissionedOn,
+          @JsonKey(name: 'last_maintenance_date')
+          final DateTime? lastMaintenanceDate,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'updated_at') required final DateTime updatedAt}) =
+      _$MachineImpl;
 
   factory _Machine.fromJson(Map<String, dynamic> json) = _$MachineImpl.fromJson;
 
   @override
+  @JsonKey(name: 'machine_id')
   String get machineId;
   @override
+  @JsonKey(name: 'line_id')
   String get lineId;
   @override
+  @JsonKey(name: 'machine_name')
   String get machineName;
   @override
+  @JsonKey(name: 'machine_type')
+  String? get machineType;
+  @override
+  @JsonKey(name: 'machine_location')
+  String? get machineLocation;
+  @override
+  @JsonKey(name: 'machine_status')
   MachineStatus get status;
   @override
+  @JsonKey(name: 'commissioned_on')
+  DateTime? get commissionedOn;
+  @override
+  @JsonKey(name: 'last_maintenance_date')
+  DateTime? get lastMaintenanceDate;
+  @override
+  @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)

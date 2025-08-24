@@ -20,10 +20,21 @@ Future<MachineHierarchy> machineHierarchy(MachineHierarchyRef ref) async {
   return await apiService.getMachineHierarchy();
 }
 
+// Plants Provider
 @riverpod
 Future<List<Plant>> plants(PlantsRef ref) async {
   final apiService = ref.read(apiServiceProvider);
-  return await apiService.getPlants();
+  try {
+    final plants = await apiService.getPlants();
+    print('DEBUG: Plants provider returned ${plants.length} plants');
+    for (final plant in plants) {
+      print('DEBUG: Plant - ID: ${plant.plantId}, Name: ${plant.plantName}');
+    }
+    return plants;
+  } catch (e) {
+    print('DEBUG: Plants provider error: $e');
+    rethrow;
+  }
 }
 
 @riverpod
@@ -32,10 +43,21 @@ Future<List<Unit>> unitsByPlant(UnitsByPlantRef ref, String plantId) async {
   return await apiService.getUnitsByPlant(plantId);
 }
 
+// Segments by Unit Provider
 @riverpod
 Future<List<Segment>> segmentsByUnit(SegmentsByUnitRef ref, String unitId) async {
   final apiService = ref.read(apiServiceProvider);
-  return await apiService.getSegmentsByUnit(unitId);
+  try {
+    final segments = await apiService.getSegmentsByUnit(unitId);
+    print('DEBUG: Segments provider returned ${segments.length} segments for unit $unitId');
+    for (final segment in segments) {
+      print('DEBUG: Segment - ID: ${segment.segmentId}, Name: ${segment.segmentName}, UnitID: ${segment.unitId}');
+    }
+    return segments;
+  } catch (e) {
+    print('DEBUG: Segments provider error: $e');
+    rethrow;
+  }
 }
 
 @riverpod
@@ -48,6 +70,32 @@ Future<List<Line>> linesBySegment(LinesBySegmentRef ref, String segmentId) async
 Future<List<Machine>> machinesByLine(MachinesByLineRef ref, String lineId) async {
   final apiService = ref.read(apiServiceProvider);
   return await apiService.getMachinesByLine(lineId);
+}
+
+// New: Machines by Unit Provider
+@riverpod
+Future<List<Machine>> machinesByUnit(MachinesByUnitRef ref, String unitId, {String? lineId}) async {
+  final apiService = ref.read(apiServiceProvider);
+  return await apiService.getMachinesByUnit(unitId, lineId: lineId);
+}
+
+// Additional Filter Options Providers
+@riverpod
+Future<List<Map<String, dynamic>>> shifts(ShiftsRef ref) async {
+  final apiService = ref.read(apiServiceProvider);
+  return await apiService.getShifts();
+}
+
+@riverpod
+Future<List<Map<String, dynamic>>> operators(OperatorsRef ref) async {
+  final apiService = ref.read(apiServiceProvider);
+  return await apiService.getOperators();
+}
+
+@riverpod
+Future<List<Map<String, dynamic>>> products(ProductsRef ref) async {
+  final apiService = ref.read(apiServiceProvider);
+  return await apiService.getProducts();
 }
 
 // Filter State Provider
@@ -112,6 +160,10 @@ class FilterNotifier extends _$FilterNotifier {
     state = state.copyWith(productId: productId);
   }
 
+  void updateFilters(FilterState newFilters) {
+    state = newFilters;
+  }
+
   void resetFilters() {
     state = FilterState.initial();
   }
@@ -144,4 +196,19 @@ Future<PerformanceAggregateResponse> performanceAggregate(
     PerformanceAggregateRef ref, FilterState filters) async {
   final apiService = ref.read(apiServiceProvider);
   return await apiService.getPerformanceAggregate(filters);
+}
+
+// Machine Availability KPI Providers
+@riverpod
+Future<AvailabilityTimeseriesResponse> availabilityTimeseries(
+    AvailabilityTimeseriesRef ref, FilterState filters) async {
+  final apiService = ref.read(apiServiceProvider);
+  return await apiService.getAvailabilityTimeseries(filters);
+}
+
+@riverpod
+Future<AvailabilityAggregateResponse> availabilityAggregate(
+    AvailabilityAggregateRef ref, FilterState filters) async {
+  final apiService = ref.read(apiServiceProvider);
+  return await apiService.getAvailabilityAggregate(filters);
 }

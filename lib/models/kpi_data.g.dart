@@ -76,10 +76,10 @@ Map<String, dynamic> _$$OutputAggregateResponseImplToJson(
 _$OutputResultImpl _$$OutputResultImplFromJson(Map<String, dynamic> json) =>
     _$OutputResultImpl(
       machineId: json['machineId'] as String,
-      totalOutputQty: (json['totalOutputQty'] as num).toInt(),
-      rejectedOutputQty: (json['rejectedOutputQty'] as num).toInt(),
-      goodOutputQty: (json['goodOutputQty'] as num).toInt(),
-      yieldRatio: (json['yieldRatio'] as num).toDouble(),
+      totalOutputQty: (json['totalOutputQty'] as num?)?.toInt(),
+      rejectedOutputQty: (json['rejectedOutputQty'] as num?)?.toInt(),
+      goodOutputQty: (json['goodOutputQty'] as num?)?.toInt(),
+      yieldRatio: (json['yieldRatio'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$OutputResultImplToJson(_$OutputResultImpl instance) =>
@@ -131,13 +131,21 @@ _$OutputDataPointImpl _$$OutputDataPointImplFromJson(
         Map<String, dynamic> json) =>
     _$OutputDataPointImpl(
       timestamp: DateTime.parse(json['timestamp'] as String),
-      value: (json['value'] as num).toDouble(),
+      totalOutputQty: (json['totalOutputQty'] as num?)?.toInt(),
+      rejectedOutputQty: (json['rejectedOutputQty'] as num?)?.toInt(),
+      goodOutputQty: (json['goodOutputQty'] as num?)?.toInt(),
+      yieldRatio: (json['yieldRatio'] as num?)?.toDouble(),
+      value: (json['value'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$OutputDataPointImplToJson(
         _$OutputDataPointImpl instance) =>
     <String, dynamic>{
       'timestamp': instance.timestamp.toIso8601String(),
+      'totalOutputQty': instance.totalOutputQty,
+      'rejectedOutputQty': instance.rejectedOutputQty,
+      'goodOutputQty': instance.goodOutputQty,
+      'yieldRatio': instance.yieldRatio,
       'value': instance.value,
     };
 
@@ -224,4 +232,104 @@ Map<String, dynamic> _$$PerformanceDataPointImplToJson(
     <String, dynamic>{
       'timestamp': instance.timestamp.toIso8601String(),
       'value': instance.value,
+    };
+
+_$AvailabilityAggregateResponseImpl
+    _$$AvailabilityAggregateResponseImplFromJson(Map<String, dynamic> json) =>
+        _$AvailabilityAggregateResponseImpl(
+          startTime: DateTime.parse(json['startTime'] as String),
+          endTime: DateTime.parse(json['endTime'] as String),
+          groupBy: json['groupBy'] as String,
+          results: (json['results'] as List<dynamic>)
+              .map(
+                  (e) => AvailabilityResult.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
+
+Map<String, dynamic> _$$AvailabilityAggregateResponseImplToJson(
+        _$AvailabilityAggregateResponseImpl instance) =>
+    <String, dynamic>{
+      'startTime': instance.startTime.toIso8601String(),
+      'endTime': instance.endTime.toIso8601String(),
+      'groupBy': instance.groupBy,
+      'results': instance.results,
+    };
+
+_$AvailabilityResultImpl _$$AvailabilityResultImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AvailabilityResultImpl(
+      machineId: json['machineId'] as String,
+      availabilityPercentage:
+          (json['availabilityPercentage'] as num).toDouble(),
+      uptimeHours: (json['uptimeHours'] as num).toDouble(),
+      downtimeHours: (json['downtimeHours'] as num).toDouble(),
+      totalShifts: (json['totalShifts'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$$AvailabilityResultImplToJson(
+        _$AvailabilityResultImpl instance) =>
+    <String, dynamic>{
+      'machineId': instance.machineId,
+      'availabilityPercentage': instance.availabilityPercentage,
+      'uptimeHours': instance.uptimeHours,
+      'downtimeHours': instance.downtimeHours,
+      'totalShifts': instance.totalShifts,
+    };
+
+_$AvailabilityTimeseriesResponseImpl
+    _$$AvailabilityTimeseriesResponseImplFromJson(Map<String, dynamic> json) =>
+        _$AvailabilityTimeseriesResponseImpl(
+          startTime: DateTime.parse(json['startTime'] as String),
+          endTime: DateTime.parse(json['endTime'] as String),
+          interval: json['interval'] as String,
+          series: (json['series'] as List<dynamic>)
+              .map((e) =>
+                  AvailabilityTimeseries.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
+
+Map<String, dynamic> _$$AvailabilityTimeseriesResponseImplToJson(
+        _$AvailabilityTimeseriesResponseImpl instance) =>
+    <String, dynamic>{
+      'startTime': instance.startTime.toIso8601String(),
+      'endTime': instance.endTime.toIso8601String(),
+      'interval': instance.interval,
+      'series': instance.series,
+    };
+
+_$AvailabilityTimeseriesImpl _$$AvailabilityTimeseriesImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AvailabilityTimeseriesImpl(
+      machineId: json['machineId'] as String,
+      data: (json['data'] as List<dynamic>)
+          .map((e) => AvailabilityDataPoint.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$AvailabilityTimeseriesImplToJson(
+        _$AvailabilityTimeseriesImpl instance) =>
+    <String, dynamic>{
+      'machineId': instance.machineId,
+      'data': instance.data,
+    };
+
+_$AvailabilityDataPointImpl _$$AvailabilityDataPointImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AvailabilityDataPointImpl(
+      timestamp: DateTime.parse(json['timestamp'] as String),
+      availabilityRatio: (json['availabilityRatio'] as num).toDouble(),
+      totalMinutes: (json['totalMinutes'] as num).toInt(),
+      actualProductionMinutes: (json['actualProductionMinutes'] as num).toInt(),
+      plannedProductionMinutes:
+          (json['plannedProductionMinutes'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$$AvailabilityDataPointImplToJson(
+        _$AvailabilityDataPointImpl instance) =>
+    <String, dynamic>{
+      'timestamp': instance.timestamp.toIso8601String(),
+      'availabilityRatio': instance.availabilityRatio,
+      'totalMinutes': instance.totalMinutes,
+      'actualProductionMinutes': instance.actualProductionMinutes,
+      'plannedProductionMinutes': instance.plannedProductionMinutes,
     };

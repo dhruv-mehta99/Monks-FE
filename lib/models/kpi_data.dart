@@ -67,10 +67,10 @@ class OutputAggregateResponse with _$OutputAggregateResponse {
 class OutputResult with _$OutputResult {
   const factory OutputResult({
     required String machineId,
-    required int totalOutputQty,
-    required int rejectedOutputQty,
-    required int goodOutputQty,
-    required double yieldRatio,
+    int? totalOutputQty,
+    int? rejectedOutputQty,
+    int? goodOutputQty,
+    double? yieldRatio,
   }) = _OutputResult;
 
   factory OutputResult.fromJson(Map<String, dynamic> json) =>
@@ -103,10 +103,20 @@ class OutputTimeseries with _$OutputTimeseries {
 
 @freezed
 class OutputDataPoint with _$OutputDataPoint {
+  const OutputDataPoint._();
+
   const factory OutputDataPoint({
     required DateTime timestamp,
-    required double value,
+    int? totalOutputQty,
+    int? rejectedOutputQty,
+    int? goodOutputQty,
+    double? yieldRatio,
+    // For backward compatibility with charts
+    double? value,
   }) = _OutputDataPoint;
+
+  // Computed property to ensure value is always available for charts
+  double get chartValue => value ?? totalOutputQty?.toDouble() ?? 0.0;
 
   factory OutputDataPoint.fromJson(Map<String, dynamic> json) =>
       _$OutputDataPointFromJson(json);
@@ -170,4 +180,70 @@ class PerformanceDataPoint with _$PerformanceDataPoint {
 
   factory PerformanceDataPoint.fromJson(Map<String, dynamic> json) =>
       _$PerformanceDataPointFromJson(json);
+}
+
+// Machine Availability KPI Models
+@freezed
+class AvailabilityAggregateResponse with _$AvailabilityAggregateResponse {
+  const factory AvailabilityAggregateResponse({
+    required DateTime startTime,
+    required DateTime endTime,
+    required String groupBy,
+    required List<AvailabilityResult> results,
+  }) = _AvailabilityAggregateResponse;
+
+  factory AvailabilityAggregateResponse.fromJson(Map<String, dynamic> json) =>
+      _$AvailabilityAggregateResponseFromJson(json);
+}
+
+@freezed
+class AvailabilityResult with _$AvailabilityResult {
+  const factory AvailabilityResult({
+    required String machineId,
+    required double availabilityPercentage,
+    required double uptimeHours,
+    required double downtimeHours,
+    required int totalShifts,
+  }) = _AvailabilityResult;
+
+  factory AvailabilityResult.fromJson(Map<String, dynamic> json) =>
+      _$AvailabilityResultFromJson(json);
+}
+
+@freezed
+class AvailabilityTimeseriesResponse with _$AvailabilityTimeseriesResponse {
+  const factory AvailabilityTimeseriesResponse({
+    required DateTime startTime,
+    required DateTime endTime,
+    required String interval,
+    required List<AvailabilityTimeseries> series,
+  }) = _AvailabilityTimeseriesResponse;
+
+  factory AvailabilityTimeseriesResponse.fromJson(Map<String, dynamic> json) =>
+      _$AvailabilityTimeseriesResponseFromJson(json);
+}
+
+@freezed
+class AvailabilityTimeseries with _$AvailabilityTimeseries {
+  const factory AvailabilityTimeseries({
+    required String machineId,
+    required List<AvailabilityDataPoint> data,
+  }) = _AvailabilityTimeseries;
+
+  factory AvailabilityTimeseries.fromJson(Map<String, dynamic> json) =>
+      _$AvailabilityTimeseriesFromJson(json);
+}
+
+@freezed
+class AvailabilityDataPoint with _$AvailabilityDataPoint {
+  const factory AvailabilityDataPoint({
+    required DateTime timestamp,
+    required double availabilityRatio,
+    required int totalMinutes,
+    required int actualProductionMinutes,
+    required int plannedProductionMinutes,
+  }) = _AvailabilityDataPoint;
+
+  factory AvailabilityDataPoint.fromJson(Map<String, dynamic> json) =>
+      _$AvailabilityDataPointFromJson(json);
 }

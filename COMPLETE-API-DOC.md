@@ -55,18 +55,17 @@ Extends base window parameters:
 
 ### Units
 
-**Base Path:** `/units`
+**Base Path:** `/plants/:plantId/units`
 
-| Method | Endpoint                | Description        | Path Params      | Query Params | Response |
-| ------ | ----------------------- | ------------------ | ---------------- | ------------ | -------- |
-| GET    | `/units`                | Get all units      | None             | None         | `Unit[]` |
-| GET    | `/units/:id`            | Get unit by ID     | `id` (UUID)      | None         | `Unit`   |
-| GET    | `/units/plant/:plantId` | Get units by plant | `plantId` (UUID) | None         | `Unit[]` |
-| POST   | `/units`                | Create new unit    | None             | None         | `Unit`   |
-| PUT    | `/units/:id`            | Update unit        | `id` (UUID)      | None         | `Unit`   |
-| DELETE | `/units/:id`            | Delete unit        | `id` (UUID)      | None         | `void`   |
+| Method | Endpoint                     | Description     | Path Params                   | Query Params | Response |
+| ------ | ---------------------------- | --------------- | ----------------------------- | ------------ | -------- |
+| GET    | `/plants/:plantId/units`     | Get all units   | `plantId` (UUID)              | None         | `Unit[]` |
+| GET    | `/plants/:plantId/units/:id` | Get unit by ID  | `plantId` (UUID), `id` (UUID) | None         | `Unit`   |
+| POST   | `/plants/:plantId/units`     | Create new unit | `plantId` (UUID)              | None         | `Unit`   |
+| PUT    | `/plants/:plantId/units/:id` | Update unit     | `plantId` (UUID), `id` (UUID) | None         | `Unit`   |
+| DELETE | `/plants/:plantId/units/:id` | Delete unit     | `plantId` (UUID), `id` (UUID) | None         | `void`   |
 
-**Unit Entity:**
+**Unit Response (Flat Structure):**
 
 ```json
 {
@@ -78,20 +77,21 @@ Extends base window parameters:
 }
 ```
 
+**Note:** Response contains only the unit data with IDs, no nested plant object.
+
 ### Segments
 
-**Base Path:** `/segments`
+**Base Path:** `/units/:unitId/segments`
 
-| Method | Endpoint                 | Description          | Path Params     | Query Params | Response    |
-| ------ | ------------------------ | -------------------- | --------------- | ------------ | ----------- |
-| GET    | `/segments`              | Get all segments     | None            | None         | `Segment[]` |
-| GET    | `/segments/:id`          | Get segment by ID    | `id` (UUID)     | None         | `Segment`   |
-| GET    | `/segments/unit/:unitId` | Get segments by unit | `unitId` (UUID) | None         | `Segment[]` |
-| POST   | `/segments`              | Create new segment   | None            | None         | `Segment`   |
-| PUT    | `/segments/:id`          | Update segment       | `id` (UUID)     | None         | `Segment`   |
-| DELETE | `/segments/:id`          | Delete segment       | `id` (UUID)     | None         | `void`      |
+| Method | Endpoint                      | Description        | Path Params                  | Query Params | Response    |
+| ------ | ----------------------------- | ------------------ | ---------------------------- | ------------ | ----------- |
+| GET    | `/units/:unitId/segments`     | Get all segments   | `unitId` (UUID)              | None         | `Segment[]` |
+| GET    | `/units/:unitId/segments/:id` | Get segment by ID  | `unitId` (UUID), `id` (UUID) | None         | `Segment`   |
+| POST   | `/units/:unitId/segments`     | Create new segment | `unitId` (UUID)              | None         | `Segment`   |
+| PUT    | `/units/:unitId/segments/:id` | Update segment     | `unitId` (UUID), `id` (UUID) | None         | `Segment`   |
+| DELETE | `/units/:unitId/segments/:id` | Delete segment     | `unitId` (UUID), `id` (UUID) | None         | `void`      |
 
-**Segment Entity:**
+**Segment Response (Flat Structure):**
 
 ```json
 {
@@ -103,20 +103,22 @@ Extends base window parameters:
 }
 ```
 
+**Note:** Response contains only the segment data with IDs, no nested unit
+object.
+
 ### Lines
 
-**Base Path:** `/lines`
+**Base Path:** `/segments/:segmentId/lines`
 
-| Method | Endpoint                    | Description          | Path Params        | Query Params | Response |
-| ------ | --------------------------- | -------------------- | ------------------ | ------------ | -------- |
-| GET    | `/lines`                    | Get all lines        | None               | None         | `Line[]` |
-| GET    | `/lines/:id`                | Get line by ID       | `id` (UUID)        | None         | `Line`   |
-| GET    | `/lines/segment/:segmentId` | Get lines by segment | `segmentId` (UUID) | None         | `Line[]` |
-| POST   | `/lines`                    | Create new line      | None               | None         | `Line`   |
-| PUT    | `/lines/:id`                | Update line          | `id` (UUID)        | None         | `Line`   |
-| DELETE | `/lines/:id`                | Delete line          | `id` (UUID)        | None         | `void`   |
+| Method | Endpoint                         | Description     | Path Params                     | Query Params | Response |
+| ------ | -------------------------------- | --------------- | ------------------------------- | ------------ | -------- |
+| GET    | `/segments/:segmentId/lines`     | Get all lines   | `segmentId` (UUID)              | None         | `Line[]` |
+| GET    | `/segments/:segmentId/lines/:id` | Get line by ID  | `segmentId` (UUID), `id` (UUID) | None         | `Line`   |
+| POST   | `/segments/:segmentId/lines`     | Create new line | `segmentId` (UUID)              | None         | `Line`   |
+| PUT    | `/segments/:segmentId/lines/:id` | Update line     | `segmentId` (UUID), `id` (UUID) | None         | `Line`   |
+| DELETE | `/segments/:segmentId/lines/:id` | Delete line     | `segmentId` (UUID), `id` (UUID) | None         | `void`   |
 
-**Line Entity:**
+**Line Response (Flat Structure):**
 
 ```json
 {
@@ -128,32 +130,41 @@ Extends base window parameters:
 }
 ```
 
+**Note:** Response contains only the line data with IDs, no nested segment
+object.
+
 ### Machines
 
-**Base Path:** `/machines`
+**Base Path:** `/units/:unitId/machines`
 
-| Method | Endpoint                   | Description            | Path Params                                 | Query Params | Response    |
-| ------ | -------------------------- | ---------------------- | ------------------------------------------- | ------------ | ----------- |
-| GET    | `/machines`                | Get all machines       | None                                        | None         | `Machine[]` |
-| GET    | `/machines/:id`            | Get machine by ID      | `id` (UUID)                                 | None         | `Machine`   |
-| GET    | `/machines/line/:lineId`   | Get machines by line   | `lineId` (UUID)                             | None         | `Machine[]` |
-| GET    | `/machines/status/:status` | Get machines by status | `status` (active\|inactive\|decommissioned) | None         | `Machine[]` |
-| POST   | `/machines`                | Create new machine     | None                                        | None         | `Machine`   |
-| PUT    | `/machines/:id`            | Update machine         | `id` (UUID)                                 | None         | `Machine`   |
-| DELETE | `/machines/:id`            | Delete machine         | `id` (UUID)                                 | None         | `void`      |
+| Method | Endpoint                                 | Description            | Path Params                                                  | Query Params              | Response       |
+| ------ | ---------------------------------------- | ---------------------- | ------------------------------------------------------------ | ------------------------- | -------------- |
+| GET    | `/units/:unitId/machines`                | Get all machines       | `unitId` (UUID)                                              | `lineId` (UUID, optional) | `MachineDto[]` |
+| GET    | `/units/:unitId/machines/:id`            | Get machine by ID      | `unitId` (UUID), `id` (UUID)                                 | None                      | `MachineDto`   |
+| GET    | `/units/:unitId/machines/status/:status` | Get machines by status | `unitId` (UUID), `status` (active\|inactive\|decommissioned) | None                      | `MachineDto[]` |
+| POST   | `/units/:unitId/machines`                | Create new machine     | `unitId` (UUID)                                              | None                      | `MachineDto`   |
+| PUT    | `/units/:unitId/machines/:id`            | Update machine         | `unitId` (UUID), `id` (UUID)                                 | None                      | `MachineDto`   |
+| DELETE | `/units/:unitId/machines/:id`            | Delete machine         | `unitId` (UUID), `id` (UUID)                                 | None                      | `void`         |
 
-**Machine Entity:**
+**Machine Response (Flat Structure):**
 
 ```json
 {
   "machine_id": "uuid",
   "line_id": "uuid",
   "machine_name": "string",
-  "status": "active | inactive | decommissioned",
+  "machine_type": "string | null",
+  "machine_location": "string | null",
+  "machine_status": "active | inactive | decommissioned",
+  "commissioned_on": "date | null",
+  "last_maintenance_date": "date | null",
   "created_at": "ISO8601",
   "updated_at": "ISO8601"
 }
 ```
+
+**Note:** Response contains only the machine data with IDs, no nested line,
+segment, unit, or plant objects.
 
 ### Products
 
@@ -463,3 +474,49 @@ No rate limiting is currently implemented.
 4. Timeseries data can be aggregated at different intervals (5m, 30m, 1h, etc.)
 5. Most KPI endpoints support grouping by machine, product, or work order
 6. The API follows RESTful conventions with consistent response structures
+
+## REST API Structure
+
+The API follows a hierarchical structure with proper REST nesting (limited to 2
+levels for readability):
+
+- **Plants** (`/plants`) - Top level
+- **Units** (`/plants/:plantId/units`) - Under plants
+- **Segments** (`/units/:unitId/segments`) - Under units
+- **Lines** (`/segments/:segmentId/lines`) - Under segments
+- **Machines** (`/units/:unitId/machines`) - Under units
+
+This structure maintains clean URLs while following REST conventions and keeping
+nesting manageable.
+
+## Response Structure
+
+All API responses use **flat objects** with IDs instead of nested objects:
+
+- **No nested entities** - Only IDs are returned for relationships
+- **Consistent structure** - All endpoints follow the same pattern
+- **Efficient data transfer** - Smaller payloads, faster responses
+- **Easy to consume** - Frontend can build relationships using IDs
+
+**Example:**
+
+```json
+// ✅ Good - Flat structure with IDs
+{
+  "segment_id": "uuid",
+  "unit_id": "uuid",        // Just the ID, not the full unit object
+  "segment_name": "string",
+  "created_at": "ISO8601",
+  "updated_at": "ISO8601"
+}
+
+// ❌ Bad - Nested objects (not used)
+{
+  "segment_id": "uuid",
+  "unit": {                 // Full nested object - unnecessary
+    "unit_id": "uuid",
+    "plant_id": "uuid",
+    "unit_name": "string"
+  }
+}
+```

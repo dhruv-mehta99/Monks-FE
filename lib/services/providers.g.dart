@@ -36,7 +36,7 @@ final machineHierarchyProvider =
 );
 
 typedef MachineHierarchyRef = AutoDisposeFutureProviderRef<MachineHierarchy>;
-String _$plantsHash() => r'55d40f65be2a274af267649733546ba4cf248ac9';
+String _$plantsHash() => r'86acd51aff91568c196dac4c5183314762412e2c';
 
 /// See also [plants].
 @ProviderFor(plants)
@@ -199,7 +199,7 @@ class _UnitsByPlantProviderElement
   String get plantId => (origin as UnitsByPlantProvider).plantId;
 }
 
-String _$segmentsByUnitHash() => r'5ef78269d99c40d75c8b37d352dbd233de41dc73';
+String _$segmentsByUnitHash() => r'f3f9e22cdcc2924bdd3d32fbe24269e390aee0ae';
 
 /// See also [segmentsByUnit].
 @ProviderFor(segmentsByUnit)
@@ -586,6 +586,197 @@ class _MachinesByLineProviderElement
   String get lineId => (origin as MachinesByLineProvider).lineId;
 }
 
+String _$machinesByUnitHash() => r'7d4f754c3369d40e8d20e5eb1d1f1f27cd7b8de8';
+
+/// See also [machinesByUnit].
+@ProviderFor(machinesByUnit)
+const machinesByUnitProvider = MachinesByUnitFamily();
+
+/// See also [machinesByUnit].
+class MachinesByUnitFamily extends Family<AsyncValue<List<Machine>>> {
+  /// See also [machinesByUnit].
+  const MachinesByUnitFamily();
+
+  /// See also [machinesByUnit].
+  MachinesByUnitProvider call(
+    String unitId, {
+    String? lineId,
+  }) {
+    return MachinesByUnitProvider(
+      unitId,
+      lineId: lineId,
+    );
+  }
+
+  @override
+  MachinesByUnitProvider getProviderOverride(
+    covariant MachinesByUnitProvider provider,
+  ) {
+    return call(
+      provider.unitId,
+      lineId: provider.lineId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'machinesByUnitProvider';
+}
+
+/// See also [machinesByUnit].
+class MachinesByUnitProvider extends AutoDisposeFutureProvider<List<Machine>> {
+  /// See also [machinesByUnit].
+  MachinesByUnitProvider(
+    String unitId, {
+    String? lineId,
+  }) : this._internal(
+          (ref) => machinesByUnit(
+            ref as MachinesByUnitRef,
+            unitId,
+            lineId: lineId,
+          ),
+          from: machinesByUnitProvider,
+          name: r'machinesByUnitProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$machinesByUnitHash,
+          dependencies: MachinesByUnitFamily._dependencies,
+          allTransitiveDependencies:
+              MachinesByUnitFamily._allTransitiveDependencies,
+          unitId: unitId,
+          lineId: lineId,
+        );
+
+  MachinesByUnitProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.unitId,
+    required this.lineId,
+  }) : super.internal();
+
+  final String unitId;
+  final String? lineId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Machine>> Function(MachinesByUnitRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: MachinesByUnitProvider._internal(
+        (ref) => create(ref as MachinesByUnitRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        unitId: unitId,
+        lineId: lineId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<Machine>> createElement() {
+    return _MachinesByUnitProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MachinesByUnitProvider &&
+        other.unitId == unitId &&
+        other.lineId == lineId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, unitId.hashCode);
+    hash = _SystemHash.combine(hash, lineId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin MachinesByUnitRef on AutoDisposeFutureProviderRef<List<Machine>> {
+  /// The parameter `unitId` of this provider.
+  String get unitId;
+
+  /// The parameter `lineId` of this provider.
+  String? get lineId;
+}
+
+class _MachinesByUnitProviderElement
+    extends AutoDisposeFutureProviderElement<List<Machine>>
+    with MachinesByUnitRef {
+  _MachinesByUnitProviderElement(super.provider);
+
+  @override
+  String get unitId => (origin as MachinesByUnitProvider).unitId;
+  @override
+  String? get lineId => (origin as MachinesByUnitProvider).lineId;
+}
+
+String _$shiftsHash() => r'4b8a37e998eeb8f52084f8675671e401b7fe362a';
+
+/// See also [shifts].
+@ProviderFor(shifts)
+final shiftsProvider =
+    AutoDisposeFutureProvider<List<Map<String, dynamic>>>.internal(
+  shifts,
+  name: r'shiftsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$shiftsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ShiftsRef = AutoDisposeFutureProviderRef<List<Map<String, dynamic>>>;
+String _$operatorsHash() => r'1825b71e5570518a764b72e78c8510275258520f';
+
+/// See also [operators].
+@ProviderFor(operators)
+final operatorsProvider =
+    AutoDisposeFutureProvider<List<Map<String, dynamic>>>.internal(
+  operators,
+  name: r'operatorsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$operatorsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef OperatorsRef = AutoDisposeFutureProviderRef<List<Map<String, dynamic>>>;
+String _$productsHash() => r'6c0ab487b6ac3b94eda2b73ae2a9b3ea95e35f0d';
+
+/// See also [products].
+@ProviderFor(products)
+final productsProvider =
+    AutoDisposeFutureProvider<List<Map<String, dynamic>>>.internal(
+  products,
+  name: r'productsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$productsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ProductsRef = AutoDisposeFutureProviderRef<List<Map<String, dynamic>>>;
 String _$outputTimeseriesHash() => r'06bc020f6ae91ec717879654e6966e89274ec875';
 
 /// See also [outputTimeseries].
@@ -1124,7 +1315,279 @@ class _PerformanceAggregateProviderElement
   FilterState get filters => (origin as PerformanceAggregateProvider).filters;
 }
 
-String _$filterNotifierHash() => r'b7326ba03fcd3599c05fe77af65eb9a3cbb134af';
+String _$availabilityTimeseriesHash() =>
+    r'0d651364719ec8f29aefc77ac51d95f4cca044fd';
+
+/// See also [availabilityTimeseries].
+@ProviderFor(availabilityTimeseries)
+const availabilityTimeseriesProvider = AvailabilityTimeseriesFamily();
+
+/// See also [availabilityTimeseries].
+class AvailabilityTimeseriesFamily
+    extends Family<AsyncValue<AvailabilityTimeseriesResponse>> {
+  /// See also [availabilityTimeseries].
+  const AvailabilityTimeseriesFamily();
+
+  /// See also [availabilityTimeseries].
+  AvailabilityTimeseriesProvider call(
+    FilterState filters,
+  ) {
+    return AvailabilityTimeseriesProvider(
+      filters,
+    );
+  }
+
+  @override
+  AvailabilityTimeseriesProvider getProviderOverride(
+    covariant AvailabilityTimeseriesProvider provider,
+  ) {
+    return call(
+      provider.filters,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'availabilityTimeseriesProvider';
+}
+
+/// See also [availabilityTimeseries].
+class AvailabilityTimeseriesProvider
+    extends AutoDisposeFutureProvider<AvailabilityTimeseriesResponse> {
+  /// See also [availabilityTimeseries].
+  AvailabilityTimeseriesProvider(
+    FilterState filters,
+  ) : this._internal(
+          (ref) => availabilityTimeseries(
+            ref as AvailabilityTimeseriesRef,
+            filters,
+          ),
+          from: availabilityTimeseriesProvider,
+          name: r'availabilityTimeseriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$availabilityTimeseriesHash,
+          dependencies: AvailabilityTimeseriesFamily._dependencies,
+          allTransitiveDependencies:
+              AvailabilityTimeseriesFamily._allTransitiveDependencies,
+          filters: filters,
+        );
+
+  AvailabilityTimeseriesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.filters,
+  }) : super.internal();
+
+  final FilterState filters;
+
+  @override
+  Override overrideWith(
+    FutureOr<AvailabilityTimeseriesResponse> Function(
+            AvailabilityTimeseriesRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: AvailabilityTimeseriesProvider._internal(
+        (ref) => create(ref as AvailabilityTimeseriesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        filters: filters,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<AvailabilityTimeseriesResponse>
+      createElement() {
+    return _AvailabilityTimeseriesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AvailabilityTimeseriesProvider && other.filters == filters;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin AvailabilityTimeseriesRef
+    on AutoDisposeFutureProviderRef<AvailabilityTimeseriesResponse> {
+  /// The parameter `filters` of this provider.
+  FilterState get filters;
+}
+
+class _AvailabilityTimeseriesProviderElement
+    extends AutoDisposeFutureProviderElement<AvailabilityTimeseriesResponse>
+    with AvailabilityTimeseriesRef {
+  _AvailabilityTimeseriesProviderElement(super.provider);
+
+  @override
+  FilterState get filters => (origin as AvailabilityTimeseriesProvider).filters;
+}
+
+String _$availabilityAggregateHash() =>
+    r'57d2f105ee04f5dcbefb351349d6488cef4fc822';
+
+/// See also [availabilityAggregate].
+@ProviderFor(availabilityAggregate)
+const availabilityAggregateProvider = AvailabilityAggregateFamily();
+
+/// See also [availabilityAggregate].
+class AvailabilityAggregateFamily
+    extends Family<AsyncValue<AvailabilityAggregateResponse>> {
+  /// See also [availabilityAggregate].
+  const AvailabilityAggregateFamily();
+
+  /// See also [availabilityAggregate].
+  AvailabilityAggregateProvider call(
+    FilterState filters,
+  ) {
+    return AvailabilityAggregateProvider(
+      filters,
+    );
+  }
+
+  @override
+  AvailabilityAggregateProvider getProviderOverride(
+    covariant AvailabilityAggregateProvider provider,
+  ) {
+    return call(
+      provider.filters,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'availabilityAggregateProvider';
+}
+
+/// See also [availabilityAggregate].
+class AvailabilityAggregateProvider
+    extends AutoDisposeFutureProvider<AvailabilityAggregateResponse> {
+  /// See also [availabilityAggregate].
+  AvailabilityAggregateProvider(
+    FilterState filters,
+  ) : this._internal(
+          (ref) => availabilityAggregate(
+            ref as AvailabilityAggregateRef,
+            filters,
+          ),
+          from: availabilityAggregateProvider,
+          name: r'availabilityAggregateProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$availabilityAggregateHash,
+          dependencies: AvailabilityAggregateFamily._dependencies,
+          allTransitiveDependencies:
+              AvailabilityAggregateFamily._allTransitiveDependencies,
+          filters: filters,
+        );
+
+  AvailabilityAggregateProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.filters,
+  }) : super.internal();
+
+  final FilterState filters;
+
+  @override
+  Override overrideWith(
+    FutureOr<AvailabilityAggregateResponse> Function(
+            AvailabilityAggregateRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: AvailabilityAggregateProvider._internal(
+        (ref) => create(ref as AvailabilityAggregateRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        filters: filters,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<AvailabilityAggregateResponse>
+      createElement() {
+    return _AvailabilityAggregateProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AvailabilityAggregateProvider && other.filters == filters;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin AvailabilityAggregateRef
+    on AutoDisposeFutureProviderRef<AvailabilityAggregateResponse> {
+  /// The parameter `filters` of this provider.
+  FilterState get filters;
+}
+
+class _AvailabilityAggregateProviderElement
+    extends AutoDisposeFutureProviderElement<AvailabilityAggregateResponse>
+    with AvailabilityAggregateRef {
+  _AvailabilityAggregateProviderElement(super.provider);
+
+  @override
+  FilterState get filters => (origin as AvailabilityAggregateProvider).filters;
+}
+
+String _$filterNotifierHash() => r'43b829bc8e6a00bcd24c95f07053d964ad7e22a0';
 
 /// See also [FilterNotifier].
 @ProviderFor(FilterNotifier)

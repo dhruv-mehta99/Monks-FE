@@ -261,7 +261,7 @@ segment, unit, or plant objects.
 - `filterBy`: `'productId' | 'workOrderId'` (optional)
 - `filterValue`: string (required if filterBy is set)
 
-**Response Structure:**
+**Output Aggregate Response Structure:**
 
 ```json
 {
@@ -279,6 +279,32 @@ segment, unit, or plant objects.
   ]
 }
 ```
+
+**Output Timeseries Response Structure:**
+
+```json
+{
+  "startTime": "ISO8601",
+  "endTime": "ISO8601",
+  "interval": "string",
+  "series": [
+    {
+      "machineId": "uuid",
+      "data": [
+        {
+          "timestamp": "ISO8601",
+          "totalOutputQty": "number",
+          "rejectedOutputQty": "number",
+          "goodOutputQty": "number",
+          "yieldRatio": "number"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Note:** The Output KPI provides detailed production metrics including total output quantity, rejected quantity, good output quantity, and yield ratio for each time interval.
 
 ### Machine Performance KPI
 
@@ -307,6 +333,32 @@ segment, unit, or plant objects.
 **Query Parameters:**
 
 - `groupBy`: `'machine'` (default: 'machine')
+
+**Availability Timeseries Response Structure:**
+
+```json
+{
+  "startTime": "ISO8601",
+  "endTime": "ISO8601",
+  "interval": "string",
+  "series": [
+    {
+      "machineId": "uuid",
+      "data": [
+        {
+          "timestamp": "ISO8601",
+          "availabilityRatio": "number (0.0-1.0)",
+          "totalMinutes": "number",
+          "actualProductionMinutes": "number",
+          "plannedProductionMinutes": "number"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Note:** The `availabilityRatio` field contains values from 0.0 to 1.0, representing the ratio of actual production time to planned production time. To display as a percentage, multiply by 100.
 
 ### Machine Status
 
@@ -414,6 +466,8 @@ segment, unit, or plant objects.
 
 ### Timeseries Response Pattern
 
+**Standard Timeseries Response:**
+
 ```json
 {
   "startTime": "ISO8601",
@@ -432,6 +486,32 @@ segment, unit, or plant objects.
   ]
 }
 ```
+
+**Availability Timeseries Response (Special Case):**
+
+```json
+{
+  "startTime": "ISO8601",
+  "endTime": "ISO8601",
+  "interval": "string",
+  "series": [
+    {
+      "machineId": "string",
+      "data": [
+        {
+          "timestamp": "ISO8601",
+          "availabilityRatio": "number (0.0-1.0)",
+          "totalMinutes": "number",
+          "actualProductionMinutes": "number",
+          "plannedProductionMinutes": "number"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Note:** Most KPI endpoints follow the standard pattern with a simple `value` field, but the Availability KPI has additional fields for detailed production time analysis.
 
 ## Error Responses
 
@@ -466,6 +546,50 @@ No rate limiting is currently implemented.
 - **Array**: JSON arrays
 - **Object**: JSON objects
 
+## KPI Data Point Structures
+
+Different KPI endpoints return different data point structures:
+
+### Standard KPI Data Point
+
+```json
+{
+  "timestamp": "ISO8601",
+  "value": "number"
+}
+```
+
+### Availability KPI Data Point
+
+```json
+{
+  "timestamp": "ISO8601",
+  "availabilityRatio": "number (0.0-1.0)",
+  "totalMinutes": "number",
+  "actualProductionMinutes": "number",
+  "plannedProductionMinutes": "number"
+}
+```
+
+### Output KPI Data Point
+
+```json
+{
+  "timestamp": "ISO8601",
+  "totalOutputQty": "number",
+  "rejectedOutputQty": "number",
+  "goodOutputQty": "number",
+  "yieldRatio": "number"
+}
+```
+
+**Field Descriptions:**
+
+- `totalOutputQty`: Total quantity produced in the time interval
+- `rejectedOutputQty`: Quantity rejected due to quality issues
+- `goodOutputQty`: Quantity that passed quality checks
+- `yieldRatio`: Ratio of good output to total output (0.0-1.0)
+
 ## Notes
 
 1. All timestamps are in UTC timezone
@@ -474,6 +598,8 @@ No rate limiting is currently implemented.
 4. Timeseries data can be aggregated at different intervals (5m, 30m, 1h, etc.)
 5. Most KPI endpoints support grouping by machine, product, or work order
 6. The API follows RESTful conventions with consistent response structures
+7. **Availability KPI**: The `availabilityRatio` field contains values from 0.0 to 1.0. To display as a percentage, multiply by 100 (e.g., 0.85 becomes 85%)
+8. **Data Point Variations**: Different KPI endpoints return different data point structures. Check the specific KPI documentation for the exact fields returned.
 
 ## REST API Structure
 

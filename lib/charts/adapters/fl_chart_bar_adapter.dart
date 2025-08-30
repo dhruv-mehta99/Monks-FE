@@ -16,8 +16,7 @@ class FlChartBarAdapter extends BarChartAdapter {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
+  Widget build(BuildContext context) => Padding(
       padding: AppTokens.chartPadding,
       child: BarChart(
         BarChartData(
@@ -26,12 +25,12 @@ class FlChartBarAdapter extends BarChartAdapter {
           gridData: FlGridData(
             show: true,
             drawVerticalLine: xAxis.showGrid,
-            getDrawingHorizontalLine: (v) => FlLine(
+            getDrawingHorizontalLine: (v) => const FlLine(
               color: AppTokens.gridColor,
               strokeWidth: 1,
               dashArray: [4, 4],
             ),
-            getDrawingVerticalLine: (v) => FlLine(
+            getDrawingVerticalLine: (v) => const FlLine(
               color: AppTokens.gridColor,
               strokeWidth: 1,
               dashArray: [4, 4],
@@ -42,15 +41,14 @@ class FlChartBarAdapter extends BarChartAdapter {
         ),
       ),
     );
-  }
 
   List<BarChartGroupData> _createBarGroups() {
     final xValues = series.first.data.map((e) => e.x).toList();
 
     return List.generate(xValues.length, (index) {
       final rods = <BarChartRodData>[];
-      for (var s in series) {
-        final y = (s.data[index].y as num).toDouble();
+      for (final s in series) {
+        final y = (s.data[index].y).toDouble();
         rods.add(
           BarChartRodData(
             toY: y,
@@ -73,8 +71,7 @@ class FlChartBarAdapter extends BarChartAdapter {
     });
   }
 
-  FlTitlesData _createTitlesData() {
-    return FlTitlesData(
+  FlTitlesData _createTitlesData() => FlTitlesData(
       leftTitles: AxisTitles(
         axisNameWidget: yAxis.title != null ? Text(yAxis.title!) : null,
         sideTitles: SideTitles(
@@ -105,7 +102,6 @@ class FlChartBarAdapter extends BarChartAdapter {
         ),
       ),
     );
-  }
 
   BarTouchData _createTouchData() {
     if (tooltip?.enabled != true) return BarTouchData(enabled: false);

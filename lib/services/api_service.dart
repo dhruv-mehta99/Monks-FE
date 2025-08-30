@@ -1,17 +1,20 @@
 import 'package:dio/dio.dart';
-import '../models/machine_hierarchy.dart';
-import '../models/kpi_data.dart';
+
 import '../models/filter_state.dart';
+import '../models/kpi_data.dart';
+import '../models/machine_hierarchy.dart';
 
 class ApiService {
   final Dio _dio;
 
   ApiService({String? baseUrl})
-      : _dio = Dio(BaseOptions(
+    : _dio = Dio(
+        BaseOptions(
           baseUrl: baseUrl ?? 'http://localhost:5001',
           connectTimeout: const Duration(seconds: 30),
           receiveTimeout: const Duration(seconds: 30),
-        ));
+        ),
+      );
 
   // Machine Hierarchy - Updated to match new API structure
   Future<MachineHierarchy> getMachineHierarchy() async {
@@ -74,7 +77,10 @@ class ApiService {
   }
 
   // Updated: /units/:unitId/machines (with optional lineId filter)
-  Future<List<Machine>> getMachinesByUnit(String unitId, {String? lineId}) async {
+  Future<List<Machine>> getMachinesByUnit(
+    String unitId, {
+    String? lineId,
+  }) async {
     try {
       final queryParams = <String, dynamic>{};
       if (lineId != null) {
@@ -139,51 +145,65 @@ class ApiService {
   }
 
   // KPI Data
-  Future<OutputTimeseriesResponse> getOutputTimeseries(FilterState filters) async {
+  Future<OutputTimeseriesResponse> getOutputTimeseries(
+    FilterState filters,
+  ) async {
     try {
       final response = await _dio.get(
         '/api/v1/processed/output/timeseries',
         queryParameters: _buildQueryParams(filters),
       );
-      return OutputTimeseriesResponse.fromJson(response.data as Map<String, dynamic>);
+      return OutputTimeseriesResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       throw _handleError(e);
     }
   }
 
   Future<PerformanceTimeseriesResponse> getPerformanceTimeseries(
-      FilterState filters) async {
+    FilterState filters,
+  ) async {
     try {
       final response = await _dio.get(
         '/api/v1/processed/performance/timeseries',
         queryParameters: _buildQueryParams(filters),
       );
-      return PerformanceTimeseriesResponse.fromJson(response.data as Map<String, dynamic>);
+      return PerformanceTimeseriesResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       throw _handleError(e);
     }
   }
 
-  Future<OutputAggregateResponse> getOutputAggregate(FilterState filters) async {
+  Future<OutputAggregateResponse> getOutputAggregate(
+    FilterState filters,
+  ) async {
     try {
       final response = await _dio.get(
         '/api/v1/processed/output/aggregate',
         queryParameters: _buildQueryParams(filters),
       );
-      return OutputAggregateResponse.fromJson(response.data as Map<String, dynamic>);
+      return OutputAggregateResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       throw _handleError(e);
     }
   }
 
   Future<PerformanceAggregateResponse> getPerformanceAggregate(
-      FilterState filters) async {
+    FilterState filters,
+  ) async {
     try {
       final response = await _dio.get(
         '/api/v1/processed/performance/aggregate',
         queryParameters: _buildQueryParams(filters),
       );
-      return PerformanceAggregateResponse.fromJson(response.data as Map<String, dynamic>);
+      return PerformanceAggregateResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       throw _handleError(e);
     }
@@ -191,26 +211,32 @@ class ApiService {
 
   // Machine Availability KPI
   Future<AvailabilityTimeseriesResponse> getAvailabilityTimeseries(
-      FilterState filters) async {
+    FilterState filters,
+  ) async {
     try {
       final response = await _dio.get(
         '/api/v1/processed/availability/timeseries',
         queryParameters: _buildQueryParams(filters),
       );
-      return AvailabilityTimeseriesResponse.fromJson(response.data as Map<String, dynamic>);
+      return AvailabilityTimeseriesResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       throw _handleError(e);
     }
   }
 
   Future<AvailabilityAggregateResponse> getAvailabilityAggregate(
-      FilterState filters) async {
+    FilterState filters,
+  ) async {
     try {
       final response = await _dio.get(
         '/api/v1/processed/availability/aggregate',
         queryParameters: _buildQueryParams(filters),
       );
-      return AvailabilityAggregateResponse.fromJson(response.data as Map<String, dynamic>);
+      return AvailabilityAggregateResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       throw _handleError(e);
     }

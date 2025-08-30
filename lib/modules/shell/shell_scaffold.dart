@@ -171,8 +171,7 @@ class _ShellScaffoldState extends State<ShellScaffold> {
     required String label,
     required bool isSelected,
     required VoidCallback onTap,
-  }) {
-    return Container(
+  }) => Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
         color: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : null,
@@ -197,10 +196,8 @@ class _ShellScaffoldState extends State<ShellScaffold> {
         dense: true,
       ),
     );
-  }
 
-  Widget _buildCollapsedSidebar() {
-    return Column(
+  Widget _buildCollapsedSidebar() => Column(
       children: [
         const SizedBox(height: 16),
         // Toggle button
@@ -236,10 +233,8 @@ class _ShellScaffoldState extends State<ShellScaffold> {
         ),
       ],
     );
-  }
 
-  Widget _buildExpandedSidebar() {
-    return Column(
+  Widget _buildExpandedSidebar() => Column(
       children: [
         // Header with close button
         Container(
@@ -297,15 +292,13 @@ class _ShellScaffoldState extends State<ShellScaffold> {
         ),
       ],
     );
-  }
 
   Widget _buildCollapsedNavItem({
     required IconData icon,
     required bool isSelected,
     required VoidCallback onTap,
     required String tooltip,
-  }) {
-    return Container(
+  }) => Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: isSelected
@@ -331,7 +324,6 @@ class _ShellScaffoldState extends State<ShellScaffold> {
         tooltip: tooltip,
       ),
     );
-  }
 
   int _getSelectedIndex(String path) {
     switch (path) {

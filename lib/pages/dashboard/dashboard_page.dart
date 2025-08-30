@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../../core/shared_widgets/shared_widgets.dart';
-import '../../services/services.dart';
 import '../../models/models.dart';
+import '../../services/services.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});
@@ -23,10 +24,14 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     final plantsAsync = ref.watch(plantsProvider);
 
     final outputComparisonAsync = selectedMachineIds.isNotEmpty
-        ? ref.watch(outputTimeseriesProvider(FilterState(
-            machineId: selectedMachineIds.first,
-            dateRange: comparisonRange,
-          )))
+        ? ref.watch(
+            outputTimeseriesProvider(
+              FilterState(
+                machineId: selectedMachineIds.first,
+                dateRange: comparisonRange,
+              ),
+            ),
+          )
         : const AsyncValue.data(null);
 
     return Scaffold(
@@ -54,11 +59,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                     ),
                     const SizedBox(height: 16),
                     plantsAsync.when(
-                      data: (plants) => _buildMachineSelection(plants),
-                      loading: () => const Center(child: CircularProgressIndicator()),
-                      error: (error, stack) => Center(
-                        child: Text('Error: $error'),
-                      ),
+                      data: _buildMachineSelection,
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                      error: (error, stack) =>
+                          Center(child: Text('Error: $error')),
                     ),
                   ],
                 ),
@@ -83,8 +88,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             if (selectedMachineIds.isNotEmpty) ...[
               Expanded(
                 child: outputComparisonAsync.when(
-                  data: (data) => _buildComparisonResults(data),
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  data: _buildComparisonResults,
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (error, stack) => Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -130,18 +136,12 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                       const SizedBox(height: 16),
                       Text(
                         'Select machines to compare',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey[600],
-                        ),
+                        style: TextStyle(fontSize: 18, color: Colors.grey[600]),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Choose multiple machines from the selection above to view comparison data',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[500],
-                        ),
+                        style: TextStyle(fontSize: 14, color: Colors.grey[500]),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -155,111 +155,193 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  Widget _buildMachineSelection(List<Plant> plants) {
-    return Column(
-      children: plants.map((plant) {
-        return ExpansionTile(
-          title: Text(plant.plantName),
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-              child: FutureBuilder<List<Unit>>(
-                future: ref.read(apiServiceProvider).getUnitsByPlant(plant.plantId),
-                builder: (context, unitsSnapshot) {
-                  if (!unitsSnapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+  Widget _buildMachineSelection(List<Plant> plants) => Column(
+    children: plants
+        .map(
+          (plant) => ExpansionTile(
+            title: Text(plant.plantName),
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 16.0,
+                  right: 16.0,
+                  bottom: 16.0,
+                ),
+                child: FutureBuilder<List<Unit>>(
+                  future: ref
+                      .read(apiServiceProvider)
+                      .getUnitsByPlant(plant.plantId),
+                  builder: (context, unitsSnapshot) {
+                    if (!unitsSnapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                  return Column(
-                    children: unitsSnapshot.data!.map((unit) {
-                      return ExpansionTile(
-                        title: Text(unit.unitName),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                            child: FutureBuilder<List<Segment>>(
-                              future: ref.read(apiServiceProvider).getSegmentsByUnit(unit.unitId),
-                              builder: (context, segmentsSnapshot) {
-                                if (!segmentsSnapshot.hasData) {
-                                  return const Center(child: CircularProgressIndicator());
-                                }
+                    return Column(
+                      children: unitsSnapshot.data!
+                          .map(
+                            (unit) => ExpansionTile(
+                              title: Text(unit.unitName),
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 16.0,
+                                    right: 16.0,
+                                    bottom: 16.0,
+                                  ),
+                                  child: FutureBuilder<List<Segment>>(
+                                    future: ref
+                                        .read(apiServiceProvider)
+                                        .getSegmentsByUnit(unit.unitId),
+                                    builder: (context, segmentsSnapshot) {
+                                      if (!segmentsSnapshot.hasData) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
 
-                                return Column(
-                                  children: segmentsSnapshot.data!.map((segment) {
-                                    return ExpansionTile(
-                                      title: Text(segment.segmentName),
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                                          child: FutureBuilder<List<Line>>(
-                                            future: ref.read(apiServiceProvider).getLinesBySegment(segment.segmentId),
-                                            builder: (context, linesSnapshot) {
-                                              if (!linesSnapshot.hasData) {
-                                                return const Center(child: CircularProgressIndicator());
-                                              }
-
-                                              return Column(
-                                                children: linesSnapshot.data!.map((line) {
-                                                  return ExpansionTile(
-                                                    title: Text(line.lineName),
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                                                        child: FutureBuilder<List<Machine>>(
-                                                          future: ref.read(apiServiceProvider).getMachinesByLine(line.lineId),
-                                                          builder: (context, machinesSnapshot) {
-                                                            if (!machinesSnapshot.hasData) {
-                                                              return const Center(child: CircularProgressIndicator());
-                                                            }
-
-                                                            return Column(
-                                                              children: machinesSnapshot.data!.map((machine) {
-                                                                final isSelected = selectedMachineIds.contains(machine.machineId);
-                                                                return CheckboxListTile(
-                                                                  title: Text(machine.machineName),
-                                                                  subtitle: Text('Status: ${machine.status.name}'),
-                                                                  value: isSelected,
-                                                                  onChanged: (selected) {
-                                                                    setState(() {
-                                                                      if (selected == true) {
-                                                                        selectedMachineIds.add(machine.machineId);
-                                                                      } else {
-                                                                        selectedMachineIds.remove(machine.machineId);
-                                                                      }
-                                                                    });
-                                                                  },
-                                                                );
-                                                              }).toList(),
-                                                            );
-                                                          },
+                                      return Column(
+                                        children: segmentsSnapshot.data!
+                                            .map(
+                                              (segment) => ExpansionTile(
+                                                title: Text(
+                                                  segment.segmentName,
+                                                ),
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                          left: 16.0,
+                                                          right: 16.0,
+                                                          bottom: 16.0,
                                                         ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                }).toList(),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }).toList(),
-                                );
-                              },
+                                                    child: FutureBuilder<List<Line>>(
+                                                      future: ref
+                                                          .read(
+                                                            apiServiceProvider,
+                                                          )
+                                                          .getLinesBySegment(
+                                                            segment.segmentId,
+                                                          ),
+                                                      builder: (context, linesSnapshot) {
+                                                        if (!linesSnapshot
+                                                            .hasData) {
+                                                          return const Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          );
+                                                        }
+
+                                                        return Column(
+                                                          children: linesSnapshot.data!.map((
+                                                            line,
+                                                          ) => ExpansionTile(
+                                                              title: Text(
+                                                                line.lineName,
+                                                              ),
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.only(
+                                                                        left:
+                                                                            16.0,
+                                                                        right:
+                                                                            16.0,
+                                                                        bottom:
+                                                                            16.0,
+                                                                      ),
+                                                                  child:
+                                                                      FutureBuilder<
+                                                                        List<
+                                                                          Machine
+                                                                        >
+                                                                      >(
+                                                                        future: ref
+                                                                            .read(
+                                                                              apiServiceProvider,
+                                                                            )
+                                                                            .getMachinesByLine(
+                                                                              line.lineId,
+                                                                            ),
+                                                                        builder:
+                                                                            (
+                                                                              context,
+                                                                              machinesSnapshot,
+                                                                            ) {
+                                                                              if (!machinesSnapshot.hasData) {
+                                                                                return const Center(
+                                                                                  child: CircularProgressIndicator(),
+                                                                                );
+                                                                              }
+
+                                                                              return Column(
+                                                                                children: machinesSnapshot.data!.map(
+                                                                                  (
+                                                                                    machine,
+                                                                                  ) {
+                                                                                    final isSelected = selectedMachineIds.contains(
+                                                                                      machine.machineId,
+                                                                                    );
+                                                                                    return CheckboxListTile(
+                                                                                      title: Text(
+                                                                                        machine.machineName,
+                                                                                      ),
+                                                                                      subtitle: Text(
+                                                                                        'Status: ${machine.status.name}',
+                                                                                      ),
+                                                                                      value: isSelected,
+                                                                                      onChanged:
+                                                                                          (
+                                                                                            selected,
+                                                                                          ) {
+                                                                                            setState(
+                                                                                              () {
+                                                                                                if (selected ==
+                                                                                                    true) {
+                                                                                                  selectedMachineIds.add(
+                                                                                                    machine.machineId,
+                                                                                                  );
+                                                                                                } else {
+                                                                                                  selectedMachineIds.remove(
+                                                                                                    machine.machineId,
+                                                                                                  );
+                                                                                                }
+                                                                                              },
+                                                                                            );
+                                                                                          },
+                                                                                    );
+                                                                                  },
+                                                                                ).toList(),
+                                                                              );
+                                                                            },
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            )).toList(),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                            .toList(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
-                  );
-                },
+                          )
+                          .toList(),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        );
-      }).toList(),
-    );
-  }
+            ],
+          ),
+        )
+        .toList(),
+  );
 
   Widget _buildComparisonResults(OutputTimeseriesResponse? data) {
     if (data == null || data.series.isEmpty) {
@@ -284,7 +366,13 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             data: data.series,
             yAxisLabel: 'Output',
             showLegend: true,
-            colors: const [Colors.blue, Colors.green, Colors.orange, Colors.purple, Colors.red],
+            colors: const [
+              Colors.blue,
+              Colors.green,
+              Colors.orange,
+              Colors.purple,
+              Colors.red,
+            ],
           ),
         ),
 
@@ -301,7 +389,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  List<KpiSummaryCard> _buildComparisonSummaryCards(OutputTimeseriesResponse data) {
+  List<KpiSummaryCard> _buildComparisonSummaryCards(
+    OutputTimeseriesResponse data,
+  ) {
     final cards = <KpiSummaryCard>[];
 
     // Calculate comparison statistics
@@ -319,7 +409,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
       totalOutput += seriesTotal;
     }
 
-    final avgOutput = data.series.isNotEmpty ? totalOutput / data.series.length : 0;
+    final avgOutput = data.series.isNotEmpty
+        ? totalOutput / data.series.length
+        : 0;
 
     cards.addAll([
       KpiSummaryCard(

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+
 import '../../../models/models.dart';
 
 class KpiLineChart extends StatelessWidget {
@@ -61,18 +62,14 @@ class KpiLineChart extends StatelessWidget {
                     drawVerticalLine: showGrid,
                     horizontalInterval: _calculateYInterval(),
                     verticalInterval: _calculateXInterval(),
-                    getDrawingHorizontalLine: (value) {
-                      return FlLine(
+                    getDrawingHorizontalLine: (value) => FlLine(
                         color: Colors.grey.withOpacity(0.3),
                         strokeWidth: 1,
-                      );
-                    },
-                    getDrawingVerticalLine: (value) {
-                      return FlLine(
+                      ),
+                    getDrawingVerticalLine: (value) => FlLine(
                         color: Colors.grey.withOpacity(0.3),
                         strokeWidth: 1,
-                      );
-                    },
+                      ),
                   ),
                   titlesData: FlTitlesData(
                     show: true,
@@ -111,16 +108,14 @@ class KpiLineChart extends StatelessWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: _calculateYInterval(),
-                        getTitlesWidget: (value, meta) {
-                          return Text(
+                        getTitlesWidget: (value, meta) => Text(
                             value.toStringAsFixed(1),
                             style: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),
-                          );
-                        },
+                          ),
                         reservedSize: 42,
                       ),
                     ),
@@ -138,8 +133,7 @@ class KpiLineChart extends StatelessWidget {
                     enabled: true,
                     touchTooltipData: LineTouchTooltipData(
                       tooltipBgColor: Colors.blueGrey.withOpacity(0.9),
-                      getTooltipItems: (touchedSpots) {
-                        return touchedSpots.map((touchedSpot) {
+                      getTooltipItems: (touchedSpots) => touchedSpots.map((touchedSpot) {
                           final timePoint = _getAllTimePoints()[touchedSpot.x.toInt()];
                           return LineTooltipItem(
                             '${_formatTime(timePoint)}\n',
@@ -149,7 +143,7 @@ class KpiLineChart extends StatelessWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: '${touchedSpot.y.toStringAsFixed(2)}',
+                                text: touchedSpot.y.toStringAsFixed(2),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
@@ -157,8 +151,7 @@ class KpiLineChart extends StatelessWidget {
                               ),
                             ],
                           );
-                        }).toList();
-                      },
+                        }).toList(),
                     ),
                   ),
                 ),
@@ -170,8 +163,7 @@ class KpiLineChart extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
-    return Card(
+  Widget _buildEmptyState() => Card(
       child: SizedBox(
         height: 300,
         child: Center(
@@ -204,10 +196,8 @@ class KpiLineChart extends StatelessWidget {
         ),
       ),
     );
-  }
 
-  Widget _buildLegend(List<OutputTimeseries> data, List<Color> colors) {
-    return Wrap(
+  Widget _buildLegend(List<OutputTimeseries> data, List<Color> colors) => Wrap(
       spacing: 16,
       runSpacing: 8,
       children: data.asMap().entries.map((entry) {
@@ -235,10 +225,8 @@ class KpiLineChart extends StatelessWidget {
         );
       }).toList(),
     );
-  }
 
-  List<LineChartBarData> _buildLineBarsData(List<Color> colors) {
-    return data.asMap().entries.map((entry) {
+  List<LineChartBarData> _buildLineBarsData(List<Color> colors) => data.asMap().entries.map((entry) {
       final index = entry.key;
       final series = entry.value;
       final color = colors[index % colors.length];
@@ -262,7 +250,6 @@ class KpiLineChart extends StatelessWidget {
         ),
       );
     }).toList();
-  }
 
   List<DateTime> _getAllTimePoints() {
     if (data.isEmpty) return [];
@@ -315,7 +302,5 @@ class KpiLineChart extends StatelessWidget {
     return (timePoints.length - 1) / 5;
   }
 
-  String _formatTime(DateTime time) {
-    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
-  }
+  String _formatTime(DateTime time) => '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
 }

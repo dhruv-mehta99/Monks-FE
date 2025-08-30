@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../core/design/tokens.dart';
 import '../../../charts/core/chart_models.dart';
 import '../../../charts/widgets/app_bar_chart.dart';
-import '../../../charts/widgets/app_line_chart.dart';
 import '../../../charts/widgets/app_heatmap.dart';
+import '../../../charts/widgets/app_line_chart.dart';
+import '../../../core/design/tokens.dart';
 
 // Demo data providers
 final stackedBarProvider = Provider<List<Series>>((ref) {
@@ -92,8 +92,8 @@ final multiLineProvider = Provider<List<Series>>((ref) {
 
 final heatmapProvider = Provider<List<HeatCell>>((ref) {
   // 5 machines x 3 shifts
-  final machines = 5;
-  final shifts = 3;
+  const machines = 5;
+  const shifts = 3;
   final List<HeatCell> cells = [];
   for (int y = 0; y < machines; y++) {
     for (int x = 0; x < shifts; x++) {
@@ -214,15 +214,12 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
     );
   }
 
-  List<Series> _applyVisibility(List<Series> input) {
-    return [
+  List<Series> _applyVisibility(List<Series> input) => [
       for (final s in input)
         if (!hiddenSeries.contains(s.name)) s,
     ];
-  }
 
-  Widget _legend(List<Series> series) {
-    return Wrap(
+  Widget _legend(List<Series> series) => Wrap(
       spacing: AppTokens.legendGap,
       runSpacing: 8,
       children: [
@@ -260,10 +257,8 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
           ),
       ],
     );
-  }
 
-  Widget _card({required String title, required Widget child, Widget? legend}) {
-    return Card(
+  Widget _card({required String title, required Widget child, Widget? legend}) => Card(
       margin: const EdgeInsets.only(bottom: 16),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -278,5 +273,4 @@ class _ChartsGalleryPageState extends ConsumerState<ChartsGalleryPage> {
         ),
       ),
     );
-  }
 }

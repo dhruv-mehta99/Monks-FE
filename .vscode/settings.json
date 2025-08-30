@@ -1,5 +1,5 @@
 {
-  "dart.flutterSdkPath": "flutter",
+  "dart.flutterSdkPath": "/opt/homebrew/share/flutter",
   "dart.lineLength": 80,
   "dart.enableSdkFormatter": true,
   "dart.formatOnSave": true,
@@ -8,8 +8,7 @@
   "dart.showInspectorNotificationsForWidgetErrors": true,
   "dart.previewFlutterUiGuides": true,
   "dart.previewFlutterUiGuidesCustomTracking": true,
-  "dart.analyzerPath": "dart",
-  "dart.analyzerAdditionalArgs": ["--fatal-infos"],
+
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "editor.codeActionsOnSave": {

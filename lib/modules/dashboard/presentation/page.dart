@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../charts/widgets/app_line_chart.dart';
 import '../../../charts/core/chart_models.dart';
+import '../../../charts/widgets/app_line_chart.dart';
 import '../../../core/design/tokens.dart';
 import '../domain/models.dart';
 import 'state.dart';
@@ -70,8 +70,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  Widget _kpiTabs(List<KpiItem> kpis, String selectedId) {
-    return Card(
+  Widget _kpiTabs(List<KpiItem> kpis, String selectedId) => Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Wrap(
@@ -90,10 +89,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         ),
       ),
     );
-  }
 
-  Widget _filtersPane() {
-    return AnimatedContainer(
+  Widget _filtersPane() => AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       width: showFilters ? 320 : 40,
       child: Card(
@@ -115,7 +112,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         ),
       ),
     );
-  }
 
   Widget _filterForm() {
     final filters = ref.watch(kpiFiltersProvider);
@@ -215,9 +211,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     required String value,
     required List<String> items,
     required void Function(String) onChanged,
-  }) {
-    return DropdownButtonFormField<String>(
-      value: value,
+  }) => DropdownButtonFormField<String>(
+      initialValue: value,
       items: [
         for (final i in items) DropdownMenuItem(value: i, child: Text(i)),
       ],
@@ -226,5 +221,4 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
       },
       isExpanded: true,
     );
-  }
 }

@@ -47,9 +47,9 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
         if (t <= s.value) {
           if (prev == null) return s.color;
           final localT =
-              (t - prev!.value) /
-              ((s.value - prev!.value) == 0 ? 1 : (s.value - prev!.value));
-          return Color.lerp(prev!.color, s.color, localT) ?? s.color;
+              (t - prev.value) /
+              ((s.value - prev.value) == 0 ? 1 : (s.value - prev.value));
+          return Color.lerp(prev.color, s.color, localT) ?? s.color;
         }
         prev = s;
       }
@@ -83,20 +83,16 @@ class SyncfusionHeatmapAdapter extends HeatmapAdapter {
     }
 
     final grid = Column(
-      children: List.generate(maxY + 1, (row) {
-        return Expanded(
+      children: List.generate(maxY + 1, (row) => Expanded(
           child: Row(
-            children: List.generate(maxX + 1, (col) {
-              return Expanded(
+            children: List.generate(maxX + 1, (col) => Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: gridCell(col, row),
                 ),
-              );
-            }),
+              )),
           ),
-        );
-      }),
+        )),
     );
 
     final axisTitles = Padding(

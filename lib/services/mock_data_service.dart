@@ -118,11 +118,11 @@ class MockDataService {
     // Generate 24 hours of data points
     for (int i = 23; i >= 0; i--) {
       final timestamp = now.subtract(Duration(hours: i));
-      final value = 50 + (20 * (i % 3)) + (10 * (i % 2)); // Varying output values
-      dataPoints.add(OutputDataPoint(
-        timestamp: timestamp,
-        value: value.toDouble(),
-      ));
+      final value =
+          50 + (20 * (i % 3)) + (10 * (i % 2)); // Varying output values
+      dataPoints.add(
+        OutputDataPoint(timestamp: timestamp, value: value.toDouble()),
+      );
     }
 
     return OutputTimeseriesResponse(
@@ -138,18 +138,20 @@ class MockDataService {
     );
   }
 
-  static PerformanceTimeseriesResponse getMockPerformanceTimeseries(FilterState filters) {
+  static PerformanceTimeseriesResponse getMockPerformanceTimeseries(
+    FilterState filters,
+  ) {
     final now = DateTime.now();
     final dataPoints = <PerformanceDataPoint>[];
 
     // Generate 24 hours of performance data
     for (int i = 23; i >= 0; i--) {
       final timestamp = now.subtract(Duration(hours: i));
-      final value = 75 + (15 * (i % 4)) + (5 * (i % 3)); // Varying performance values
-      dataPoints.add(PerformanceDataPoint(
-        timestamp: timestamp,
-        value: value.toDouble(),
-      ));
+      final value =
+          75 + (15 * (i % 4)) + (5 * (i % 3)); // Varying performance values
+      dataPoints.add(
+        PerformanceDataPoint(timestamp: timestamp, value: value.toDouble()),
+      );
     }
 
     return PerformanceTimeseriesResponse(
@@ -165,42 +167,32 @@ class MockDataService {
     );
   }
 
-  static OutputAggregateResponse getMockOutputAggregate(FilterState filters) {
-    return OutputAggregateResponse(
-      startTime: filters.dateRange.start,
-      endTime: filters.dateRange.end,
-      groupBy: 'machine',
-      results: [
-        OutputResult(
-          machineId: filters.machineId ?? 'machine1',
-          totalOutputQty: 1200,
-          rejectedOutputQty: 48,
-          goodOutputQty: 1152,
-          yieldRatio: 0.96,
-        ),
-      ],
-    );
-  }
+  static OutputAggregateResponse getMockOutputAggregate(FilterState filters) =>
+      OutputAggregateResponse(
+        startTime: filters.dateRange.start,
+        endTime: filters.dateRange.end,
+        groupBy: 'machine',
+        results: [
+          OutputResult(
+            machineId: filters.machineId ?? 'machine1',
+            totalOutputQty: 1200,
+            rejectedOutputQty: 48,
+            goodOutputQty: 1152,
+            yieldRatio: 0.96,
+          ),
+        ],
+      );
 
-  static PerformanceAggregateResponse getMockPerformanceAggregate(FilterState filters) {
-    return PerformanceAggregateResponse(
-      startTime: filters.dateRange.start,
-      endTime: filters.dateRange.end,
-      groupBy: 'machine',
-      results: [
-        PerformanceResult(
-          key: 'efficiency',
-          value: 87.5,
-        ),
-        PerformanceResult(
-          key: 'availability',
-          value: 92.3,
-        ),
-        PerformanceResult(
-          key: 'quality',
-          value: 96.0,
-        ),
-      ],
-    );
-  }
+  static PerformanceAggregateResponse getMockPerformanceAggregate(
+    FilterState filters,
+  ) => PerformanceAggregateResponse(
+    startTime: filters.dateRange.start,
+    endTime: filters.dateRange.end,
+    groupBy: 'machine',
+    results: [
+      const PerformanceResult(key: 'efficiency', value: 87.5),
+      const PerformanceResult(key: 'availability', value: 92.3),
+      const PerformanceResult(key: 'quality', value: 96.0),
+    ],
+  );
 }

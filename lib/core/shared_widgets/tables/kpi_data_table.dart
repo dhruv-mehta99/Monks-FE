@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../models/models.dart';
 
 class KpiDataTable extends StatefulWidget {
@@ -44,10 +45,7 @@ class _KpiDataTableState extends State<KpiDataTable> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -61,7 +59,8 @@ class _KpiDataTableState extends State<KpiDataTable> {
                 dataRowMaxHeight: 52,
               ),
             ),
-            if (widget.showPagination && allDataPoints.length > widget.rowsPerPage) ...[
+            if (widget.showPagination &&
+                allDataPoints.length > widget.rowsPerPage) ...[
               const SizedBox(height: 16),
               _buildPagination(allDataPoints.length),
             ],
@@ -71,41 +70,29 @@ class _KpiDataTableState extends State<KpiDataTable> {
     );
   }
 
-  Widget _buildEmptyState() {
-    return Card(
-      child: SizedBox(
-        height: 200,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.table_chart,
-                size: 48,
-                color: Colors.grey[400],
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'No data available',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Select filters to view KPI data',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[500],
-                ),
-              ),
-            ],
-          ),
+  Widget _buildEmptyState() => Card(
+    child: SizedBox(
+      height: 200,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.table_chart, size: 48, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              'No data available',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Select filters to view KPI data',
+              style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 
   List<DataColumn> _buildColumns() {
     final defaultColumns = [
@@ -118,23 +105,13 @@ class _KpiDataTableState extends State<KpiDataTable> {
 
     final columns = widget.columns ?? defaultColumns;
 
-    return columns.map((column) {
-      return DataColumn(
-        label: Text(column),
-        onSort: (columnIndex, ascending) {
-          _onSort(columnIndex, ascending);
-        },
-      );
-    }).toList();
+    return columns
+        .map((column) => DataColumn(label: Text(column), onSort: _onSort))
+        .toList();
   }
 
-  List<DataRow> _buildRows(List<Map<String, dynamic>> data) {
-    return data.map((rowData) {
-      return DataRow(
-        cells: _buildCells(rowData),
-      );
-    }).toList();
-  }
+  List<DataRow> _buildRows(List<Map<String, dynamic>> data) =>
+      data.map((rowData) => DataRow(cells: _buildCells(rowData))).toList();
 
   List<DataCell> _buildCells(Map<String, dynamic> rowData) {
     final defaultColumns = [
@@ -198,7 +175,9 @@ class _KpiDataTableState extends State<KpiDataTable> {
   List<Map<String, dynamic>> _sortData(List<Map<String, dynamic>> data) {
     if (data.isEmpty) return data;
 
-    final columns = widget.columns ?? ['Timestamp', 'Machine ID', 'Value', 'Unit', 'Status'];
+    final columns =
+        widget.columns ??
+        ['Timestamp', 'Machine ID', 'Value', 'Unit', 'Status'];
     final sortColumn = columns[_sortColumnIndex];
 
     data.sort((a, b) {
@@ -237,7 +216,9 @@ class _KpiDataTableState extends State<KpiDataTable> {
     });
 
     if (widget.onSort != null) {
-      final columns = widget.columns ?? ['Timestamp', 'Machine ID', 'Value', 'Unit', 'Status'];
+      final columns =
+          widget.columns ??
+          ['Timestamp', 'Machine ID', 'Value', 'Unit', 'Status'];
       widget.onSort!(columns[columnIndex]);
     }
   }
@@ -264,20 +245,23 @@ class _KpiDataTableState extends State<KpiDataTable> {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: _currentPage > 0 ? () => _goToPage(_currentPage - 1) : null,
+                  onPressed: _currentPage > 0
+                      ? () => _goToPage(_currentPage - 1)
+                      : null,
                   icon: const Icon(Icons.chevron_left),
                 ),
                 // Only show limited page numbers to avoid overflow
                 if (totalPages <= 5) ...[
-                  ...List.generate(totalPages, (index) => _buildPageButton(index)),
+                  ...List.generate(totalPages, _buildPageButton),
                 ] else ...[
                   // Show first page
                   _buildPageButton(0),
                   // Show dots if current page is far from start
-                  if (_currentPage > 2) const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4),
-                    child: Text('...'),
-                  ),
+                  if (_currentPage > 2)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: Text('...'),
+                    ),
                   // Show pages around current page
                   ...List.generate(3, (i) {
                     final pageIndex = _currentPage + i - 1;
@@ -287,10 +271,11 @@ class _KpiDataTableState extends State<KpiDataTable> {
                     return const SizedBox.shrink();
                   }),
                   // Show dots if current page is far from end
-                  if (_currentPage < totalPages - 3) const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4),
-                    child: Text('...'),
-                  ),
+                  if (_currentPage < totalPages - 3)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: Text('...'),
+                    ),
                   // Show last page
                   if (totalPages > 1) _buildPageButton(totalPages - 1),
                 ],
@@ -308,31 +293,29 @@ class _KpiDataTableState extends State<KpiDataTable> {
     );
   }
 
-  Widget _buildPageButton(int index) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: InkWell(
-        onTap: () => _goToPage(index),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
+  Widget _buildPageButton(int index) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 4),
+    child: InkWell(
+      onTap: () => _goToPage(index),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: _currentPage == index
+              ? Theme.of(context).primaryColor
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          '${index + 1}',
+          style: TextStyle(
             color: _currentPage == index
-                ? Theme.of(context).primaryColor
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Text(
-            '${index + 1}',
-            style: TextStyle(
-              color: _currentPage == index
-                  ? Colors.white
-                  : Theme.of(context).textTheme.bodyMedium?.color,
-            ),
+                ? Colors.white
+                : Theme.of(context).textTheme.bodyMedium?.color,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 
   void _goToPage(int page) {
     setState(() {

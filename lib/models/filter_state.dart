@@ -4,24 +4,21 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'filter_state.freezed.dart';
 part 'filter_state.g.dart';
 
-class DateTimeRangeConverter implements JsonConverter<DateTimeRange, Map<String, dynamic>> {
+class DateTimeRangeConverter
+    implements JsonConverter<DateTimeRange, Map<String, dynamic>> {
   const DateTimeRangeConverter();
 
   @override
-  DateTimeRange fromJson(Map<String, dynamic> json) {
-    return DateTimeRange(
-      start: DateTime.parse(json['start'] as String),
-      end: DateTime.parse(json['end'] as String),
-    );
-  }
+  DateTimeRange fromJson(Map<String, dynamic> json) => DateTimeRange(
+    start: DateTime.parse(json['start'] as String),
+    end: DateTime.parse(json['end'] as String),
+  );
 
   @override
-  Map<String, dynamic> toJson(DateTimeRange dateRange) {
-    return {
-      'start': dateRange.start.toIso8601String(),
-      'end': dateRange.end.toIso8601String(),
-    };
-  }
+  Map<String, dynamic> toJson(DateTimeRange dateRange) => {
+    'start': dateRange.start.toIso8601String(),
+    'end': dateRange.end.toIso8601String(),
+  };
 }
 
 @freezed
@@ -39,11 +36,11 @@ class FilterState with _$FilterState {
   }) = _FilterState;
 
   factory FilterState.initial() => FilterState(
-        dateRange: DateTimeRange(
-          start: DateTime.now().subtract(const Duration(days: 7)),
-          end: DateTime.now(),
-        ),
-      );
+    dateRange: DateTimeRange(
+      start: DateTime.now().subtract(const Duration(days: 7)),
+      end: DateTime.now(),
+    ),
+  );
 
   factory FilterState.fromJson(Map<String, dynamic> json) =>
       _$FilterStateFromJson(json);

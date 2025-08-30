@@ -17,8 +17,7 @@ class FlChartLineAdapter extends LineChartAdapter {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
+  Widget build(BuildContext context) => Padding(
       padding: AppTokens.chartPadding,
       child: LineChart(
         LineChartData(
@@ -27,12 +26,12 @@ class FlChartLineAdapter extends LineChartAdapter {
           gridData: FlGridData(
             show: true,
             drawVerticalLine: xAxis.showGrid,
-            getDrawingHorizontalLine: (v) => FlLine(
+            getDrawingHorizontalLine: (v) => const FlLine(
               color: AppTokens.gridColor,
               strokeWidth: 1,
               dashArray: [4, 4],
             ),
-            getDrawingVerticalLine: (v) => FlLine(
+            getDrawingVerticalLine: (v) => const FlLine(
               color: AppTokens.gridColor,
               strokeWidth: 1,
               dashArray: [4, 4],
@@ -43,17 +42,13 @@ class FlChartLineAdapter extends LineChartAdapter {
         ),
       ),
     );
-  }
 
-  List<LineChartBarData> _createLineBarsData() {
-    return series.map((s) {
+  List<LineChartBarData> _createLineBarsData() => series.map((s) {
       final color =
           s.color ??
           AppTokens.chartColors[series.indexOf(s) %
               AppTokens.chartColors.length];
-      final spots = s.data.asMap().entries.map((e) {
-        return FlSpot(e.key.toDouble(), (e.value.y as num).toDouble());
-      }).toList();
+      final spots = s.data.asMap().entries.map((e) => FlSpot(e.key.toDouble(), (e.value.y).toDouble())).toList();
 
       return LineChartBarData(
         spots: spots,
@@ -62,14 +57,12 @@ class FlChartLineAdapter extends LineChartAdapter {
         barWidth: AppTokens.chartLineWidth,
         dotData: FlDotData(
           show: showPoints,
-          getDotPainter: (spot, percent, bar, index) {
-            return FlDotCirclePainter(
+          getDotPainter: (spot, percent, bar, index) => FlDotCirclePainter(
               radius: AppTokens.chartPointRadius,
               color: Colors.white,
               strokeWidth: 2,
               strokeColor: color,
-            );
-          },
+            ),
         ),
         belowBarData: BarAreaData(
           show: fillArea,
@@ -84,10 +77,8 @@ class FlChartLineAdapter extends LineChartAdapter {
         ),
       );
     }).toList();
-  }
 
-  FlTitlesData _createTitlesData() {
-    return FlTitlesData(
+  FlTitlesData _createTitlesData() => FlTitlesData(
       leftTitles: AxisTitles(
         axisNameWidget: yAxis.title != null ? Text(yAxis.title!) : null,
         sideTitles: SideTitles(
@@ -118,25 +109,22 @@ class FlChartLineAdapter extends LineChartAdapter {
         ),
       ),
     );
-  }
 
   LineTouchData _createTouchData() {
-    if (tooltip?.enabled != true) return LineTouchData(enabled: false);
+    if (tooltip?.enabled != true) return const LineTouchData(enabled: false);
 
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
         tooltipBgColor: AppTokens.tooltipBg,
         tooltipRoundedRadius: AppTokens.tooltipRadius,
-        getTooltipItems: (touchedSpots) {
-          return touchedSpots.map((spot) {
+        getTooltipItems: (touchedSpots) => touchedSpots.map((spot) {
             final s = this.series[spot.barIndex];
             final dataPoint = s.data[spot.x.toInt()];
             final text =
                 tooltip?.formatter?.call(dataPoint.x, dataPoint.y) ??
                 '${s.name}: ${dataPoint.y}';
             return LineTooltipItem(text, AppTokens.chartTooltip);
-          }).toList();
-        },
+          }).toList(),
       ),
     );
   }

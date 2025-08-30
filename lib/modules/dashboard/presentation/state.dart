@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../charts/core/chart_models.dart';
-import '../../../core/result/result.dart';
 import '../data/api_repository.dart';
 import '../domain/models.dart';
 

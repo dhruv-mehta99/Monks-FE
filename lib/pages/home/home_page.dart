@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../../core/shared_widgets/shared_widgets.dart';
-import '../../services/services.dart';
 import '../../models/models.dart';
+import '../../services/services.dart';
 
 enum KpiType { output, availability }
 
@@ -25,9 +26,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final filterState = ref.watch(filterNotifierProvider);
-    final outputDataAsync = ref.watch(
-      outputTimeseriesProvider(filterState),
-    );
+    final outputDataAsync = ref.watch(outputTimeseriesProvider(filterState));
     final availabilityDataAsync = ref.watch(
       availabilityTimeseriesProvider(filterState),
     );
@@ -58,7 +57,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                       Text(
                         'Filters:',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.9),
+                          color: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.color?.withOpacity(0.9),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -66,7 +67,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                       MachineFilter(
                         currentFilters: filterState,
                         onFiltersChanged: (newFilters) {
-                          ref.read(filterNotifierProvider.notifier).updateFilters(newFilters);
+                          ref
+                              .read(filterNotifierProvider.notifier)
+                              .updateFilters(newFilters);
                         },
                         compact: true,
                       ),
@@ -79,7 +82,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   TimeRangeFilter(
                     currentRange: filterState.dateRange,
                     onRangeChanged: (newRange) {
-                      ref.read(filterNotifierProvider.notifier).updateDateRange(newRange);
+                      ref
+                          .read(filterNotifierProvider.notifier)
+                          .updateDateRange(newRange);
                     },
                     compact: true,
                   ),
@@ -110,7 +115,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                           // KPI Tabs
                           Card(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
                               child: Row(
                                 children: [
                                   _buildKpiTab(
@@ -121,8 +129,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   const SizedBox(width: 16),
                                   _buildKpiTab(
                                     label: 'Availability KPI',
-                                    isSelected: _selectedKpi == KpiType.availability,
-                                    onTap: () => _selectKpi(KpiType.availability),
+                                    isSelected:
+                                        _selectedKpi == KpiType.availability,
+                                    onTap: () =>
+                                        _selectKpi(KpiType.availability),
                                   ),
                                 ],
                               ),
@@ -155,15 +165,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 const SizedBox(height: 16),
                                 Text(
                                   'Select a Machine to View Charts',
-                                  style: Theme.of(context).textTheme.headlineSmall,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.headlineSmall,
                                   textAlign: TextAlign.center,
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
                                   'Please select a machine from the filters above to display KPI charts',
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: Colors.grey[600],
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(color: Colors.grey[600]),
                                   textAlign: TextAlign.center,
                                 ),
                               ],
@@ -187,7 +198,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     if (filters.machineId == null) return '';
 
     // Try to get machine name from the machines provider
-    final machinesAsync = ref.watch(machinesByUnitProvider(filters.unitId ?? '', lineId: filters.lineId));
+    final machinesAsync = ref.watch(
+      machinesByUnitProvider(filters.unitId ?? '', lineId: filters.lineId),
+    );
 
     return machinesAsync.when(
       data: (machines) {
@@ -218,41 +231,39 @@ class _HomePageState extends ConsumerState<HomePage> {
     required String label,
     required bool isSelected,
     required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
+  }) => GestureDetector(
+    onTap: onTap,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
           color: isSelected
               ? Theme.of(context).primaryColor
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: isSelected
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).dividerColor.withOpacity(0.3),
-            width: 1,
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected
-                ? Colors.white
-                : Theme.of(context).textTheme.bodyMedium?.color,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-            fontSize: 14,
-          ),
+              : Theme.of(context).dividerColor.withOpacity(0.3),
+          width: 1,
         ),
       ),
-    );
-  }
+      child: Text(
+        label,
+        style: TextStyle(
+          color: isSelected
+              ? Colors.white
+              : Theme.of(context).textTheme.bodyMedium?.color,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+          fontSize: 14,
+        ),
+      ),
+    ),
+  );
 
   // Build the selected KPI chart
   Widget _buildSelectedKpiChart(FilterState filterState, WidgetRef ref) {
     final outputDataAsync = ref.watch(outputTimeseriesProvider(filterState));
-    final availabilityDataAsync = ref.watch(availabilityTimeseriesProvider(filterState));
+    final availabilityDataAsync = ref.watch(
+      availabilityTimeseriesProvider(filterState),
+    );
 
     switch (_selectedKpi) {
       case KpiType.output:
@@ -274,26 +285,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.red[400],
-                    ),
+                    Icon(Icons.error_outline, size: 48, color: Colors.red[400]),
                     const SizedBox(height: 16),
                     Text(
                       'Error loading data',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.red[600],
-                      ),
+                      style: TextStyle(fontSize: 16, color: Colors.red[600]),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       error.toString(),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.red[500],
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.red[500]),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -306,14 +307,24 @@ class _HomePageState extends ConsumerState<HomePage> {
       case KpiType.availability:
         return availabilityDataAsync.when(
           data: (data) => KpiLineChart(
-            title: 'Machine Availability Over Time - ${_getMachineName(filterState, ref)}',
-            data: data.series.map((series) => OutputTimeseries(
-              machineId: series.machineId,
-              data: series.data.map((point) => OutputDataPoint(
-                timestamp: point.timestamp,
-                value: (point.availabilityRatio * 100).toDouble(), // Convert ratio to percentage
-              )).toList(),
-            )).toList(),
+            title:
+                'Machine Availability Over Time - ${_getMachineName(filterState, ref)}',
+            data: data.series
+                .map(
+                  (series) => OutputTimeseries(
+                    machineId: series.machineId,
+                    data: series.data
+                        .map(
+                          (point) => OutputDataPoint(
+                            timestamp: point.timestamp,
+                            value: (point.availabilityRatio * 100)
+                                .toDouble(), // Convert ratio to percentage
+                          ),
+                        )
+                        .toList(),
+                  ),
+                )
+                .toList(),
             yAxisLabel: 'Availability %',
             showLegend: true,
             colors: const [Colors.green, Colors.blue, Colors.orange],
@@ -329,26 +340,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.red[400],
-                    ),
+                    Icon(Icons.error_outline, size: 48, color: Colors.red[400]),
                     const SizedBox(height: 16),
                     Text(
                       'Error loading data',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.red[600],
-                      ),
+                      style: TextStyle(fontSize: 16, color: Colors.red[600]),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       error.toString(),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.red[500],
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.red[500]),
                       textAlign: TextAlign.center,
                     ),
                   ],

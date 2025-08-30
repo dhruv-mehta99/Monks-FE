@@ -12,9 +12,7 @@ class ChartRegistry {
   final Map<String, ChartAdapterFactory> _factories;
 
   /// Get a chart adapter factory by name
-  ChartAdapterFactory getFactory(String? name) {
-    return _factories[name] ?? defaultFactory;
-  }
+  ChartAdapterFactory getFactory(String? name) => _factories[name] ?? defaultFactory;
 
   /// Register a new chart adapter factory
   void registerFactory(String name, ChartAdapterFactory factory) {

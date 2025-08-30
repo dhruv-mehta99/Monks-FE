@@ -42,18 +42,16 @@ class KpiSummaryCard extends StatelessWidget {
               Row(
                 children: [
                   if (icon != null) ...[
-                    Icon(
-                      icon,
-                      color: cardColor,
-                      size: 24,
-                    ),
+                    Icon(icon, color: cardColor, size: 24),
                     const SizedBox(width: 12),
                   ],
                   Expanded(
                     child: Text(
                       title,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+                        color: theme.textTheme.bodyMedium?.color?.withOpacity(
+                          0.7,
+                        ),
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -81,7 +79,9 @@ class KpiSummaryCard extends StatelessWidget {
                       child: Text(
                         unit!,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+                          color: theme.textTheme.bodyMedium?.color?.withOpacity(
+                            0.7,
+                          ),
                         ),
                       ),
                     ),
@@ -120,7 +120,9 @@ class KpiSummaryCard extends StatelessWidget {
                     Text(
                       'vs previous period',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.textTheme.bodySmall?.color?.withOpacity(0.6),
+                        color: theme.textTheme.bodySmall?.color?.withOpacity(
+                          0.6,
+                        ),
                       ),
                     ),
                   ],
@@ -149,18 +151,16 @@ class KpiSummaryGrid extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        childAspectRatio: childAspectRatio,
-        crossAxisSpacing: spacing,
-        mainAxisSpacing: spacing,
-      ),
-      itemCount: cards.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => cards[index],
-    );
-  }
+  Widget build(BuildContext context) => GridView.builder(
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: crossAxisCount,
+      childAspectRatio: childAspectRatio,
+      crossAxisSpacing: spacing,
+      mainAxisSpacing: spacing,
+    ),
+    itemCount: cards.length,
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) => cards[index],
+  );
 }

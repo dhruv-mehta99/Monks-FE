@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../services/services.dart';
+
 import '../../../models/models.dart';
+import '../../../services/services.dart';
 
 class MachineFilter extends ConsumerWidget {
   final FilterState currentFilters;
@@ -28,7 +29,12 @@ class MachineFilter extends ConsumerWidget {
         ? ref.watch(linesBySegmentProvider(currentFilters.segmentId!))
         : const AsyncValue.data(<Line>[]);
     final machinesAsync = currentFilters.unitId != null
-        ? ref.watch(machinesByUnitProvider(currentFilters.unitId!, lineId: currentFilters.lineId))
+        ? ref.watch(
+            machinesByUnitProvider(
+              currentFilters.unitId!,
+              lineId: currentFilters.lineId,
+            ),
+          )
         : const AsyncValue.data(<Machine>[]);
 
     if (compact) {
@@ -50,10 +56,7 @@ class MachineFilter extends ConsumerWidget {
               value: plant.plantId,
               child: Text(plant.plantName),
             ),
-            onChanged: (plantId) => _updateFilters(
-              ref,
-              plantId: plantId,
-            ),
+            onChanged: (plantId) => _updateFilters(ref, plantId: plantId),
           ),
           _buildCompactFilterDropdown<Unit>(
             context: context,
@@ -68,10 +71,7 @@ class MachineFilter extends ConsumerWidget {
               value: unit.unitId,
               child: Text(unit.unitName),
             ),
-            onChanged: (unitId) => _updateFilters(
-              ref,
-              unitId: unitId,
-            ),
+            onChanged: (unitId) => _updateFilters(ref, unitId: unitId),
             enabled: currentFilters.plantId != null,
           ),
           _buildCompactFilterDropdown<Segment>(
@@ -87,10 +87,7 @@ class MachineFilter extends ConsumerWidget {
               value: segment.segmentId,
               child: Text(segment.segmentName),
             ),
-            onChanged: (segmentId) => _updateFilters(
-              ref,
-              segmentId: segmentId,
-            ),
+            onChanged: (segmentId) => _updateFilters(ref, segmentId: segmentId),
             enabled: currentFilters.unitId != null,
           ),
           _buildCompactFilterDropdown<Line>(
@@ -106,10 +103,7 @@ class MachineFilter extends ConsumerWidget {
               value: line.lineId,
               child: Text(line.lineName),
             ),
-            onChanged: (lineId) => _updateFilters(
-              ref,
-              lineId: lineId,
-            ),
+            onChanged: (lineId) => _updateFilters(ref, lineId: lineId),
             enabled: currentFilters.segmentId != null,
           ),
           _buildCompactFilterDropdown<Machine>(
@@ -125,10 +119,7 @@ class MachineFilter extends ConsumerWidget {
               value: machine.machineId,
               child: Text(machine.machineName),
             ),
-            onChanged: (machineId) => _updateFilters(
-              ref,
-              machineId: machineId,
-            ),
+            onChanged: (machineId) => _updateFilters(ref, machineId: machineId),
             enabled: currentFilters.unitId != null,
           ),
         ],
@@ -158,10 +149,7 @@ class MachineFilter extends ConsumerWidget {
                 value: plant.plantId,
                 child: Text(plant.plantName),
               ),
-              onChanged: (plantId) => _updateFilters(
-                ref,
-                plantId: plantId,
-              ),
+              onChanged: (plantId) => _updateFilters(ref, plantId: plantId),
             ),
             const SizedBox(height: 12),
             _buildFilterDropdown<Unit>(
@@ -176,10 +164,7 @@ class MachineFilter extends ConsumerWidget {
                 value: unit.unitId,
                 child: Text(unit.unitName),
               ),
-              onChanged: (unitId) => _updateFilters(
-                ref,
-                unitId: unitId,
-              ),
+              onChanged: (unitId) => _updateFilters(ref, unitId: unitId),
               enabled: currentFilters.plantId != null,
             ),
             const SizedBox(height: 12),
@@ -195,10 +180,8 @@ class MachineFilter extends ConsumerWidget {
                 value: segment.segmentId,
                 child: Text(segment.segmentName),
               ),
-              onChanged: (segmentId) => _updateFilters(
-                ref,
-                segmentId: segmentId,
-              ),
+              onChanged: (segmentId) =>
+                  _updateFilters(ref, segmentId: segmentId),
               enabled: currentFilters.unitId != null,
             ),
             const SizedBox(height: 12),
@@ -214,10 +197,7 @@ class MachineFilter extends ConsumerWidget {
                 value: line.lineId,
                 child: Text(line.lineName),
               ),
-              onChanged: (lineId) => _updateFilters(
-                ref,
-                lineId: lineId,
-              ),
+              onChanged: (lineId) => _updateFilters(ref, lineId: lineId),
               enabled: currentFilters.segmentId != null,
             ),
             const SizedBox(height: 12),
@@ -233,10 +213,8 @@ class MachineFilter extends ConsumerWidget {
                 value: machine.machineId,
                 child: Text(machine.machineName),
               ),
-              onChanged: (machineId) => _updateFilters(
-                ref,
-                machineId: machineId,
-              ),
+              onChanged: (machineId) =>
+                  _updateFilters(ref, machineId: machineId),
               enabled: currentFilters.unitId != null,
             ),
           ],
@@ -252,31 +230,27 @@ class MachineFilter extends ConsumerWidget {
     required DropdownMenuItem<String> Function(T) itemBuilder,
     required Function(String?) onChanged,
     bool enabled = true,
-  }) {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-      ),
-      value: value, // Use value instead of initialValue
-      items: [
-        const DropdownMenuItem(
-          value: null,
-          child: Text('Select...'),
-        ),
-        ...items.map(itemBuilder),
-      ],
-      onChanged: enabled ? onChanged : null,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please select a $label';
-        }
-        return null;
-      },
-    );
-  }
+  }) => DropdownButtonFormField<String>(
+    decoration: InputDecoration(
+      labelText: label,
+      border: const OutlineInputBorder(),
+    ),
+    initialValue: value, // Use value instead of initialValue
+    items: [
+      const DropdownMenuItem(value: null, child: Text('Select...')),
+      ...items.map(itemBuilder),
+    ],
+    onChanged: enabled ? onChanged : null,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'Please select a $label';
+      }
+      return null;
+    },
+  );
 
-  void _updateFilters(WidgetRef ref, {
+  void _updateFilters(
+    WidgetRef ref, {
     String? plantId,
     String? unitId,
     String? segmentId,
@@ -337,46 +311,50 @@ class MachineFilter extends ConsumerWidget {
     required DropdownMenuItem<String> Function(T) itemBuilder,
     required Function(String?) onChanged,
     bool enabled = true,
-  }) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          '$label:',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.9),
-            fontWeight: FontWeight.w500,
+  }) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text(
+        '$label:',
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.color?.withOpacity(0.9),
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      const SizedBox(width: 4),
+      Container(
+        constraints: const BoxConstraints(minWidth: 120, maxWidth: 180),
+        child: DropdownButton<String>(
+          value: value,
+          items: [
+            const DropdownMenuItem<String>(
+              value: null,
+              child: Text('Select...', style: TextStyle(fontSize: 13)),
+            ),
+            ...items.map(itemBuilder),
+          ],
+          onChanged: enabled ? onChanged : null,
+          style: TextStyle(
+            fontSize: 13,
+            color: enabled
+                ? Theme.of(context).textTheme.bodyMedium?.color
+                : Colors.grey,
+          ),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            size: 18,
+            color: enabled ? Theme.of(context).primaryColor : Colors.grey,
+          ),
+          underline: Container(
+            height: 2,
+            color: enabled
+                ? Theme.of(context).primaryColor.withOpacity(0.6)
+                : Colors.grey.withOpacity(0.3),
           ),
         ),
-        const SizedBox(width: 4),
-        Container(
-          constraints: const BoxConstraints(minWidth: 120, maxWidth: 180),
-          child: DropdownButton<String>(
-            value: value,
-            items: [
-              const DropdownMenuItem<String>(
-                value: null,
-                child: Text('Select...', style: TextStyle(fontSize: 13)),
-              ),
-              ...items.map(itemBuilder),
-            ],
-            onChanged: enabled ? onChanged : null,
-            style: TextStyle(
-              fontSize: 13,
-              color: enabled ? Theme.of(context).textTheme.bodyMedium?.color : Colors.grey,
-            ),
-            icon: Icon(
-              Icons.arrow_drop_down,
-              size: 18,
-              color: enabled ? Theme.of(context).primaryColor : Colors.grey,
-            ),
-            underline: Container(
-              height: 2,
-              color: enabled ? Theme.of(context).primaryColor.withOpacity(0.6) : Colors.grey.withOpacity(0.3),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 }

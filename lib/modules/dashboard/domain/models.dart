@@ -27,13 +27,11 @@ class KpiFilters {
     String? segment,
     String? line,
     String? machine,
-  }) {
-    return KpiFilters(
+  }) => KpiFilters(
       dateRange: dateRange ?? this.dateRange,
       plant: plant ?? this.plant,
       segment: segment ?? this.segment,
       line: line ?? this.line,
       machine: machine ?? this.machine,
     );
-  }
 }

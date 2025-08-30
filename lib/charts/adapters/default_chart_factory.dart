@@ -14,8 +14,7 @@ class DefaultChartFactory implements ChartAdapterFactory {
     bool grouped = false,
     TooltipConfig? tooltip,
     AnimationConfig? animation,
-  }) {
-    return FlChartBarAdapter(
+  }) => FlChartBarAdapter(
       series: series,
       xAxis: xAxis,
       yAxis: yAxis,
@@ -24,7 +23,6 @@ class DefaultChartFactory implements ChartAdapterFactory {
       tooltip: tooltip,
       animation: animation,
     );
-  }
 
   @override
   LineChartAdapter createLineChart({
@@ -36,8 +34,7 @@ class DefaultChartFactory implements ChartAdapterFactory {
     bool fillArea = false,
     TooltipConfig? tooltip,
     AnimationConfig? animation,
-  }) {
-    return FlChartLineAdapter(
+  }) => FlChartLineAdapter(
       series: series,
       xAxis: xAxis,
       yAxis: yAxis,
@@ -47,7 +44,6 @@ class DefaultChartFactory implements ChartAdapterFactory {
       tooltip: tooltip,
       animation: animation,
     );
-  }
 
   @override
   HeatmapAdapter createHeatmap({
@@ -57,8 +53,7 @@ class DefaultChartFactory implements ChartAdapterFactory {
     required List<HeatScaleStop> colorStops,
     TooltipConfig? tooltip,
     AnimationConfig? animation,
-  }) {
-    return SyncfusionHeatmapAdapter(
+  }) => SyncfusionHeatmapAdapter(
       cells: cells,
       xAxis: xAxis,
       yAxis: yAxis,
@@ -66,5 +61,4 @@ class DefaultChartFactory implements ChartAdapterFactory {
       tooltip: tooltip,
       animation: animation,
     );
-  }
 }

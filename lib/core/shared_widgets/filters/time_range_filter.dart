@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/constants/breakpoints.dart';
 
 class TimeRangeFilter extends StatefulWidget {
@@ -36,22 +37,28 @@ class _TimeRangeFilterState extends State<TimeRangeFilter> {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-                  Text(
-          'Time:',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.9),
-            fontWeight: FontWeight.w500,
+          Text(
+            'Time:',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.color?.withOpacity(0.9),
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
           const SizedBox(width: 8),
           Container(
             constraints: const BoxConstraints(minWidth: 140),
             child: DropdownButton<String>(
               value: _selectedPreset,
-              items: AppConstants.timeRanges.map((preset) => DropdownMenuItem(
-                value: preset,
-                child: Text(preset, style: const TextStyle(fontSize: 13)),
-              )).toList(),
+              items: AppConstants.timeRanges
+                  .map(
+                    (preset) => DropdownMenuItem(
+                      value: preset,
+                      child: Text(preset, style: const TextStyle(fontSize: 13)),
+                    ),
+                  )
+                  .toList(),
               onChanged: (preset) {
                 if (preset != null) {
                   _selectPreset(preset);
@@ -82,10 +89,7 @@ class _TimeRangeFilterState extends State<TimeRangeFilter> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Time Range',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Time Range', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 16),
             Wrap(
               spacing: 8,
@@ -115,10 +119,7 @@ class _TimeRangeFilterState extends State<TimeRangeFilter> {
                     onChanged: (date) {
                       if (date != null) {
                         _updateRange(
-                          DateTimeRange(
-                            start: date,
-                            end: _selectedRange.end,
-                          ),
+                          DateTimeRange(start: date, end: _selectedRange.end),
                         );
                       }
                     },
@@ -132,10 +133,7 @@ class _TimeRangeFilterState extends State<TimeRangeFilter> {
                     onChanged: (date) {
                       if (date != null) {
                         _updateRange(
-                          DateTimeRange(
-                            start: _selectedRange.start,
-                            end: date,
-                          ),
+                          DateTimeRange(start: _selectedRange.start, end: date),
                         );
                       }
                     },
@@ -203,91 +201,81 @@ class _TimeRangeFilterState extends State<TimeRangeFilter> {
     required String label,
     required DateTime value,
     required Function(DateTime?) onChanged,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(height: 8),
-        InkWell(
-          onTap: () async {
-            final date = await showDatePicker(
-              context: context,
-              initialDate: value,
-              firstDate: DateTime.now().subtract(const Duration(days: 365)),
-              lastDate: DateTime.now().add(const Duration(days: 365)),
-            );
-            onChanged(date);
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '${value.day}/${value.month}/${value.year}',
-                    style: const TextStyle(fontSize: 14),
-                  ),
+  }) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+      const SizedBox(height: 8),
+      InkWell(
+        onTap: () async {
+          final date = await showDatePicker(
+            context: context,
+            initialDate: value,
+            firstDate: DateTime.now().subtract(const Duration(days: 365)),
+            lastDate: DateTime.now().add(const Duration(days: 365)),
+          );
+          onChanged(date);
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${value.day}/${value.month}/${value.year}',
+                  style: const TextStyle(fontSize: 14),
                 ),
-                const Icon(Icons.calendar_today, size: 16),
-              ],
-            ),
+              ),
+              const Icon(Icons.calendar_today, size: 16),
+            ],
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 
   Widget _buildTimeField({
     required String label,
     required DateTime value,
     required Function(TimeOfDay?) onChanged,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(height: 8),
-        InkWell(
-          onTap: () async {
-            final time = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay.fromDateTime(value),
-            );
-            onChanged(time);
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}',
-                    style: const TextStyle(fontSize: 14),
-                  ),
+  }) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+      const SizedBox(height: 8),
+      InkWell(
+        onTap: () async {
+          final time = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.fromDateTime(value),
+          );
+          onChanged(time);
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}',
+                  style: const TextStyle(fontSize: 14),
                 ),
-                const Icon(Icons.access_time, size: 16),
-              ],
-            ),
+              ),
+              const Icon(Icons.access_time, size: 16),
+            ],
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 
   void _selectPreset(String preset) {
     setState(() {

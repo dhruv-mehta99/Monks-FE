@@ -1,303 +1,537 @@
-# MFG Dashboard
+# Monks Manufacturing Dashboard
 
-A Flutter web dashboard application with responsive design and flexible charting capabilities.
+A Flutter web application for monitoring manufacturing KPIs, machine efficiency, and output quality across plants, units, segments, lines, and machines.
 
-## Configure API base URL
+## 🏗️ Architecture Overview
 
-By default, API requests point to `http://localhost:8080`. To use your live endpoints, run with a custom base URL:
+This application follows a **clean architecture** pattern with **Riverpod** for state management and **code generation** for type safety. The architecture is designed to be scalable, maintainable, and follows Flutter best practices.
 
-```bash
-flutter run -d chrome --dart-define=API_BASE_URL=https://your.api.domain
-```
+### Project Structure
 
-Or for web build:
-```bash
-flutter build web --dart-define=API_BASE_URL=https://your.api.domain
-```
-
-The app currently consumes these live GET endpoints:
-- `/plants` → Plant list
-- `/segments` → Segment list
-- `/lines` → Line list
-- `/machines` → Machine list
-
-Other documentation continues below.
-
-## New to Flutter?
-
-Before diving into the codebase, here's what you need to know:
-
-### Key Flutter Concepts Used in This Project
-
-1. **Widgets**: Everything in Flutter is a widget. Think of them as LEGO blocks:
-   - `StatelessWidget`: Simple widgets that don't change (like a text label)
-   - `StatefulWidget`: Widgets that can change (like a form)
-   - `ConsumerWidget`: Special widgets that can listen to providers (our state management solution)
-
-2. **State Management**: We use Riverpod for managing state:
-   - Providers: Hold and manage data
-   - Consumers: Widgets that listen to providers
-   - Notifiers: Classes that can update provider state
-
-3. **Routing**: We use go_router for navigation:
-   - Similar to web routes (e.g., '/dashboard', '/settings')
-   - Handles page transitions and nested navigation
-
-### Important Configuration Files
-
-1. **pubspec.yaml**
-   ```yaml
-   # This is your project's main configuration file
-   name: mfg_dashboard        # Project name
-   dependencies:             # External packages you use
-     flutter:               # Core Flutter framework
-     fl_chart: ^0.66.2     # Chart library
-   dev_dependencies:        # Packages used during development
-     build_runner:         # Generates code
-   ```
-   - Controls project name, version
-   - Lists all dependencies
-   - Configures assets (images, fonts)
-   - Run `flutter pub get` after changes
-
-2. **analysis_options.yaml**
-   ```yaml
-   # Controls Flutter's code analyzer
-   include: package:flutter_lints/flutter.yaml
-   linter:
-     rules:
-       - prefer_final_fields  # Example rule
-   ```
-   - Enforces coding standards
-   - Helps catch common mistakes
-   - Makes code more consistent
-
-3. **Makefile**
-   ```makefile
-   # Shortcuts for common commands
-   gen:                # Generate code
-     flutter pub run build_runner build
-   dev:                # Run in Chrome
-     flutter run -d chrome
-   ```
-   - Not a Flutter file, but helps run common commands
-   - Type `make command` instead of long Flutter commands
-
-## Project Structure for Beginners
-
-### 1. Start Here: Basic App Setup
 ```
 lib/
-├── main.dart          # App starts here! Very simple file
-└── app.dart           # Basic app configuration
-```
-What to learn:
-- How Flutter apps start
-- Basic widget structure
-- How routing is set up
-
-### 2. Navigation Understanding
-```
-lib/router.dart        # Handles page navigation
-```
-Learn:
-- How to define routes (URLs)
-- How to navigate between pages
-- How to handle nested navigation
-
-### 3. Layout and Pages
-```
-lib/features/
-├── shell/            # Main app layout (like a template)
-│   └── shell_scaffold.dart  # Handles responsive design
-├── dashboard/        # Dashboard page
-├── charts/          # Charts page
-└── settings/        # Settings page
-```
-Each page follows same pattern:
-1. A main widget class
-2. Basic layout structure
-3. Content specific to that page
-
-### 4. Chart System (More Advanced)
-
-Start with the basics:
-```
-lib/charts/widgets/   # Use these first
-├── app_bar_chart.dart    # Bar charts
-├── app_line_chart.dart   # Line charts
-└── app_heatmap.dart      # Heat maps
+├── core/                    # Core utilities, theme, constants
+├── models/                  # Data models (Freezed)
+├── services/                # API services and providers
+├── pages/                   # Main application pages
+├── modules/                 # Feature modules
+├── charts/                  # Chart adapters and core
+└── shared_widgets/          # Reusable UI components
 ```
 
-Then learn how they work:
+## 🔄 Data Flow Architecture
+
+### 1. **Data Layer (Bottom)**
+
 ```
-lib/charts/core/      # The foundation
-├── chart_models.dart    # Data structures
-└── chart_adapter.dart   # Interfaces
+API Response → ApiService → Providers → UI Widgets
 ```
 
-Finally, understand implementations:
-```
-lib/charts/adapters/  # Actual chart implementations
-```
+### 2. **State Management Flow**
 
-### 5. Constants and Utilities
 ```
-lib/core/
-├── constants/        # App-wide constants
-└── utils/           # Helper functions
+User Action → FilterNotifier → Provider Updates → UI Rebuilds
 ```
 
-## Common Tasks (With Examples)
+### 3. **Hierarchical Data Flow**
 
-### 1. Adding a New Page
+```
+Plants → Units → Segments → Lines → Machines → KPI Data
+```
 
-1. Create page file:
+## 📊 State Management Patterns
+
+### **Riverpod Code Generation Pattern**
+
+The application uses **Riverpod code generators** (`@riverpod`) for cleaner, type-safe state management:
+
+#### **Provider Definition**
+
 ```dart
-// lib/features/my_page/my_page.dart
-class MyPage extends StatelessWidget {
+@riverpod
+Future<List<Plant>> plants(PlantsRef ref) async {
+  final apiService = ref.read(apiServiceProvider);
+  return apiService.getPlants();
+}
+```
+
+#### **State Notifier Pattern**
+
+```dart
+@riverpod
+class FilterNotifier extends _$FilterNotifier {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('My Page')),
+  FilterState build() => FilterState.initial();
+
+  void updatePlant(String? plantId) {
+    state = state.copyWith(
+      plantId: plantId,
+      unitId: null,        // Clear dependent filters
+      segmentId: null,
+      lineId: null,
+      machineId: null,
     );
   }
 }
 ```
 
-2. Add to router.dart:
-```dart
-GoRoute(
-  path: '/my-page',
-  builder: (context, state) => const MyPage(),
-),
-```
-
-3. Add to navigation in shell_scaffold.dart
-
-### 2. Using a Chart
+#### **Provider Consumption**
 
 ```dart
-AppBarChart(
-  series: [
-    Series(
-      name: 'Sales',
-      data: [
-        DataPoint(x: 'Jan', y: 100),
-        DataPoint(x: 'Feb', y: 200),
-      ],
-    ),
-  ],
-  xAxis: AxisFormat(title: 'Month'),
-  yAxis: AxisFormat(title: 'Sales'),
-)
+// Watching state changes
+final filterState = ref.watch(filterNotifierProvider);
+
+// Reading providers
+final plantsAsync = ref.watch(plantsProvider);
+
+// Triggering actions
+ref.read(filterNotifierProvider.notifier).updatePlant(plantId);
 ```
 
-### 3. Making Layout Responsive
+### **Key State Management Concepts**
 
-Check screen size:
+1. **Immutable State**: All state is immutable using Freezed
+2. **Reactive Updates**: UI automatically rebuilds when state changes
+3. **Dependency Injection**: Services are injected via providers
+4. **Error Handling**: AsyncValue handles loading, success, and error states
+
+## 🗂️ Data Models
+
+### **Machine Hierarchy Models**
+
 ```dart
-final screenWidth = MediaQuery.of(context).size.width;
-final isSmallScreen = screenWidth < Breakpoints.sm;
-
-return isSmallScreen 
-  ? MobileLayout() 
-  : DesktopLayout();
+@freezed
+class Plant with _$Plant {
+  const factory Plant({
+    @JsonKey(name: 'plant_id') required String plantId,
+    @JsonKey(name: 'plant_name') required String plantName,
+    String? location,
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @JsonKey(name: 'updated_at') required DateTime updatedAt,
+  }) = _Plant;
+}
 ```
 
-## Development Workflow
+**Key Features:**
 
-1. **Making Changes**:
-   ```bash
-   # 1. Get dependencies
-   flutter pub get
+- **Freezed**: Immutable data classes with `copyWith`, `==`, `hashCode`
+- **JSON Serialization**: Automatic JSON parsing with snake_case to camelCase mapping
+- **Type Safety**: Compile-time type checking
 
-   # 2. Generate code (if needed)
-   make gen
+### **Filter State Model**
 
-   # 3. Run the app
-   make dev
-   ```
+```dart
+@freezed
+class FilterState with _$FilterState {
+  const factory FilterState({
+    String? plantId,
+    String? unitId,
+    String? segmentId,
+    String? lineId,
+    String? machineId,
+    @DateTimeRangeConverter() required DateTimeRange dateRange,
+  }) = _FilterState;
+}
+```
 
-2. **After Changing Models**:
-   ```bash
-   # Regenerate code
-   make gen
-   ```
+**Key Features:**
 
-3. **Building for Production**:
-   ```bash
-   make build-web
-   ```
+- **Hierarchical Filters**: Parent filters control child filter availability
+- **Custom Converters**: DateTimeRange conversion for JSON serialization
+- **Immutable Updates**: State changes create new instances
 
-## Common Issues and Solutions
+## 🌐 API Layer
 
-1. **"build_runner failed"**
-   - Run `flutter clean`
-   - Then `flutter pub get`
-   - Then `make gen`
+### **ApiService Structure**
 
-2. **"Undefined class 'Something'"**
-   - Probably missing code generation
-   - Run `make gen`
+```dart
+class ApiService {
+  final Dio _dio;
 
-3. **Chart not showing**
-   - Check data format
-   - Verify series structure
-   - Make sure parent widget has size
+  // Hierarchical REST endpoints
+  Future<List<Unit>> getUnitsByPlant(String plantId) async {
+    final response = await _dio.get('/plants/$plantId/units');
+    return (response.data as List)
+        .map((json) => Unit.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+}
+```
 
-## Next Steps
+**Key Features:**
 
-1. Try modifying the dashboard page
-2. Add a new chart to the gallery
-3. Experiment with different layouts
-4. Add new features to existing pages
+- **Dio HTTP Client**: Robust HTTP client with timeout handling
+- **RESTful Design**: Hierarchical endpoints (`/plants/:id/units`)
+- **Type Safety**: Explicit type casting and error handling
+- **Error Propagation**: Centralized error handling with `_handleError`
 
-Need help? Check:
-- [Flutter Documentation](https://docs.flutter.dev/)
-- [go_router Guide](https://pub.dev/packages/go_router)
-- [FL Chart Examples](https://pub.dev/packages/fl_chart/example)
-- [Riverpod Documentation](https://riverpod.dev/)
+### **API Endpoints Structure**
 
-## App architecture & data flow
+```
+GET /plants                           # Get all plants
+GET /plants/:plantId/units           # Get units for a plant
+GET /units/:unitId/segments          # Get segments for a unit
+GET /segments/:segmentId/lines       # Get lines for a segment
+GET /units/:unitId/machines          # Get machines for a unit
+GET /kpi/output/timeseries           # Get output KPI data
+GET /kpi/availability/timeseries     # Get availability KPI data
+```
 
-### Layers
-- **UI (features)**: Widgets in `lib/features/**` (e.g., `dashboard/dashboard_page.dart`) render screens and capture user input.
-- **State (Riverpod)**: Providers in `lib/features/dashboard/kpi_state.dart` expose current filters, selected KPI, option lists, and time‑series data.
-- **Repository**: `lib/features/dashboard/kpi_repository.dart` translates UI/state intent to HTTP calls and maps responses to app models (e.g., `Series`, `DataPoint`).
-- **Network**: `lib/core/network/api_client.dart` (Dio) configured with `API_BASE_URL` from `lib/core/config/app_config.dart`.
-- **Charts**: High‑level widgets in `lib/charts/widgets/**` delegate to adapters via the registry; visuals are controlled by tokens in `lib/core/design/tokens.dart`.
+## 🎯 Provider Architecture
 
-### End‑to‑end flow (example: user changes a filter)
-1. User picks a new Plant/Segment/Line/Machine or Date Range on `DashboardPage`.
-2. The page dispatches to the filters controller:
-   - `ref.read(kpiFiltersProvider.notifier).updatePlant('Plant A')`
-3. Riverpod updates `kpiFiltersProvider` state. Any providers that depend on it re‑evaluate.
-4. `kpiSeriesProvider` (a `FutureProvider.autoDispose`) reads `selectedKpiIdProvider` + `kpiFiltersProvider` and calls:
-   - `KpiRepository.fetchSeries(id, plant, segment, line, machine)`
-5. `KpiRepository` uses `ApiClient.dio.get(...)` against `API_BASE_URL` to hit the live endpoint, maps the JSON into `Series { name, List<DataPoint> }`.
-6. `kpiSeriesProvider` completes with `AsyncValue.data(Series)`.
-7. `DashboardPage` watches `kpiSeriesProvider` and rebuilds only the chart card:
-   - loading → progress
-   - error → message
-   - data → passes `Series` to `AppLineChart`
-8. `AppLineChart` asks the active adapter factory (via the registry) to build the concrete chart with unified styling (`tokens.dart`).
+### **Provider Categories**
 
-### State map
-- `selectedKpiIdProvider` (StateProvider<String>)
-- `kpiFiltersProvider` (StateNotifier<KpiFiltersController>)
-- `plantsProvider`, `segmentsProvider`, `linesProvider`, `machinesProvider` (FutureProvider<List<String>>)
-- `kpiSeriesProvider` (FutureProvider.autoDispose<Series>)
+#### **1. Data Providers**
 
-### Files of interest
-- UI: `lib/features/dashboard/dashboard_page.dart`
-- State: `lib/features/dashboard/kpi_state.dart`
-- Repository: `lib/features/dashboard/kpi_repository.dart`
-- Network: `lib/core/network/api_client.dart`, `lib/core/config/app_config.dart`
-- Models (charts): `lib/charts/core/chart_models.dart`
-- Charts: `lib/charts/widgets/**`, `lib/charts/adapters/**`, registry in `lib/charts/core/chart_registry.dart`
+```dart
+@riverpod
+Future<List<Plant>> plants(PlantsRef ref) async {
+  final apiService = ref.read(apiServiceProvider);
+  return apiService.getPlants();
+}
+```
 
-### Replace mocks with real series endpoint
-If you have a live time‑series endpoint, update:
-- Implement the real call + mapping in `KpiRepository.fetchSeries(...)`
-- The UI and state are already decoupled; no changes needed in widgets.
+#### **2. State Notifier Providers**
+
+```dart
+@riverpod
+class FilterNotifier extends _$FilterNotifier {
+  @override
+  FilterState build() => FilterState.initial();
+
+  void updateFilters(FilterState newFilters) {
+    state = newFilters;
+  }
+}
+```
+
+#### **3. Computed Providers**
+
+```dart
+@riverpod
+Future<OutputTimeseriesResponse> outputTimeseries(
+  OutputTimeseriesRef ref,
+  FilterState filters,
+) async {
+  final apiService = ref.read(apiServiceProvider);
+  return apiService.getOutputTimeseries(filters);
+}
+```
+
+### **Provider Dependencies**
+
+```
+apiServiceProvider → dataProviders → UI Widgets
+                ↓
+        filterNotifierProvider → computedProviders
+```
+
+## 🎨 UI Architecture
+
+### **Widget Hierarchy**
+
+```
+App → Router → ShellScaffold → Pages → SharedWidgets
+```
+
+### **Responsive Design**
+
+- **Material Design 3**: Modern design system
+- **Breakpoint System**: Responsive layouts for different screen sizes
+- **Adaptive Components**: Widgets that adapt to available space
+
+### **Component Architecture**
+
+```dart
+class MachineFilter extends ConsumerWidget {
+  final FilterState currentFilters;
+  final Function(FilterState) onFiltersChanged;
+  final bool compact;  // Responsive design pattern
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch multiple providers for reactive updates
+    final plantsAsync = ref.watch(plantsProvider);
+    final unitsAsync = currentFilters.plantId != null
+        ? ref.watch(unitsByPlantProvider(currentFilters.plantId!))
+        : const AsyncValue.data(<Unit>[]);
+  }
+}
+```
+
+## 📖 Code Reading Guide
+
+### **Start Here: Understanding the Application Flow**
+
+#### **1. Entry Point (`lib/main.dart`)**
+
+- **Purpose**: Application bootstrap and provider configuration
+- **Key Concepts**: ProviderScope, chart registry setup
+- **What to Learn**: How providers are configured at app startup
+
+#### **2. App Configuration (`lib/app.dart`)**
+
+- **Purpose**: Material app setup with routing
+- **Key Concepts**: ConsumerWidget, router integration
+- **What to Learn**: How Riverpod integrates with Flutter routing
+
+#### **3. Routing (`lib/router.dart`)**
+
+- **Purpose**: Application navigation structure
+- **Key Concepts**: GoRouter, ShellRoute, nested routing
+- **What to Learn**: How navigation is structured and how pages are organized
+
+### **Data Flow Understanding**
+
+#### **4. Models (`lib/models/`)**
+
+- **Start with**: `machine_hierarchy.dart` - Core business entities
+- **Then**: `filter_state.dart` - Application state structure
+- **Finally**: `kpi_data.dart` - Data models for charts and analytics
+
+**Key Learning Points:**
+
+- How Freezed generates immutable classes
+- JSON serialization patterns
+- Model relationships and hierarchy
+
+#### **5. Services (`lib/services/`)**
+
+- **Start with**: `api_service.dart` - Data fetching layer
+- **Then**: `providers.dart` - State management layer
+
+**Key Learning Points:**
+
+- API service patterns
+- Provider organization and dependencies
+- State notifier patterns for complex state
+
+### **State Management Deep Dive**
+
+#### **6. Provider Patterns (`lib/services/providers.dart`)**
+
+```dart
+// Study these patterns:
+@riverpod
+Future<List<Plant>> plants(PlantsRef ref) async { ... }
+
+@riverpod
+class FilterNotifier extends _$FilterNotifier { ... }
+
+@riverpod
+Future<OutputTimeseriesResponse> outputTimeseries(
+  OutputTimeseriesRef ref,
+  FilterState filters,
+) async { ... }
+```
+
+**Key Concepts to Understand:**
+
+- **Provider Dependencies**: How providers reference each other
+- **State Notifiers**: How complex state is managed
+- **Computed Providers**: How data is derived from other providers
+
+#### **7. Filter State Management**
+
+```dart
+// Study the hierarchical filter pattern:
+void updatePlant(String? plantId) {
+  state = state.copyWith(
+    plantId: plantId,
+    unitId: null,        // Clear dependent filters
+    segmentId: null,
+    lineId: null,
+    machineId: null,
+  );
+}
+```
+
+**Key Learning Points:**
+
+- How parent filter changes affect child filters
+- Immutable state updates with `copyWith`
+- State synchronization patterns
+
+### **UI Implementation Understanding**
+
+#### **8. Pages (`lib/pages/`)**
+
+- **Start with**: `home_page.dart` - Main dashboard implementation
+- **Then**: `dashboard_page.dart` - Comparison functionality
+
+**Key Learning Points:**
+
+- How providers are consumed in UI
+- Filter integration patterns
+- Chart data binding
+
+#### **9. Shared Widgets (`lib/core/shared_widgets/`)**
+
+- **Start with**: `filters/machine_filter.dart` - Complex filter implementation
+- **Then**: `charts/kpi_line_chart.dart` - Data visualization
+- **Finally**: `tables/kpi_data_table.dart` - Data presentation
+
+**Key Learning Points:**
+
+- Widget composition patterns
+- Provider consumption in reusable widgets
+- Responsive design implementation
+
+### **Advanced Patterns**
+
+#### **10. Chart System (`lib/charts/`)**
+
+- **Purpose**: Abstract chart rendering system
+- **Key Concepts**: Adapter pattern, chart registry
+- **What to Learn**: How to make chart rendering pluggable and extensible
+
+#### **11. Shell Scaffold (`lib/modules/shell/`)**
+
+- **Purpose**: Application shell with navigation
+- **Key Concepts**: Collapsible sidebar, responsive navigation
+- **What to Learn**: Complex layout management and state persistence
+
+## 🔧 Development Workflow
+
+### **Code Generation**
+
+```bash
+# Generate Freezed models and Riverpod providers
+dart run build_runner build --delete-conflicting-outputs
+
+# Watch for changes during development
+dart run build_runner watch
+```
+
+### **State Management Best Practices**
+
+1. **Use Code Generation**: Always use `@riverpod` instead of manual provider creation
+2. **Immutable State**: Never modify state directly, always use `copyWith`
+3. **Provider Dependencies**: Use `ref.read()` for services, `ref.watch()` for reactive data
+4. **Error Handling**: Use `AsyncValue` for loading states and error handling
+5. **State Notifiers**: Use for complex state that needs multiple update methods
+
+### **API Integration Patterns**
+
+1. **Hierarchical Endpoints**: Follow RESTful design for nested resources
+2. **Error Handling**: Centralize error handling in ApiService
+3. **Type Safety**: Always cast API responses to proper types
+4. **Loading States**: Use AsyncValue for proper loading state management
+
+## 🌍 Environment Configuration
+
+The application supports multiple environments with different API endpoints:
+
+### **Available Environments**
+
+- **Local**: `http://localhost:8080` (default)
+- **Staging**: `https://monks-be-production.up.railway.app`
+- **Production**: `https://api.monks-production.com` (dummy URL)
+
+### **Environment Management**
+
+#### **Using the Environment Script**
+
+```bash
+# Switch to local environment
+./scripts/set_env.sh local
+
+# Switch to staging environment
+./scripts/set_env.sh staging
+
+# Switch to production environment
+./scripts/set_env.sh prod
+
+# Regenerate environment files after switching
+dart run build_runner build
+```
+
+#### **Manual Environment Configuration**
+
+Create a `.env` file in the project root:
+
+```bash
+# For local development
+ENVIRONMENT=local
+API_BASE_URL=http://localhost:8080
+
+# For staging
+ENVIRONMENT=staging
+API_BASE_URL=https://monks-be-production.up.railway.app
+
+# For production
+ENVIRONMENT=prod
+API_BASE_URL=https://api.monks-production.com
+```
+
+#### **Environment Detection in Code**
+
+```dart
+import 'package:mfg_dashboard/core/config/app_config.dart';
+
+// Get current API base URL
+final apiUrl = AppConfig.apiBaseUrl;
+
+// Check environment
+if (AppConfig.isLocal) {
+  // Local development code
+} else if (AppConfig.isStaging) {
+  // Staging environment code
+} else if (AppConfig.isProduction) {
+  // Production environment code
+}
+```
+
+## 🚀 Getting Started
+
+### **Prerequisites**
+
+- Flutter 3.9.0+
+- Dart 3.9.0+
+- Backend API running (see environment configuration above)
+
+### **Setup**
+
+```bash
+# Clone and setup
+git clone <repository>
+cd Monks-FE
+
+# Install dependencies
+flutter pub get
+
+# Set environment (defaults to local)
+./scripts/set_env.sh local
+
+# Generate code
+dart run build_runner build --delete-conflicting-outputs
+
+# Run the application
+flutter run -d chrome --web-port 4001
+```
+
+### **Development Commands**
+
+```bash
+# Code generation
+make generate
+
+# Linting and analysis
+make analyze
+
+# Format code
+make format
+
+# Run tests
+make test
+```
+
+## 📚 Key Takeaways
+
+1. **Riverpod + Code Generation**: Provides clean, type-safe state management
+2. **Freezed Models**: Ensures data immutability and type safety
+3. **Hierarchical Architecture**: Clear separation of concerns from data to UI
+4. **Reactive UI**: Automatic UI updates based on state changes
+5. **Scalable Structure**: Easy to add new features and modify existing ones
+
+This architecture provides a solid foundation for building complex, maintainable Flutter applications with excellent developer experience and runtime performance.

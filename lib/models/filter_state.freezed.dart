@@ -27,9 +27,6 @@ mixin _$FilterState {
   String? get machineId => throw _privateConstructorUsedError;
   @DateTimeRangeConverter()
   DateTimeRange<DateTime> get dateRange => throw _privateConstructorUsedError;
-  String? get shiftId => throw _privateConstructorUsedError;
-  String? get operatorId => throw _privateConstructorUsedError;
-  String? get productId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,10 +46,7 @@ abstract class $FilterStateCopyWith<$Res> {
       String? segmentId,
       String? lineId,
       String? machineId,
-      @DateTimeRangeConverter() DateTimeRange<DateTime> dateRange,
-      String? shiftId,
-      String? operatorId,
-      String? productId});
+      @DateTimeRangeConverter() DateTimeRange<DateTime> dateRange});
 }
 
 /// @nodoc
@@ -74,9 +68,6 @@ class _$FilterStateCopyWithImpl<$Res, $Val extends FilterState>
     Object? lineId = freezed,
     Object? machineId = freezed,
     Object? dateRange = null,
-    Object? shiftId = freezed,
-    Object? operatorId = freezed,
-    Object? productId = freezed,
   }) {
     return _then(_value.copyWith(
       plantId: freezed == plantId
@@ -103,18 +94,6 @@ class _$FilterStateCopyWithImpl<$Res, $Val extends FilterState>
           ? _value.dateRange
           : dateRange // ignore: cast_nullable_to_non_nullable
               as DateTimeRange<DateTime>,
-      shiftId: freezed == shiftId
-          ? _value.shiftId
-          : shiftId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      operatorId: freezed == operatorId
-          ? _value.operatorId
-          : operatorId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      productId: freezed == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -133,10 +112,7 @@ abstract class _$$FilterStateImplCopyWith<$Res>
       String? segmentId,
       String? lineId,
       String? machineId,
-      @DateTimeRangeConverter() DateTimeRange<DateTime> dateRange,
-      String? shiftId,
-      String? operatorId,
-      String? productId});
+      @DateTimeRangeConverter() DateTimeRange<DateTime> dateRange});
 }
 
 /// @nodoc
@@ -156,9 +132,6 @@ class __$$FilterStateImplCopyWithImpl<$Res>
     Object? lineId = freezed,
     Object? machineId = freezed,
     Object? dateRange = null,
-    Object? shiftId = freezed,
-    Object? operatorId = freezed,
-    Object? productId = freezed,
   }) {
     return _then(_$FilterStateImpl(
       plantId: freezed == plantId
@@ -185,18 +158,6 @@ class __$$FilterStateImplCopyWithImpl<$Res>
           ? _value.dateRange
           : dateRange // ignore: cast_nullable_to_non_nullable
               as DateTimeRange<DateTime>,
-      shiftId: freezed == shiftId
-          ? _value.shiftId
-          : shiftId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      operatorId: freezed == operatorId
-          ? _value.operatorId
-          : operatorId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      productId: freezed == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -210,10 +171,7 @@ class _$FilterStateImpl implements _FilterState {
       this.segmentId,
       this.lineId,
       this.machineId,
-      @DateTimeRangeConverter() required this.dateRange,
-      this.shiftId,
-      this.operatorId,
-      this.productId});
+      @DateTimeRangeConverter() required this.dateRange});
 
   factory _$FilterStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$FilterStateImplFromJson(json);
@@ -231,16 +189,10 @@ class _$FilterStateImpl implements _FilterState {
   @override
   @DateTimeRangeConverter()
   final DateTimeRange<DateTime> dateRange;
-  @override
-  final String? shiftId;
-  @override
-  final String? operatorId;
-  @override
-  final String? productId;
 
   @override
   String toString() {
-    return 'FilterState(plantId: $plantId, unitId: $unitId, segmentId: $segmentId, lineId: $lineId, machineId: $machineId, dateRange: $dateRange, shiftId: $shiftId, operatorId: $operatorId, productId: $productId)';
+    return 'FilterState(plantId: $plantId, unitId: $unitId, segmentId: $segmentId, lineId: $lineId, machineId: $machineId, dateRange: $dateRange)';
   }
 
   @override
@@ -256,18 +208,13 @@ class _$FilterStateImpl implements _FilterState {
             (identical(other.machineId, machineId) ||
                 other.machineId == machineId) &&
             (identical(other.dateRange, dateRange) ||
-                other.dateRange == dateRange) &&
-            (identical(other.shiftId, shiftId) || other.shiftId == shiftId) &&
-            (identical(other.operatorId, operatorId) ||
-                other.operatorId == operatorId) &&
-            (identical(other.productId, productId) ||
-                other.productId == productId));
+                other.dateRange == dateRange));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, plantId, unitId, segmentId,
-      lineId, machineId, dateRange, shiftId, operatorId, productId);
+  int get hashCode => Object.hash(
+      runtimeType, plantId, unitId, segmentId, lineId, machineId, dateRange);
 
   @JsonKey(ignore: true)
   @override
@@ -291,10 +238,7 @@ abstract class _FilterState implements FilterState {
       final String? lineId,
       final String? machineId,
       @DateTimeRangeConverter()
-      required final DateTimeRange<DateTime> dateRange,
-      final String? shiftId,
-      final String? operatorId,
-      final String? productId}) = _$FilterStateImpl;
+      required final DateTimeRange<DateTime> dateRange}) = _$FilterStateImpl;
 
   factory _FilterState.fromJson(Map<String, dynamic> json) =
       _$FilterStateImpl.fromJson;
@@ -312,12 +256,6 @@ abstract class _FilterState implements FilterState {
   @override
   @DateTimeRangeConverter()
   DateTimeRange<DateTime> get dateRange;
-  @override
-  String? get shiftId;
-  @override
-  String? get operatorId;
-  @override
-  String? get productId;
   @override
   @JsonKey(ignore: true)
   _$$FilterStateImplCopyWith<_$FilterStateImpl> get copyWith =>

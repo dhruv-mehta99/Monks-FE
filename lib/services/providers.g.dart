@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$apiServiceHash() => r'ce72c4f572ea14a273b01086cdc8905a2e469468';
+String _$apiServiceHash() => r'73ad3c2e8c0d458c43bdd728c0f0fb75c5c2af98';
 
 /// See also [apiService].
 @ProviderFor(apiService)
@@ -20,22 +20,6 @@ final apiServiceProvider = AutoDisposeProvider<ApiService>.internal(
 );
 
 typedef ApiServiceRef = AutoDisposeProviderRef<ApiService>;
-String _$machineHierarchyHash() => r'78cc0bcfc7e6d8a4a23a1bcbb181e11d26f9e510';
-
-/// See also [machineHierarchy].
-@ProviderFor(machineHierarchy)
-final machineHierarchyProvider =
-    AutoDisposeFutureProvider<MachineHierarchy>.internal(
-  machineHierarchy,
-  name: r'machineHierarchyProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$machineHierarchyHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef MachineHierarchyRef = AutoDisposeFutureProviderRef<MachineHierarchy>;
 String _$plantsHash() => r'86acd51aff91568c196dac4c5183314762412e2c';
 
 /// See also [plants].
@@ -50,7 +34,7 @@ final plantsProvider = AutoDisposeFutureProvider<List<Plant>>.internal(
 );
 
 typedef PlantsRef = AutoDisposeFutureProviderRef<List<Plant>>;
-String _$unitsByPlantHash() => r'4373d7724007cb457e61a48427e5ee13cc9c647d';
+String _$unitsByPlantHash() => r'3fb5a6e176c031a10db0f85c7a3c0da1ba697884';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -328,7 +312,7 @@ class _SegmentsByUnitProviderElement
   String get unitId => (origin as SegmentsByUnitProvider).unitId;
 }
 
-String _$linesBySegmentHash() => r'b68b97aa5c5d726921e2aa8898c1fd129aa19f7e';
+String _$linesBySegmentHash() => r'b288fdb8edd61d6f536db71137b9c49a41730111';
 
 /// See also [linesBySegment].
 @ProviderFor(linesBySegment)
@@ -457,7 +441,7 @@ class _LinesBySegmentProviderElement
   String get segmentId => (origin as LinesBySegmentProvider).segmentId;
 }
 
-String _$machinesByLineHash() => r'a9fc3ba03ee7b64783963c4f7888ac89986c5fa7';
+String _$machinesByLineHash() => r'984481c774c6fc9b9eeac8522fc64ce8bdc8ef34';
 
 /// See also [machinesByLine].
 @ProviderFor(machinesByLine)
@@ -586,7 +570,7 @@ class _MachinesByLineProviderElement
   String get lineId => (origin as MachinesByLineProvider).lineId;
 }
 
-String _$machinesByUnitHash() => r'7d4f754c3369d40e8d20e5eb1d1f1f27cd7b8de8';
+String _$machinesByUnitHash() => r'6f90a290d9dd62c5b73436d45743c842c158372b';
 
 /// See also [machinesByUnit].
 @ProviderFor(machinesByUnit)
@@ -732,7 +716,7 @@ class _MachinesByUnitProviderElement
   String? get lineId => (origin as MachinesByUnitProvider).lineId;
 }
 
-String _$shiftsHash() => r'4b8a37e998eeb8f52084f8675671e401b7fe362a';
+String _$shiftsHash() => r'e074e1815e8d501299dd73d4fb95ea9a2c6a6b30';
 
 /// See also [shifts].
 @ProviderFor(shifts)
@@ -747,7 +731,7 @@ final shiftsProvider =
 );
 
 typedef ShiftsRef = AutoDisposeFutureProviderRef<List<Map<String, dynamic>>>;
-String _$operatorsHash() => r'1825b71e5570518a764b72e78c8510275258520f';
+String _$operatorsHash() => r'8788dc8ac332fd93000265fbe56eae9c04b42ee4';
 
 /// See also [operators].
 @ProviderFor(operators)
@@ -762,7 +746,7 @@ final operatorsProvider =
 );
 
 typedef OperatorsRef = AutoDisposeFutureProviderRef<List<Map<String, dynamic>>>;
-String _$productsHash() => r'6c0ab487b6ac3b94eda2b73ae2a9b3ea95e35f0d';
+String _$productsHash() => r'227ccd9b4c23fc83665dbee8bac07cb4f41c7b6d';
 
 /// See also [products].
 @ProviderFor(products)
@@ -777,7 +761,7 @@ final productsProvider =
 );
 
 typedef ProductsRef = AutoDisposeFutureProviderRef<List<Map<String, dynamic>>>;
-String _$outputTimeseriesHash() => r'06bc020f6ae91ec717879654e6966e89274ec875';
+String _$outputTimeseriesHash() => r'22636b2482300d2e92789187891c0557e2e96a8c';
 
 /// See also [outputTimeseries].
 @ProviderFor(outputTimeseries)
@@ -911,7 +895,7 @@ class _OutputTimeseriesProviderElement
 }
 
 String _$performanceTimeseriesHash() =>
-    r'ec3ad94177a5f6a1cbfb5b9a03f6965a0a4812cf';
+    r'8fa0a0b4cff249448fa35aa0b1349e1374b1b4ac';
 
 /// See also [performanceTimeseries].
 @ProviderFor(performanceTimeseries)
@@ -1046,7 +1030,7 @@ class _PerformanceTimeseriesProviderElement
   FilterState get filters => (origin as PerformanceTimeseriesProvider).filters;
 }
 
-String _$outputAggregateHash() => r'26d70b0348b20a67074abe35d0a3ddc10cf2dd75';
+String _$outputAggregateHash() => r'39f300596a85d77c4b4fe1521396cca5ba498b25';
 
 /// See also [outputAggregate].
 @ProviderFor(outputAggregate)
@@ -1180,7 +1164,7 @@ class _OutputAggregateProviderElement
 }
 
 String _$performanceAggregateHash() =>
-    r'eaf733f0739a9bd2a421e25ac233a627ceff7d8b';
+    r'bad347eeaaf177f65430df289e211cb3c654a734';
 
 /// See also [performanceAggregate].
 @ProviderFor(performanceAggregate)
@@ -1316,7 +1300,7 @@ class _PerformanceAggregateProviderElement
 }
 
 String _$availabilityTimeseriesHash() =>
-    r'0d651364719ec8f29aefc77ac51d95f4cca044fd';
+    r'f0faca4a64540f0dad98cd44f78c7636d91a58de';
 
 /// See also [availabilityTimeseries].
 @ProviderFor(availabilityTimeseries)
@@ -1452,7 +1436,7 @@ class _AvailabilityTimeseriesProviderElement
 }
 
 String _$availabilityAggregateHash() =>
-    r'57d2f105ee04f5dcbefb351349d6488cef4fc822';
+    r'80ee4076fb9739d5b96d0d121eff25036679e3f2';
 
 /// See also [availabilityAggregate].
 @ProviderFor(availabilityAggregate)
@@ -1587,7 +1571,7 @@ class _AvailabilityAggregateProviderElement
   FilterState get filters => (origin as AvailabilityAggregateProvider).filters;
 }
 
-String _$filterNotifierHash() => r'43b829bc8e6a00bcd24c95f07053d964ad7e22a0';
+String _$filterNotifierHash() => r'8aed88b6f6c87a18c6b006647961e2134b0fcd7d';
 
 /// See also [FilterNotifier].
 @ProviderFor(FilterNotifier)

@@ -15,9 +15,6 @@ _$FilterStateImpl _$$FilterStateImplFromJson(Map<String, dynamic> json) =>
       machineId: json['machineId'] as String?,
       dateRange: const DateTimeRangeConverter()
           .fromJson(json['dateRange'] as Map<String, dynamic>),
-      shiftId: json['shiftId'] as String?,
-      operatorId: json['operatorId'] as String?,
-      productId: json['productId'] as String?,
     );
 
 Map<String, dynamic> _$$FilterStateImplToJson(_$FilterStateImpl instance) =>
@@ -28,9 +25,6 @@ Map<String, dynamic> _$$FilterStateImplToJson(_$FilterStateImpl instance) =>
       'lineId': instance.lineId,
       'machineId': instance.machineId,
       'dateRange': const DateTimeRangeConverter().toJson(instance.dateRange),
-      'shiftId': instance.shiftId,
-      'operatorId': instance.operatorId,
-      'productId': instance.productId,
     };
 
 _$ComparisonFiltersImpl _$$ComparisonFiltersImplFromJson(

@@ -12,13 +12,6 @@ part 'providers.g.dart';
 @riverpod
 ApiService apiService(ApiServiceRef ref) => ApiService();
 
-// Machine Hierarchy Providers
-@riverpod
-Future<MachineHierarchy> machineHierarchy(MachineHierarchyRef ref) async {
-  final apiService = ref.read(apiServiceProvider);
-  return apiService.getMachineHierarchy();
-}
-
 // Plants Provider
 @riverpod
 Future<List<Plant>> plants(PlantsRef ref) async {
@@ -155,17 +148,17 @@ class FilterNotifier extends _$FilterNotifier {
     state = state.copyWith(dateRange: dateRange);
   }
 
-  void updateShift(String? shiftId) {
-    state = state.copyWith(shiftId: shiftId);
-  }
+  // void updateShift(String? shiftId) {
+  //   state = state.copyWith(shiftId: shiftId);
+  // }
 
-  void updateOperator(String? operatorId) {
-    state = state.copyWith(operatorId: operatorId);
-  }
+  // void updateOperator(String? operatorId) {
+  //   state = state.copyWith(operatorId: operatorId);
+  // }
 
-  void updateProduct(String? productId) {
-    state = state.copyWith(productId: productId);
-  }
+  // void updateProduct(String? productId) {
+  //   state = state.copyWith(productId: productId);
+  // }
 
   void updateFilters(FilterState newFilters) {
     state = newFilters;

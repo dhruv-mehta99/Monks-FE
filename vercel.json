@@ -1,0 +1,33 @@
+{
+  "buildCommand": "make build-staging",
+  "outputDirectory": "build/web",
+  "framework": null,
+  "installCommand": "flutter pub get && dart run build_runner build",
+  "devCommand": "make staging",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

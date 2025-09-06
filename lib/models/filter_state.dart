@@ -30,9 +30,9 @@ class FilterState with _$FilterState {
     String? lineId,
     String? machineId,
     @DateTimeRangeConverter() required DateTimeRange dateRange,
-    String? shiftId,
-    String? operatorId,
-    String? productId,
+    // String? shiftId,
+    // String? operatorId,
+    // String? productId,
   }) = _FilterState;
 
   factory FilterState.initial() => FilterState(

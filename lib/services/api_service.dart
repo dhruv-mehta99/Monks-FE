@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../core/config/app_config.dart';
 import '../models/filter_state.dart';
 import '../models/kpi_data.dart';
 import '../models/machine_hierarchy.dart';
@@ -10,24 +11,11 @@ class ApiService {
   ApiService({String? baseUrl})
     : _dio = Dio(
         BaseOptions(
-          baseUrl: baseUrl ?? 'http://localhost:5001',
+          baseUrl: baseUrl ?? AppConfig.apiBaseUrl,
           connectTimeout: const Duration(seconds: 30),
           receiveTimeout: const Duration(seconds: 30),
         ),
       );
-
-  // Machine Hierarchy - Updated to match new API structure
-  Future<MachineHierarchy> getMachineHierarchy() async {
-    try {
-      final response = await _dio.get('/plants');
-      final plants = (response.data as List)
-          .map((json) => Plant.fromJson(json as Map<String, dynamic>))
-          .toList();
-      return MachineHierarchy(plants: plants);
-    } catch (e) {
-      throw _handleError(e);
-    }
-  }
 
   Future<List<Plant>> getPlants() async {
     try {
@@ -254,17 +242,19 @@ class ApiService {
       params['machineIds'] = filters.machineId;
     }
 
-    if (filters.shiftId != null) {
-      params['shiftId'] = filters.shiftId;
-    }
+    // Note: shiftId, operatorId, and productId are currently commented out in FilterState
+    // Uncomment these when the properties are added back to FilterState
+    // if (filters.shiftId != null) {
+    //   params['shiftId'] = filters.shiftId;
+    // }
 
-    if (filters.operatorId != null) {
-      params['operatorId'] = filters.operatorId;
-    }
+    // if (filters.operatorId != null) {
+    //   params['operatorId'] = filters.operatorId;
+    // }
 
-    if (filters.productId != null) {
-      params['productId'] = filters.productId;
-    }
+    // if (filters.productId != null) {
+    //   params['productId'] = filters.productId;
+    // }
 
     return params;
   }

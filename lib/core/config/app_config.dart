@@ -1,6 +1,9 @@
+import 'environment.dart';
+
 class AppConfig {
-  static const String apiBaseUrl = String.fromEnvironment(
-    'API_BASE_URL',
-    defaultValue: 'http://localhost:8080',
-  );
+  static String get apiBaseUrl => EnvironmentConfig.apiBaseUrl;
+
+  static bool get isLocal => EnvironmentConfig.isLocal;
+  static bool get isStaging => EnvironmentConfig.isStaging;
+  static bool get isProduction => EnvironmentConfig.isProduction;
 }

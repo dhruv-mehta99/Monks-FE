@@ -11,7 +11,19 @@ clean: ## Clean build artifacts
 	rm -rf build/
 	rm -rf .dart_tool/
 
-build: ## Build the project
+build: ## Build the project (local environment)
+	./scripts/set_env.sh local
+	dart run build_runner build
+	flutter build web
+
+build-staging: ## Build for staging environment
+	./scripts/set_env.sh staging
+	dart run build_runner build
+	flutter build web
+
+build-prod: ## Build for production environment
+	./scripts/set_env.sh prod
+	dart run build_runner build
 	flutter build web
 
 test: ## Run tests
@@ -35,7 +47,19 @@ generate: ## Generate code (Freezed, Riverpod, etc.)
 watch: ## Watch for changes and regenerate code
 	flutter packages pub run build_runner watch --delete-conflicting-outputs
 
-dev: ## Start development server
+dev: ## Start development server (local environment)
+	./scripts/set_env.sh local
+	dart run build_runner build
+	flutter run -d chrome --web-port 4001
+
+staging: ## Start app in staging environment
+	./scripts/set_env.sh staging
+	dart run build_runner build
+	flutter run -d chrome --web-port 4001
+
+prod: ## Start app in production environment
+	./scripts/set_env.sh prod
+	dart run build_runner build
 	flutter run -d chrome --web-port 4001
 
 deps: ## Get dependencies
@@ -43,3 +67,12 @@ deps: ## Get dependencies
 
 upgrade: ## Upgrade dependencies
 	flutter pub upgrade
+
+deploy: ## Deploy to Vercel (staging)
+	./scripts/deploy.sh vercel
+
+deploy-netlify: ## Deploy to Netlify (staging)
+	./scripts/deploy.sh netlify
+
+deploy-github: ## Deploy to GitHub Pages (staging)
+	./scripts/deploy.sh github

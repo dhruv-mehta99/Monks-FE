@@ -115,7 +115,7 @@ class FlChartLineAdapter extends LineChartAdapter {
 
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
-        tooltipBgColor: AppTokens.tooltipBg,
+        backgroundColor: AppTokens.tooltipBg,
         tooltipRoundedRadius: AppTokens.tooltipRadius,
         getTooltipItems: (touchedSpots) => touchedSpots.map((spot) {
             final s = this.series[spot.barIndex];

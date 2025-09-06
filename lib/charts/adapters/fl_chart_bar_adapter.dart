@@ -108,7 +108,7 @@ class FlChartBarAdapter extends BarChartAdapter {
 
     return BarTouchData(
       touchTooltipData: BarTouchTooltipData(
-        tooltipBgColor: AppTokens.tooltipBg,
+        backgroundColor: AppTokens.tooltipBg,
         tooltipRoundedRadius: AppTokens.tooltipRadius,
         getTooltipItem: (group, groupIndex, rod, rodIndex) {
           final s = series[rodIndex];

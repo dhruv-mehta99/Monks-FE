@@ -132,7 +132,7 @@ class KpiLineChart extends StatelessWidget {
                   lineTouchData: LineTouchData(
                     enabled: true,
                     touchTooltipData: LineTouchTooltipData(
-                      tooltipBgColor: Colors.blueGrey.withOpacity(0.9),
+                      backgroundColor: Colors.blueGrey.withOpacity(0.9),
                       getTooltipItems: (touchedSpots) => touchedSpots.map((touchedSpot) {
                           final timePoint = _getAllTimePoints()[touchedSpot.x.toInt()];
                           return LineTooltipItem(

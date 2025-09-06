@@ -4,11 +4,6 @@
   "framework": null,
   "installCommand": "echo 'Using build script for Flutter installation'",
   "devCommand": "make staging",
-  "functions": {
-    "app/api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/(.*)",

@@ -58,10 +58,10 @@ fi
 
 # Set environment to staging
 echo "🌍 Setting environment to staging..."
-if ! ./scripts/set_env.sh staging; then
-    echo "❌ Failed to set environment"
-    exit 1
-fi
+echo "ENVIRONMENT=staging" > .env
+echo "API_BASE_URL=https://monks-be-production.up.railway.app" >> .env
+echo "Environment set to: staging"
+echo "API Base URL: https://monks-be-production.up.railway.app"
 
 # Generate code
 echo "🔧 Generating code..."

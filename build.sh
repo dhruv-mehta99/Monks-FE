@@ -17,11 +17,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         exit 1
     fi
 else
-    # Linux (Vercel)
-    echo "Detected Linux, downloading Flutter..."
-    curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.1-stable.tar.xz
-    tar xf flutter.tar.xz
-    export PATH="$PWD/flutter/bin:$PATH"
+        # Linux (Vercel)
+        echo "Detected Linux, downloading Flutter..."
+        curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.29.1-stable.tar.xz
+        tar xf flutter.tar.xz
+        export PATH="$PWD/flutter/bin:$PATH"
 fi
 
 # Fix git ownership issues
@@ -41,32 +41,25 @@ flutter --version
 echo "✅ Dart version:"
 dart --version
 
-# Temporarily adjust SDK requirement for build
-echo "🔧 Adjusting SDK requirement for build..."
-sed -i 's/sdk: ">=3.9.0 <4.0.0"/sdk: ">=3.6.0 <4.0.0"/g' pubspec.yaml
+# Update SDK requirement for newer Dart version
+echo "🔧 Updating SDK requirement for Dart 3.7.0..."
+sed -i 's/sdk: ">=3.9.0 <4.0.0"/sdk: ">=3.7.0 <4.0.0"/g' pubspec.yaml
 
-# Downgrade flutter_lints for compatibility
-echo "🔧 Downgrading flutter_lints for compatibility..."
-sed -i 's/flutter_lints: \^6.0.0/flutter_lints: ^3.0.2/g' pubspec.yaml
+# Upgrade packages to latest versions compatible with Dart 3.7.0
+echo "🔧 Upgrading packages to latest versions..."
+sed -i 's/flutter_lints: \^3.0.2/flutter_lints: ^6.0.0/g' pubspec.yaml
+sed -i 's/flutter_hooks: \^0.20.5/flutter_hooks: ^0.21.3+1/g' pubspec.yaml
+sed -i 's/go_router: \^13.2.5/go_router: ^16.2.1/g' pubspec.yaml
+sed -i 's/syncfusion_flutter_charts: \^29.1.38/syncfusion_flutter_charts: ^31.1.17/g' pubspec.yaml
+sed -i 's/fl_chart: \^0.66.2/fl_chart: ^1.1.0/g' pubspec.yaml
 
-# Downgrade flutter_hooks for compatibility
-echo "🔧 Downgrading flutter_hooks for compatibility..."
-sed -i 's/flutter_hooks: \^0.21.3+1/flutter_hooks: ^0.20.5/g' pubspec.yaml
-
-# Downgrade go_router for compatibility
-echo "🔧 Downgrading go_router for compatibility..."
-sed -i 's/go_router: \^16.2.1/go_router: ^13.2.5/g' pubspec.yaml
-
-# Downgrade syncfusion_flutter_charts for compatibility
-echo "🔧 Downgrading syncfusion_flutter_charts for compatibility..."
-sed -i 's/syncfusion_flutter_charts: \^31.1.17/syncfusion_flutter_charts: ^29.1.38/g' pubspec.yaml
-
-# Downgrade fl_chart for compatibility
-echo "🔧 Downgrading fl_chart for compatibility..."
-sed -i 's/fl_chart: \^1.1.0/fl_chart: ^0.66.2/g' pubspec.yaml
-
-# Fix fl_chart parameters for downgraded version (already using old parameter names)
-echo "🔧 Fl_chart parameters already compatible with downgraded version..."
+# Fix fl_chart parameters for latest version
+echo "🔧 Fixing fl_chart parameters for latest version..."
+sed -i 's/tooltipBgColor: AppTokens.tooltipBg,/getTooltipColor: (group) => AppTokens.tooltipBg,/g' lib/charts/adapters/fl_chart_bar_adapter.dart
+sed -i 's/tooltipRoundedRadius: AppTokens.tooltipRadius,/tooltipBorderRadius: BorderRadius.circular(AppTokens.tooltipRadius),/g' lib/charts/adapters/fl_chart_bar_adapter.dart
+sed -i 's/tooltipBgColor: AppTokens.tooltipBg,/getTooltipColor: (touchedSpot) => AppTokens.tooltipBg,/g' lib/charts/adapters/fl_chart_line_adapter.dart
+sed -i 's/tooltipRoundedRadius: AppTokens.tooltipRadius,/tooltipBorderRadius: BorderRadius.circular(AppTokens.tooltipRadius),/g' lib/charts/adapters/fl_chart_line_adapter.dart
+sed -i 's/tooltipBgColor: Colors.blueGrey.withOpacity(0.9),/getTooltipColor: (touchedSpot) => Colors.blueGrey.withOpacity(0.9),/g' lib/core/shared_widgets/charts/kpi_line_chart.dart
 
 # Get dependencies
 echo "📦 Getting dependencies..."

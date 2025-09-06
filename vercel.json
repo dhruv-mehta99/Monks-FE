@@ -1,8 +1,8 @@
 {
-  "buildCommand": "make build-staging",
+  "buildCommand": "./build.sh",
   "outputDirectory": "build/web",
   "framework": null,
-  "installCommand": "flutter pub get && dart run build_runner build",
+  "installCommand": "echo 'Using build script for Flutter installation'",
   "devCommand": "make staging",
   "rewrites": [
     {

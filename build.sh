@@ -5,15 +5,28 @@ set -e
 
 echo "🚀 Starting Flutter build for Vercel..."
 
-# Install Flutter
+# Install Flutter (latest stable)
 echo "📦 Installing Flutter..."
-curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.9-stable.tar.xz
+curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.5-stable.tar.xz
 tar xf flutter.tar.xz
 export PATH="$PWD/flutter/bin:$PATH"
+
+# Fix git ownership issues
+echo "🔧 Fixing git ownership issues..."
+git config --global --add safe.directory /vercel/path0/flutter
+git config --global --add safe.directory /vercel/path0/flutter/bin/cache/dart-sdk
 
 # Verify Flutter installation
 echo "✅ Flutter version:"
 flutter --version
+
+# Check Dart version
+echo "✅ Dart version:"
+dart --version
+
+# Temporarily adjust SDK requirement for build (Flutter 3.24.5 has Dart 3.5+)
+echo "🔧 Adjusting SDK requirement for build..."
+sed -i 's/sdk: '\''>=3.9.0 <4.0.0'\''/sdk: '\''>=3.5.0 <4.0.0'\''/g' pubspec.yaml
 
 # Get dependencies
 echo "📦 Getting dependencies..."

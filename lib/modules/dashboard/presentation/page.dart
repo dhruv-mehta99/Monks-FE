@@ -212,7 +212,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     required List<String> items,
     required void Function(String) onChanged,
   }) => DropdownButtonFormField<String>(
-    initialValue: value.isEmpty ? null : value,
+      value: value.isEmpty ? null : value,
     items: [for (final i in items) DropdownMenuItem(value: i, child: Text(i))],
     onChanged: (v) {
       if (v != null) onChanged(v);

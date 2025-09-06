@@ -19,7 +19,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
     # Linux (Vercel)
     echo "Detected Linux, downloading Flutter..."
-    curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.5-stable.tar.xz
+    curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.1-stable.tar.xz
     tar xf flutter.tar.xz
     export PATH="$PWD/flutter/bin:$PATH"
 fi

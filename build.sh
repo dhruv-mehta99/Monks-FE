@@ -16,6 +16,10 @@ echo "🔧 Fixing git ownership issues..."
 git config --global --add safe.directory /vercel/path0/flutter
 git config --global --add safe.directory /vercel/path0/flutter/bin/cache/dart-sdk
 
+# Disable Flutter analytics to avoid prompts
+echo "🔧 Disabling Flutter analytics..."
+flutter config --no-analytics
+
 # Verify Flutter installation
 echo "✅ Flutter version:"
 flutter --version
@@ -24,9 +28,13 @@ flutter --version
 echo "✅ Dart version:"
 dart --version
 
-# Temporarily adjust SDK requirement for build (Flutter 3.24.5 has Dart 3.5+)
+# Temporarily adjust SDK requirement for build
 echo "🔧 Adjusting SDK requirement for build..."
 sed -i 's/sdk: '\''>=3.9.0 <4.0.0'\''/sdk: '\''>=3.5.0 <4.0.0'\''/g' pubspec.yaml
+
+# Downgrade syncfusion package to compatible version
+echo "🔧 Downgrading syncfusion package for compatibility..."
+sed -i 's/syncfusion_flutter_charts: ^30.2.5/syncfusion_flutter_charts: ^29.1.38/g' pubspec.yaml
 
 # Get dependencies
 echo "📦 Getting dependencies..."

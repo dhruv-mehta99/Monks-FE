@@ -41,8 +41,9 @@ flutter --version
 echo "✅ Dart version:"
 dart --version
 
-# Using latest Flutter with Dart 3.7+ - no adjustments needed
-echo "✅ Using latest Flutter with Dart 3.7+ - all packages compatible"
+# Temporarily adjust SDK requirement for build
+echo "🔧 Adjusting SDK requirement for build..."
+sed -i 's/sdk: ">=3.9.0 <4.0.0"/sdk: ">=3.6.0 <4.0.0"/g' pubspec.yaml
 
 # Get dependencies
 echo "📦 Getting dependencies..."

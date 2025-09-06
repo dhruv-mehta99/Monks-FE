@@ -57,6 +57,10 @@ sed -i 's/flutter_hooks: \^0.21.3+1/flutter_hooks: ^0.20.5/g' pubspec.yaml
 echo "🔧 Downgrading go_router for compatibility..."
 sed -i 's/go_router: \^16.2.1/go_router: ^13.2.5/g' pubspec.yaml
 
+# Downgrade syncfusion_flutter_charts for compatibility
+echo "🔧 Downgrading syncfusion_flutter_charts for compatibility..."
+sed -i 's/syncfusion_flutter_charts: \^31.1.17/syncfusion_flutter_charts: ^29.1.38/g' pubspec.yaml
+
 # Get dependencies
 echo "📦 Getting dependencies..."
 if ! flutter pub get; then

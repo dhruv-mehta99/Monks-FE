@@ -222,6 +222,12 @@ class KpiLineChart extends StatelessWidget {
         final color = colors[index % colors.length];
 
         final spots = series.data.asMap().entries.map((dataEntry) {
+          // [print only for 1st entry]
+          // if (dataEntry.key == 0) {
+          print('series.machineId: ${series.machineId}');
+          print('dataEntry.value: ${dataEntry.value}');
+          print('dataEntry.key: ${dataEntry.key}');
+          // }
           final dataIndex = dataEntry.key;
           final dataPoint = dataEntry.value;
           return FlSpot(dataIndex.toDouble(), dataPoint.chartValue);

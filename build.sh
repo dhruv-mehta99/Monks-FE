@@ -5,11 +5,24 @@ set -e
 
 echo "🚀 Starting Flutter build for Vercel..."
 
-# Install Flutter (latest stable with better compatibility)
+# Install Flutter (stable version with Dart 3.7+ support)
 echo "📦 Installing Flutter..."
-curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.1-stable.tar.xz
-tar xf flutter.tar.xz
-export PATH="$PWD/flutter/bin:$PATH"
+
+# Detect platform
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    echo "Detected macOS, using local Flutter installation"
+    if ! command -v flutter &> /dev/null; then
+        echo "❌ Flutter not found locally. Please install Flutter first."
+        exit 1
+    fi
+else
+    # Linux (Vercel)
+    echo "Detected Linux, downloading Flutter..."
+    curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.5-stable.tar.xz
+    tar xf flutter.tar.xz
+    export PATH="$PWD/flutter/bin:$PATH"
+fi
 
 # Fix git ownership issues
 echo "🔧 Fixing git ownership issues..."
@@ -28,31 +41,35 @@ flutter --version
 echo "✅ Dart version:"
 dart --version
 
-# Temporarily adjust SDK requirement for build
-echo "🔧 Adjusting SDK requirement for build..."
-sed -i 's/sdk: '\''>=3.9.0 <4.0.0'\''/sdk: '\''>=3.7.0 <4.0.0'\''/g' pubspec.yaml
-
-# Keep syncfusion package at current version (should work with Flutter 3.27.1)
-echo "🔧 Keeping syncfusion package at current version..."
+# SDK version is already compatible in pubspec.yaml
+echo "✅ SDK version is compatible with Flutter 3.24.5"
 
 # Get dependencies
 echo "📦 Getting dependencies..."
-flutter pub get
-
-# Generate code
-echo "🔧 Generating code..."
-dart run build_runner build --delete-conflicting-outputs
+if ! flutter pub get; then
+    echo "❌ Failed to get dependencies"
+    exit 1
+fi
 
 # Set environment to staging
 echo "🌍 Setting environment to staging..."
-./scripts/set_env.sh staging
+if ! ./scripts/set_env.sh staging; then
+    echo "❌ Failed to set environment"
+    exit 1
+fi
 
-# Regenerate environment files
-echo "🔄 Regenerating environment files..."
-dart run build_runner build --delete-conflicting-outputs
+# Generate code
+echo "🔧 Generating code..."
+if ! dart run build_runner build --delete-conflicting-outputs; then
+    echo "❌ Failed to generate code"
+    exit 1
+fi
 
 # Build for web
 echo "🏗️ Building for web..."
-flutter build web --release
+if ! flutter build web --release; then
+    echo "❌ Failed to build web"
+    exit 1
+fi
 
 echo "✅ Build complete! Output in build/web/"

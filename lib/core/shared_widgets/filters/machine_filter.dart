@@ -235,7 +235,7 @@ class MachineFilter extends ConsumerWidget {
       labelText: label,
       border: const OutlineInputBorder(),
     ),
-    initialValue: value, // Use value instead of initialValue
+    initialValue: value,
     items: [
       const DropdownMenuItem(value: null, child: Text('Select...')),
       ...items.map(itemBuilder),

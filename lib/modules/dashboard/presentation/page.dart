@@ -71,47 +71,47 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
   }
 
   Widget _kpiTabs(List<KpiItem> kpis, String selectedId) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final k in kpis)
-              ChoiceChip(
-                label: Text(k.label),
-                selected: k.id == selectedId,
-                onSelected: (_) =>
-                    ref.read(selectedKpiIdProvider.notifier).state = k.id,
-                selectedColor: AppTokens.chartColors[0].withValues(alpha: 0.15),
-              ),
-          ],
-        ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: [
+          for (final k in kpis)
+            ChoiceChip(
+              label: Text(k.label),
+              selected: k.id == selectedId,
+              onSelected: (_) =>
+                  ref.read(selectedKpiIdProvider.notifier).state = k.id,
+              selectedColor: AppTokens.chartColors[0].withValues(alpha: 0.15),
+            ),
+        ],
       ),
-    );
+    ),
+  );
 
   Widget _filtersPane() => AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      width: showFilters ? 320 : 40,
-      child: Card(
-        margin: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
-        child: Column(
-          children: [
-            ListTile(
-              title: const Text('Filters'),
-              trailing: IconButton(
-                icon: Icon(
-                  showFilters ? Icons.chevron_right : Icons.chevron_left,
-                ),
-                onPressed: () => setState(() => showFilters = !showFilters),
+    duration: const Duration(milliseconds: 200),
+    width: showFilters ? 320 : 40,
+    child: Card(
+      margin: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
+      child: Column(
+        children: [
+          ListTile(
+            title: const Text('Filters'),
+            trailing: IconButton(
+              icon: Icon(
+                showFilters ? Icons.chevron_right : Icons.chevron_left,
               ),
+              onPressed: () => setState(() => showFilters = !showFilters),
             ),
-            if (!showFilters) const Spacer(),
-            if (showFilters) Expanded(child: _filterForm()),
-          ],
-        ),
+          ),
+          if (!showFilters) const Spacer(),
+          if (showFilters) Expanded(child: _filterForm()),
+        ],
       ),
-    );
+    ),
+  );
 
   Widget _filterForm() {
     final filters = ref.watch(kpiFiltersProvider);
@@ -212,13 +212,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     required List<String> items,
     required void Function(String) onChanged,
   }) => DropdownButtonFormField<String>(
-      initialValue: value,
-      items: [
-        for (final i in items) DropdownMenuItem(value: i, child: Text(i)),
-      ],
-      onChanged: (v) {
-        if (v != null) onChanged(v);
-      },
-      isExpanded: true,
-    );
+    initialValue: value,
+    items: [for (final i in items) DropdownMenuItem(value: i, child: Text(i))],
+    onChanged: (v) {
+      if (v != null) onChanged(v);
+    },
+    isExpanded: true,
+  );
 }

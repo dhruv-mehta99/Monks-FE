@@ -16,6 +16,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   KpiType _selectedKpi = KpiType.output;
+  bool _isFilterSidebarOpen = true;
 
   void _selectKpi(KpiType kpi) {
     setState(() {
@@ -23,76 +24,19 @@ class _HomePageState extends ConsumerState<HomePage> {
     });
   }
 
+  void _toggleFilterSidebar() {
+    setState(() {
+      _isFilterSidebarOpen = !_isFilterSidebarOpen;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final filterState = ref.watch(filterNotifierProvider);
-    final outputDataAsync = ref.watch(outputTimeseriesProvider(filterState));
-    final availabilityDataAsync = ref.watch(
-      availabilityTimeseriesProvider(filterState),
-    );
 
     return Scaffold(
-      body: Column(
+      body: Row(
         children: [
-          // Top Filter Bar (Grafana-style)
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              border: Border(
-                bottom: BorderSide(
-                  color: Theme.of(context).dividerColor.withOpacity(0.2),
-                  width: 1,
-                ),
-              ),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Machine Selection Filters
-                  Row(
-                    children: [
-                      Text(
-                        'Filters:',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.color?.withOpacity(0.9),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      MachineFilter(
-                        currentFilters: filterState,
-                        onFiltersChanged: (newFilters) {
-                          ref
-                              .read(filterNotifierProvider.notifier)
-                              .updateFilters(newFilters);
-                        },
-                        compact: true,
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(width: 32),
-
-                  // Time Range Filter
-                  TimeRangeFilter(
-                    currentRange: filterState.dateRange,
-                    onRangeChanged: (newRange) {
-                      ref
-                          .read(filterNotifierProvider.notifier)
-                          .updateDateRange(newRange);
-                    },
-                    compact: true,
-                  ),
-                ],
-              ),
-            ),
-          ),
-
           // Main Content Area
           Expanded(
             child: Padding(
@@ -100,9 +44,26 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Manufacturing Dashboard',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                  // Header with Filter Toggle Button
+                  Row(
+                    children: [
+                      Text(
+                        'Manufacturing Dashboard',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: _toggleFilterSidebar,
+                        icon: Icon(
+                          _isFilterSidebarOpen
+                              ? Icons.filter_list_off
+                              : Icons.filter_list,
+                        ),
+                        tooltip: _isFilterSidebarOpen
+                            ? 'Hide Filters'
+                            : 'Show Filters',
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 24),
 
@@ -172,7 +133,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Please select a machine from the filters above to display KPI charts',
+                                  'Please select a machine from the filters to display KPI charts',
                                   style: Theme.of(context).textTheme.bodyMedium
                                       ?.copyWith(color: Colors.grey[600]),
                                   textAlign: TextAlign.center,
@@ -187,6 +148,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ],
               ),
             ),
+          ),
+
+          // Collapsible Filter Sidebar
+          FilterSidebar(
+            isOpen: _isFilterSidebarOpen,
+            onToggle: _toggleFilterSidebar,
+            filterState: filterState,
           ),
         ],
       ),

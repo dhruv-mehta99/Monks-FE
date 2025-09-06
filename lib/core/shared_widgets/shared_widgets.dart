@@ -3,6 +3,7 @@
 export 'cards/kpi_summary_card.dart';
 // Charts
 export 'charts/kpi_line_chart.dart';
+export 'filters/filter_sidebar.dart';
 export 'filters/machine_filter.dart';
 export 'filters/time_range_filter.dart';
 // Tables

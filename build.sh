@@ -43,7 +43,7 @@ dart --version
 
 # Temporarily adjust SDK requirement for build
 echo "🔧 Adjusting SDK requirement for build..."
-sed -i 's/sdk: '\''>=3.9.0 <4.0.0'\''/sdk: '\''>=3.6.0 <4.0.0'\''/g' pubspec.yaml
+sed -i 's/sdk: ">=3.7.0 <4.0.0"/sdk: ">=3.5.0 <4.0.0"/g' pubspec.yaml
 
 # Get dependencies
 echo "📦 Getting dependencies..."

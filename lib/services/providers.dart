@@ -44,14 +44,6 @@ Future<List<Segment>> segmentsByUnit(
   final apiService = ref.read(apiServiceProvider);
   try {
     final segments = await apiService.getSegmentsByUnit(unitId);
-    print(
-      'DEBUG: Segments provider returned ${segments.length} segments for unit $unitId',
-    );
-    for (final segment in segments) {
-      print(
-        'DEBUG: Segment - ID: ${segment.segmentId}, Name: ${segment.segmentName}, UnitID: ${segment.unitId}',
-      );
-    }
     return segments;
   } catch (e) {
     print('DEBUG: Segments provider error: $e');

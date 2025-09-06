@@ -27,7 +27,9 @@ class KpiLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('KpiLineChart build called with ${data.length} series');
     if (data.isEmpty) {
+      print('KpiLineChart: No data, showing empty state');
       return _buildEmptyState();
     }
 
@@ -215,18 +217,20 @@ class KpiLineChart extends StatelessWidget {
     }).toList(),
   );
 
-  List<LineChartBarData> _buildLineBarsData(List<Color> colors) =>
-      data.asMap().entries.map((entry) {
+  List<LineChartBarData> _buildLineBarsData(List<Color> colors) {
+    print('_buildLineBarsData called with ${data.length} series');
+    return data.asMap().entries.map((entry) {
         final index = entry.key;
         final series = entry.value;
         final color = colors[index % colors.length];
+        print('series.machineId: ${series.machineId}');
 
         final spots = series.data.asMap().entries.map((dataEntry) {
           // [print only for 1st entry]
           // if (dataEntry.key == 0) {
-          print('series.machineId: ${series.machineId}');
-          print('dataEntry.value: ${dataEntry.value}');
-          print('dataEntry.key: ${dataEntry.key}');
+          // print('series.machineId: ${series.machineId}');
+          // print('dataEntry.value: ${dataEntry.value}');
+          // print('dataEntry.key: ${dataEntry.key}');
           // }
           final dataIndex = dataEntry.key;
           final dataPoint = dataEntry.value;

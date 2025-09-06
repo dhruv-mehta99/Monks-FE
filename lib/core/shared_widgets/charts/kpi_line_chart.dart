@@ -134,7 +134,7 @@ class KpiLineChart extends StatelessWidget {
                   lineTouchData: LineTouchData(
                     enabled: true,
                     touchTooltipData: LineTouchTooltipData(
-                      getTooltipColor: (touchedSpot) => Colors.blueGrey.withOpacity(0.9),
+                      tooltipBgColor: Colors.blueGrey.withOpacity(0.9),
                       getTooltipItems: (touchedSpots) =>
                           touchedSpots.map((touchedSpot) {
                             final timePoint =
@@ -220,33 +220,33 @@ class KpiLineChart extends StatelessWidget {
   List<LineChartBarData> _buildLineBarsData(List<Color> colors) {
     print('_buildLineBarsData called with ${data.length} series');
     return data.asMap().entries.map((entry) {
-        final index = entry.key;
-        final series = entry.value;
-        final color = colors[index % colors.length];
-        print('series.machineId: ${series.machineId}');
+      final index = entry.key;
+      final series = entry.value;
+      final color = colors[index % colors.length];
+      print('series.machineId: ${series.machineId}');
 
-        final spots = series.data.asMap().entries.map((dataEntry) {
-          // [print only for 1st entry]
-          // if (dataEntry.key == 0) {
-          // print('series.machineId: ${series.machineId}');
-          // print('dataEntry.value: ${dataEntry.value}');
-          // print('dataEntry.key: ${dataEntry.key}');
-          // }
-          final dataIndex = dataEntry.key;
-          final dataPoint = dataEntry.value;
-          return FlSpot(dataIndex.toDouble(), dataPoint.chartValue);
-        }).toList();
-
-        return LineChartBarData(
-          spots: spots,
-          isCurved: true,
-          color: color,
-          barWidth: 3,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(show: false),
-          belowBarData: BarAreaData(show: true, color: color.withOpacity(0.1)),
-        );
+      final spots = series.data.asMap().entries.map((dataEntry) {
+        // [print only for 1st entry]
+        // if (dataEntry.key == 0) {
+        // print('series.machineId: ${series.machineId}');
+        // print('dataEntry.value: ${dataEntry.value}');
+        // print('dataEntry.key: ${dataEntry.key}');
+        // }
+        final dataIndex = dataEntry.key;
+        final dataPoint = dataEntry.value;
+        return FlSpot(dataIndex.toDouble(), dataPoint.chartValue);
       }).toList();
+
+      return LineChartBarData(
+        spots: spots,
+        isCurved: true,
+        color: color,
+        barWidth: 3,
+        isStrokeCapRound: true,
+        dotData: const FlDotData(show: false),
+        belowBarData: BarAreaData(show: true, color: color.withOpacity(0.1)),
+      );
+    }).toList();
   }
 
   List<DateTime> _getAllTimePoints() {

@@ -65,6 +65,9 @@ sed -i 's/syncfusion_flutter_charts: \^31.1.17/syncfusion_flutter_charts: ^29.1.
 echo "🔧 Downgrading fl_chart for compatibility..."
 sed -i 's/fl_chart: \^1.1.0/fl_chart: ^0.66.2/g' pubspec.yaml
 
+# Fix fl_chart parameters for downgraded version (already using old parameter names)
+echo "🔧 Fl_chart parameters already compatible with downgraded version..."
+
 # Get dependencies
 echo "📦 Getting dependencies..."
 if ! flutter pub get; then

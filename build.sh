@@ -45,6 +45,10 @@ dart --version
 echo "🔧 Adjusting SDK requirement for build..."
 sed -i 's/sdk: ">=3.7.0 <4.0.0"/sdk: ">=3.5.0 <4.0.0"/g' pubspec.yaml
 
+# Downgrade syncfusion package for compatibility
+echo "🔧 Downgrading syncfusion package for compatibility..."
+sed -i 's/syncfusion_flutter_charts: \^30.2.5/syncfusion_flutter_charts: ^29.1.38/g' pubspec.yaml
+
 # Get dependencies
 echo "📦 Getting dependencies..."
 if ! flutter pub get; then

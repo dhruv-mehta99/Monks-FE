@@ -5,9 +5,9 @@ set -e
 
 echo "🚀 Starting Flutter build for Vercel..."
 
-# Install Flutter (latest stable)
+# Install Flutter (latest stable with better compatibility)
 echo "📦 Installing Flutter..."
-curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.5-stable.tar.xz
+curl -L -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.1-stable.tar.xz
 tar xf flutter.tar.xz
 export PATH="$PWD/flutter/bin:$PATH"
 
@@ -30,11 +30,10 @@ dart --version
 
 # Temporarily adjust SDK requirement for build
 echo "🔧 Adjusting SDK requirement for build..."
-sed -i 's/sdk: '\''>=3.9.0 <4.0.0'\''/sdk: '\''>=3.5.0 <4.0.0'\''/g' pubspec.yaml
+sed -i 's/sdk: '\''>=3.9.0 <4.0.0'\''/sdk: '\''>=3.7.0 <4.0.0'\''/g' pubspec.yaml
 
-# Downgrade syncfusion package to compatible version
-echo "🔧 Downgrading syncfusion package for compatibility..."
-sed -i 's/syncfusion_flutter_charts: ^30.2.5/syncfusion_flutter_charts: ^29.1.38/g' pubspec.yaml
+# Keep syncfusion package at current version (should work with Flutter 3.27.1)
+echo "🔧 Keeping syncfusion package at current version..."
 
 # Get dependencies
 echo "📦 Getting dependencies..."

@@ -42,7 +42,7 @@ flutter pub get
 
 # Generate code
 echo "🔧 Generating code..."
-dart run build_runner build
+dart run build_runner build --delete-conflicting-outputs
 
 # Set environment to staging
 echo "🌍 Setting environment to staging..."
@@ -50,7 +50,7 @@ echo "🌍 Setting environment to staging..."
 
 # Regenerate environment files
 echo "🔄 Regenerating environment files..."
-dart run build_runner build
+dart run build_runner build --delete-conflicting-outputs
 
 # Build for web
 echo "🏗️ Building for web..."

@@ -45,6 +45,10 @@ dart --version
 echo "🔧 Adjusting SDK requirement for build..."
 sed -i 's/sdk: ">=3.9.0 <4.0.0"/sdk: ">=3.6.0 <4.0.0"/g' pubspec.yaml
 
+# Downgrade flutter_lints for compatibility
+echo "🔧 Downgrading flutter_lints for compatibility..."
+sed -i 's/flutter_lints: \^6.0.0/flutter_lints: ^3.0.2/g' pubspec.yaml
+
 # Get dependencies
 echo "📦 Getting dependencies..."
 if ! flutter pub get; then

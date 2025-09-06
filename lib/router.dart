@@ -8,7 +8,7 @@ import 'pages/home/home_page.dart';
 part 'router.g.dart';
 
 @riverpod
-GoRouter router(Ref ref) => GoRouter(
+GoRouter router(RouterRef ref) => GoRouter(
   initialLocation: '/',
   routes: [
     ShellRoute(

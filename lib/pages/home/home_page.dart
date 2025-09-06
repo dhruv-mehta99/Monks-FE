@@ -236,12 +236,17 @@ class _HomePageState extends ConsumerState<HomePage> {
     switch (_selectedKpi) {
       case KpiType.output:
         return outputDataAsync.when(
-          data: (data) => KpiLineChart(
-            title: 'Output Over Time - ${_getMachineName(filterState, ref)}',
-            data: data.series,
-            yAxisLabel: 'Output Quantity',
-            showLegend: true,
-          ),
+          data: (data) {
+            print(
+              'HomePage: Creating KpiLineChart with ${data.series.length} series',
+            );
+            return KpiLineChart(
+              title: 'Output Over Time - ${_getMachineName(filterState, ref)}',
+              data: data.series,
+              yAxisLabel: 'Output Quantity',
+              showLegend: true,
+            );
+          },
           loading: () => const Card(
             child: SizedBox.expand(
               child: Center(child: CircularProgressIndicator()),

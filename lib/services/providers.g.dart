@@ -183,7 +183,7 @@ class _UnitsByPlantProviderElement
   String get plantId => (origin as UnitsByPlantProvider).plantId;
 }
 
-String _$segmentsByUnitHash() => r'f3f9e22cdcc2924bdd3d32fbe24269e390aee0ae';
+String _$segmentsByUnitHash() => r'd94c43aa97e311908ea1e2f7ff73c1e54fd06521';
 
 /// See also [segmentsByUnit].
 @ProviderFor(segmentsByUnit)

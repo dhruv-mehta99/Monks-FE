@@ -1,11 +1,30 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/models.dart';
+// Generic data point for chart
+class ChartDataPoint {
+  final double x; // X-axis value (time index)
+  final double y; // Y-axis value (chart value)
+  final DateTime timestamp; // Original timestamp for tooltips
+
+  const ChartDataPoint({
+    required this.x,
+    required this.y,
+    required this.timestamp,
+  });
+}
+
+// Generic timeseries for chart
+class ChartTimeseries {
+  final String machineId;
+  final List<ChartDataPoint> data;
+
+  const ChartTimeseries({required this.machineId, required this.data});
+}
 
 class KpiLineChart extends StatelessWidget {
   final String title;
-  final List<OutputTimeseries> data;
+  final List<ChartTimeseries> data;
   final String? yAxisLabel;
   final String? xAxisLabel;
   final Color? primaryColor;
@@ -192,7 +211,7 @@ class KpiLineChart extends StatelessWidget {
     ),
   );
 
-  Widget _buildLegend(List<OutputTimeseries> data, List<Color> colors) => Wrap(
+  Widget _buildLegend(List<ChartTimeseries> data, List<Color> colors) => Wrap(
     spacing: 16,
     runSpacing: 8,
     children: data.asMap().entries.map((entry) {
@@ -218,45 +237,55 @@ class KpiLineChart extends StatelessWidget {
     }).toList(),
   );
 
-  List<LineChartBarData> _buildLineBarsData(List<Color> colors) =>
-      data.asMap().entries.map((entry) {
-        final index = entry.key;
-        final series = entry.value;
-        final color = colors[index % colors.length];
+  List<LineChartBarData> _buildLineBarsData(
+    List<Color> colors,
+  ) => data.asMap().entries.map((entry) {
+    final index = entry.key;
+    final series = entry.value;
+    final color = colors[index % colors.length];
 
-        final spots = series.data.asMap().entries.map((dataEntry) {
-          final dataIndex = dataEntry.key;
-          final dataPoint = dataEntry.value;
-          return FlSpot(dataIndex.toDouble(), dataPoint.chartValue);
-        }).toList();
+    final spots = series.data.map((dataPoint) {
+      // Clamp Y values to the specified min/max range
+      final clampedY = maxY != null
+          ? dataPoint.y.clamp(_calculateMinY(), maxY!)
+          : dataPoint.y;
 
-        return LineChartBarData(
-          spots: spots,
-          isCurved: true,
-          color: color,
-          barWidth: 3,
-          isStrokeCapRound: true,
-          dotData: FlDotData(
-            show: false,
-            getDotPainter: (spot, percent, barData, index) =>
-                FlDotCirclePainter(
-                  radius: 4,
-                  color: color,
-                  strokeWidth: 2,
-                  strokeColor: Colors.white,
-                ),
-          ),
-          belowBarData: BarAreaData(
-            show: true,
-            color: color.withOpacity(0.1),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [color.withOpacity(0.3), color.withOpacity(0.05)],
-            ),
-          ),
+      // Debug: Print values that are out of bounds
+      if (maxY != null && dataPoint.y > maxY!) {
+        print(
+          'Chart: Data point Y value ${dataPoint.y} exceeds maxY ${maxY!}, clamping to $clampedY',
         );
-      }).toList();
+      }
+
+      return FlSpot(dataPoint.x, clampedY);
+    }).toList();
+
+    return LineChartBarData(
+      spots: spots,
+      isCurved: true,
+      color: color,
+      barWidth: 3,
+      isStrokeCapRound: true,
+      dotData: FlDotData(
+        show: false,
+        getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
+          radius: 4,
+          color: color,
+          strokeWidth: 2,
+          strokeColor: Colors.white,
+        ),
+      ),
+      belowBarData: BarAreaData(
+        show: true,
+        color: color.withOpacity(0.1),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [color.withOpacity(0.3), color.withOpacity(0.05)],
+        ),
+      ),
+    );
+  }).toList();
 
   List<DateTime> _getAllTimePoints() {
     if (data.isEmpty) return [];
@@ -281,12 +310,17 @@ class KpiLineChart extends StatelessWidget {
   }
 
   double _calculateMinY() {
+    // If maxY is explicitly provided, use 0 as minimum for percentage-based charts
+    if (maxY != null && maxY! == 100.0) {
+      return 0.0;
+    }
+
     if (data.isEmpty) return 0;
 
     double minY = double.infinity;
     for (final series in data) {
       for (final point in series.data) {
-        if (point.chartValue < minY) minY = point.chartValue;
+        if (point.y < minY) minY = point.y;
       }
     }
     if (minY == double.infinity) return 0;
@@ -299,6 +333,7 @@ class KpiLineChart extends StatelessWidget {
   double _calculateMaxY() {
     // If maxY is explicitly provided, use it
     if (maxY != null) {
+      print('Chart: Using provided maxY: ${maxY!}');
       return maxY!;
     }
 
@@ -309,8 +344,8 @@ class KpiLineChart extends StatelessWidget {
     double calculatedMaxY = double.negativeInfinity;
     for (final series in data) {
       for (final point in series.data) {
-        if (point.chartValue > calculatedMaxY) {
-          calculatedMaxY = point.chartValue;
+        if (point.y > calculatedMaxY) {
+          calculatedMaxY = point.y;
         }
       }
     }

@@ -235,6 +235,8 @@ class AvailabilityTimeseries with _$AvailabilityTimeseries {
 
 @freezed
 class AvailabilityDataPoint with _$AvailabilityDataPoint {
+  const AvailabilityDataPoint._();
+
   const factory AvailabilityDataPoint({
     required DateTime timestamp,
     required double availabilityRatio,
@@ -242,6 +244,21 @@ class AvailabilityDataPoint with _$AvailabilityDataPoint {
     required int actualProductionMinutes,
     required int plannedProductionMinutes,
   }) = _AvailabilityDataPoint;
+
+  // Computed property to convert ratio to percentage for charts
+  double get chartValue {
+    double value;
+    // If the ratio is already a percentage (greater than 1), return as is
+    // Otherwise, multiply by 100 to convert ratio to percentage
+    if (availabilityRatio > 1.0) {
+      value = availabilityRatio;
+    } else {
+      value = availabilityRatio * 100;
+    }
+
+    // Cap the value at 100 to ensure it doesn't exceed 100%
+    return value.clamp(0.0, 100.0);
+  }
 
   factory AvailabilityDataPoint.fromJson(Map<String, dynamic> json) =>
       _$AvailabilityDataPointFromJson(json);

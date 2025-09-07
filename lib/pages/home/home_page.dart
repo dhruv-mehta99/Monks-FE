@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../core/shared_widgets/charts/chart_extensions.dart';
 import '../../core/shared_widgets/shared_widgets.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
@@ -243,11 +244,16 @@ class _HomePageState extends ConsumerState<HomePage> {
         return outputDataAsync.when(
           data: (data) {
             // Handle both single and multi-machine data
-            final series = useMultiMachine
+            final outputSeries = useMultiMachine
                 ? _combineMultiMachineOutputData(
                     data as List<OutputTimeseriesResponse>,
                   )
                 : (data as OutputTimeseriesResponse).series;
+
+            // Convert to generic chart data
+            final series = outputSeries
+                .map((s) => s.toChartTimeseries())
+                .toList();
 
             return KpiLineChart(
               title: useMultiMachine
@@ -304,36 +310,25 @@ class _HomePageState extends ConsumerState<HomePage> {
         return availabilityDataAsync.when(
           data: (data) {
             // Handle both single and multi-machine data
-            final series = useMultiMachine
+            final availabilitySeries = useMultiMachine
                 ? _combineMultiMachineAvailabilityData(
                     data as List<AvailabilityTimeseriesResponse>,
                   )
                 : (data as AvailabilityTimeseriesResponse).series;
 
-            // Convert availability data to output format for chart display
-            final convertedSeries = series
-                .map(
-                  (series) => OutputTimeseries(
-                    machineId: series.machineId,
-                    data: series.data
-                        .map(
-                          (point) => OutputDataPoint(
-                            timestamp: point.timestamp,
-                            totalOutputQty: (point.availabilityRatio * 100)
-                                .round(), // Convert ratio to percentage
-                          ),
-                        )
-                        .toList(),
-                  ),
-                )
+            // Convert to generic chart data
+            final series = availabilitySeries
+                .map((s) => s.toChartTimeseries())
                 .toList();
 
             return KpiLineChart(
               title: useMultiMachine
                   ? 'Machine Availability Over Time - Multiple Machines'
                   : 'Machine Availability Over Time - ${_getMachineName(filterState, ref)}',
-              data: convertedSeries,
+              data: series,
               yAxisLabel: 'Availability %',
+              maxY:
+                  100.0, // Set maximum Y-axis value to 100 for availability KPI
               showLegend: true,
               colors: const [
                 Color(0xFF4CAF50), // Green

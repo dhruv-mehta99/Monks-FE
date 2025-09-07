@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../core/shared_widgets/charts/chart_extensions.dart';
 import '../../core/shared_widgets/shared_widgets.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
@@ -367,7 +368,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         Expanded(
           child: KpiLineChart(
             title: 'Machine Output Comparison',
-            data: data.series,
+            data: data.series.map((s) => s.toChartTimeseries()).toList(),
             yAxisLabel: 'Output',
             showLegend: true,
             colors: const [

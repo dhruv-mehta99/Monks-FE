@@ -3417,13 +3417,14 @@ class __$$AvailabilityDataPointImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AvailabilityDataPointImpl implements _AvailabilityDataPoint {
+class _$AvailabilityDataPointImpl extends _AvailabilityDataPoint {
   const _$AvailabilityDataPointImpl(
       {required this.timestamp,
       required this.availabilityRatio,
       required this.totalMinutes,
       required this.actualProductionMinutes,
-      required this.plannedProductionMinutes});
+      required this.plannedProductionMinutes})
+      : super._();
 
   factory _$AvailabilityDataPointImpl.fromJson(Map<String, dynamic> json) =>
       _$$AvailabilityDataPointImplFromJson(json);
@@ -3483,7 +3484,7 @@ class _$AvailabilityDataPointImpl implements _AvailabilityDataPoint {
   }
 }
 
-abstract class _AvailabilityDataPoint implements AvailabilityDataPoint {
+abstract class _AvailabilityDataPoint extends AvailabilityDataPoint {
   const factory _AvailabilityDataPoint(
           {required final DateTime timestamp,
           required final double availabilityRatio,
@@ -3491,6 +3492,7 @@ abstract class _AvailabilityDataPoint implements AvailabilityDataPoint {
           required final int actualProductionMinutes,
           required final int plannedProductionMinutes}) =
       _$AvailabilityDataPointImpl;
+  const _AvailabilityDataPoint._() : super._();
 
   factory _AvailabilityDataPoint.fromJson(Map<String, dynamic> json) =
       _$AvailabilityDataPointImpl.fromJson;

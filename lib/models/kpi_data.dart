@@ -115,7 +115,7 @@ class OutputDataPoint with _$OutputDataPoint {
   }) = _OutputDataPoint;
 
   // Computed property to ensure value is always available for charts
-  double get chartValue => yieldRatio?.toDouble() ?? 0.0;
+  double get chartValue => (yieldRatio?.toDouble() ?? 0.0) * 100;
 
   factory OutputDataPoint.fromJson(Map<String, dynamic> json) =>
       _$OutputDataPointFromJson(json);

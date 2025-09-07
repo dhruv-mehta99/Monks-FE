@@ -241,6 +241,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             data: data.series,
             yAxisLabel: 'Output Quantity',
             showLegend: true,
+            maxY: 100.0, // Set maximum Y-axis value to 100 for output KPI
             colors: const [
               Color(0xFF2196F3), // Material Blue
               Color(0xFF1976D2), // Darker Blue

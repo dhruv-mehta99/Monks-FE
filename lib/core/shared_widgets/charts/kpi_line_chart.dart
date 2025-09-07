@@ -12,6 +12,7 @@ class KpiLineChart extends StatelessWidget {
   final bool showGrid;
   final bool showLegend;
   final List<Color>? colors;
+  final double? maxY;
 
   const KpiLineChart({
     super.key,
@@ -23,6 +24,7 @@ class KpiLineChart extends StatelessWidget {
     this.showGrid = true,
     this.showLegend = true,
     this.colors,
+    this.maxY,
   });
 
   @override
@@ -286,19 +288,30 @@ class KpiLineChart extends StatelessWidget {
   }
 
   double _calculateMaxY() {
-    if (data.isEmpty) return 100;
+    // If maxY is explicitly provided, use it
+    if (maxY != null) {
+      return maxY!;
+    }
 
-    double maxY = double.negativeInfinity;
+    if (data.isEmpty) {
+      return 100;
+    }
+
+    double calculatedMaxY = double.negativeInfinity;
     for (final series in data) {
       for (final point in series.data) {
-        if (point.chartValue > maxY) maxY = point.chartValue;
+        if (point.chartValue > calculatedMaxY) {
+          calculatedMaxY = point.chartValue;
+        }
       }
     }
-    if (maxY == double.negativeInfinity) return 100;
+    if (calculatedMaxY == double.negativeInfinity) {
+      return 100;
+    }
 
     // Add small padding above maximum, but ensure it doesn't exceed reasonable bounds
-    final padding = (maxY * 0.1).clamp(0.0, maxY);
-    return maxY + padding;
+    final padding = (calculatedMaxY * 0.1).clamp(0.0, calculatedMaxY);
+    return calculatedMaxY + padding;
   }
 
   double _calculateYInterval() {
@@ -320,9 +333,38 @@ class KpiLineChart extends StatelessWidget {
   double _calculateXInterval() {
     final timePoints = _getAllTimePoints();
     if (timePoints.length <= 1) return 1;
-    return (timePoints.length - 1) / 5;
+
+    // Calculate appropriate interval based on data density
+    final totalPoints = timePoints.length;
+
+    if (totalPoints <= 10) {
+      return 1; // Show every point for small datasets
+    } else if (totalPoints <= 50) {
+      return totalPoints / 8; // Show ~8 labels
+    } else if (totalPoints <= 100) {
+      return totalPoints / 10; // Show ~10 labels
+    } else if (totalPoints <= 200) {
+      return totalPoints / 12; // Show ~12 labels
+    } else {
+      return totalPoints / 15; // Show ~15 labels for large datasets
+    }
   }
 
-  String _formatTime(DateTime time) =>
-      '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+  String _formatTime(DateTime time) {
+    final timePoints = _getAllTimePoints();
+    if (timePoints.isEmpty) return '';
+
+    // Check if the data spans multiple days
+    final firstDay = timePoints.first.day;
+    final lastDay = timePoints.last.day;
+    final isMultiDay = lastDay != firstDay;
+
+    if (isMultiDay) {
+      // Show date and time for multi-day data
+      return '${time.day}/${time.month} ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+    } else {
+      // Show only time for single day data
+      return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+    }
+  }
 }

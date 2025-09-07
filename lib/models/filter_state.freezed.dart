@@ -24,7 +24,10 @@ mixin _$FilterState {
   String? get unitId => throw _privateConstructorUsedError;
   String? get segmentId => throw _privateConstructorUsedError;
   String? get lineId => throw _privateConstructorUsedError;
-  String? get machineId => throw _privateConstructorUsedError;
+  String? get machineId =>
+      throw _privateConstructorUsedError; // Keep for backward compatibility
+  List<String> get selectedMachineIds =>
+      throw _privateConstructorUsedError; // New multi-machine selection
   @DateTimeRangeConverter()
   DateTimeRange<DateTime> get dateRange => throw _privateConstructorUsedError;
 
@@ -46,6 +49,7 @@ abstract class $FilterStateCopyWith<$Res> {
       String? segmentId,
       String? lineId,
       String? machineId,
+      List<String> selectedMachineIds,
       @DateTimeRangeConverter() DateTimeRange<DateTime> dateRange});
 }
 
@@ -67,6 +71,7 @@ class _$FilterStateCopyWithImpl<$Res, $Val extends FilterState>
     Object? segmentId = freezed,
     Object? lineId = freezed,
     Object? machineId = freezed,
+    Object? selectedMachineIds = null,
     Object? dateRange = null,
   }) {
     return _then(_value.copyWith(
@@ -90,6 +95,10 @@ class _$FilterStateCopyWithImpl<$Res, $Val extends FilterState>
           ? _value.machineId
           : machineId // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedMachineIds: null == selectedMachineIds
+          ? _value.selectedMachineIds
+          : selectedMachineIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       dateRange: null == dateRange
           ? _value.dateRange
           : dateRange // ignore: cast_nullable_to_non_nullable
@@ -112,6 +121,7 @@ abstract class _$$FilterStateImplCopyWith<$Res>
       String? segmentId,
       String? lineId,
       String? machineId,
+      List<String> selectedMachineIds,
       @DateTimeRangeConverter() DateTimeRange<DateTime> dateRange});
 }
 
@@ -131,6 +141,7 @@ class __$$FilterStateImplCopyWithImpl<$Res>
     Object? segmentId = freezed,
     Object? lineId = freezed,
     Object? machineId = freezed,
+    Object? selectedMachineIds = null,
     Object? dateRange = null,
   }) {
     return _then(_$FilterStateImpl(
@@ -154,6 +165,10 @@ class __$$FilterStateImplCopyWithImpl<$Res>
           ? _value.machineId
           : machineId // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedMachineIds: null == selectedMachineIds
+          ? _value._selectedMachineIds
+          : selectedMachineIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       dateRange: null == dateRange
           ? _value.dateRange
           : dateRange // ignore: cast_nullable_to_non_nullable
@@ -171,7 +186,9 @@ class _$FilterStateImpl implements _FilterState {
       this.segmentId,
       this.lineId,
       this.machineId,
-      @DateTimeRangeConverter() required this.dateRange});
+      final List<String> selectedMachineIds = const [],
+      @DateTimeRangeConverter() required this.dateRange})
+      : _selectedMachineIds = selectedMachineIds;
 
   factory _$FilterStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$FilterStateImplFromJson(json);
@@ -186,13 +203,26 @@ class _$FilterStateImpl implements _FilterState {
   final String? lineId;
   @override
   final String? machineId;
+// Keep for backward compatibility
+  final List<String> _selectedMachineIds;
+// Keep for backward compatibility
+  @override
+  @JsonKey()
+  List<String> get selectedMachineIds {
+    if (_selectedMachineIds is EqualUnmodifiableListView)
+      return _selectedMachineIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedMachineIds);
+  }
+
+// New multi-machine selection
   @override
   @DateTimeRangeConverter()
   final DateTimeRange<DateTime> dateRange;
 
   @override
   String toString() {
-    return 'FilterState(plantId: $plantId, unitId: $unitId, segmentId: $segmentId, lineId: $lineId, machineId: $machineId, dateRange: $dateRange)';
+    return 'FilterState(plantId: $plantId, unitId: $unitId, segmentId: $segmentId, lineId: $lineId, machineId: $machineId, selectedMachineIds: $selectedMachineIds, dateRange: $dateRange)';
   }
 
   @override
@@ -207,6 +237,8 @@ class _$FilterStateImpl implements _FilterState {
             (identical(other.lineId, lineId) || other.lineId == lineId) &&
             (identical(other.machineId, machineId) ||
                 other.machineId == machineId) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedMachineIds, _selectedMachineIds) &&
             (identical(other.dateRange, dateRange) ||
                 other.dateRange == dateRange));
   }
@@ -214,7 +246,14 @@ class _$FilterStateImpl implements _FilterState {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, plantId, unitId, segmentId, lineId, machineId, dateRange);
+      runtimeType,
+      plantId,
+      unitId,
+      segmentId,
+      lineId,
+      machineId,
+      const DeepCollectionEquality().hash(_selectedMachineIds),
+      dateRange);
 
   @JsonKey(ignore: true)
   @override
@@ -237,6 +276,7 @@ abstract class _FilterState implements FilterState {
       final String? segmentId,
       final String? lineId,
       final String? machineId,
+      final List<String> selectedMachineIds,
       @DateTimeRangeConverter()
       required final DateTimeRange<DateTime> dateRange}) = _$FilterStateImpl;
 
@@ -253,7 +293,9 @@ abstract class _FilterState implements FilterState {
   String? get lineId;
   @override
   String? get machineId;
-  @override
+  @override // Keep for backward compatibility
+  List<String> get selectedMachineIds;
+  @override // New multi-machine selection
   @DateTimeRangeConverter()
   DateTimeRange<DateTime> get dateRange;
   @override

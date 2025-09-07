@@ -106,20 +106,16 @@ class MachineFilter extends ConsumerWidget {
             onChanged: (lineId) => _updateFilters(ref, lineId: lineId),
             enabled: currentFilters.segmentId != null,
           ),
-          _buildCompactFilterDropdown<Machine>(
+          _buildMultiSelectMachineFilter(
             context: context,
-            label: 'Machine',
-            value: currentFilters.machineId,
-            items: machinesAsync.when(
+            machines: machinesAsync.when(
               data: (machines) => machines,
               loading: () => <Machine>[],
               error: (_, __) => <Machine>[],
             ),
-            itemBuilder: (machine) => DropdownMenuItem(
-              value: machine.machineId,
-              child: Text(machine.machineName),
-            ),
-            onChanged: (machineId) => _updateFilters(ref, machineId: machineId),
+            selectedMachineIds: currentFilters.selectedMachineIds,
+            onChanged: (machineIds) =>
+                _updateFilters(ref, selectedMachineIds: machineIds),
             enabled: currentFilters.unitId != null,
           ),
         ],
@@ -201,20 +197,16 @@ class MachineFilter extends ConsumerWidget {
               enabled: currentFilters.segmentId != null,
             ),
             const SizedBox(height: 12),
-            _buildFilterDropdown<Machine>(
-              label: 'Machine',
-              value: currentFilters.machineId,
-              items: machinesAsync.when(
+            _buildMultiSelectMachineFilter(
+              context: context,
+              machines: machinesAsync.when(
                 data: (machines) => machines,
                 loading: () => <Machine>[],
                 error: (_, __) => <Machine>[],
               ),
-              itemBuilder: (machine) => DropdownMenuItem(
-                value: machine.machineId,
-                child: Text(machine.machineName),
-              ),
-              onChanged: (machineId) =>
-                  _updateFilters(ref, machineId: machineId),
+              selectedMachineIds: currentFilters.selectedMachineIds,
+              onChanged: (machineIds) =>
+                  _updateFilters(ref, selectedMachineIds: machineIds),
               enabled: currentFilters.unitId != null,
             ),
           ],
@@ -256,6 +248,7 @@ class MachineFilter extends ConsumerWidget {
     String? segmentId,
     String? lineId,
     String? machineId,
+    List<String>? selectedMachineIds,
   }) {
     FilterState newFilters = currentFilters;
 
@@ -267,6 +260,7 @@ class MachineFilter extends ConsumerWidget {
         segmentId: null,
         lineId: null,
         machineId: null,
+        selectedMachineIds: [],
       );
     }
     // If unitId is provided, update it and clear dependent fields
@@ -276,6 +270,7 @@ class MachineFilter extends ConsumerWidget {
         segmentId: null,
         lineId: null,
         machineId: null,
+        selectedMachineIds: [],
       );
     }
     // If segmentId is provided, update it and clear dependent fields
@@ -284,6 +279,7 @@ class MachineFilter extends ConsumerWidget {
         segmentId: segmentId.isEmpty ? null : segmentId,
         lineId: null,
         machineId: null,
+        selectedMachineIds: [],
       );
     }
     // If lineId is provided, update it and clear dependent fields
@@ -291,12 +287,23 @@ class MachineFilter extends ConsumerWidget {
       newFilters = currentFilters.copyWith(
         lineId: lineId.isEmpty ? null : lineId,
         machineId: null,
+        selectedMachineIds: [],
       );
     }
-    // If machineId is provided, only update it
+    // If machineId is provided, only update it (backward compatibility)
     else if (machineId != null) {
       newFilters = currentFilters.copyWith(
         machineId: machineId.isEmpty ? null : machineId,
+        selectedMachineIds: machineId.isEmpty ? [] : [machineId],
+      );
+    }
+    // If selectedMachineIds is provided, update it
+    else if (selectedMachineIds != null) {
+      newFilters = currentFilters.copyWith(
+        selectedMachineIds: selectedMachineIds,
+        machineId: selectedMachineIds.isNotEmpty
+            ? selectedMachineIds.first
+            : null,
       );
     }
 
@@ -355,6 +362,95 @@ class MachineFilter extends ConsumerWidget {
           ),
         ),
       ),
+    ],
+  );
+
+  Widget _buildMultiSelectMachineFilter({
+    required BuildContext context,
+    required List<Machine> machines,
+    required List<String> selectedMachineIds,
+    required Function(List<String>) onChanged,
+    bool enabled = true,
+  }) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'Machines',
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        constraints: const BoxConstraints(minHeight: 100, maxHeight: 200),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: machines.length,
+          itemBuilder: (context, index) {
+            final machine = machines[index];
+            final isSelected = selectedMachineIds.contains(machine.machineId);
+
+            return CheckboxListTile(
+              title: Text(
+                machine.machineName,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: enabled ? null : Colors.grey,
+                ),
+              ),
+              value: isSelected,
+              onChanged: enabled
+                  ? (bool? value) {
+                      if (value == true) {
+                        onChanged([...selectedMachineIds, machine.machineId]);
+                      } else {
+                        onChanged(
+                          selectedMachineIds
+                              .where((id) => id != machine.machineId)
+                              .toList(),
+                        );
+                      }
+                    }
+                  : null,
+              dense: true,
+              controlAffinity: ListTileControlAffinity.leading,
+            );
+          },
+        ),
+      ),
+      if (selectedMachineIds.isNotEmpty) ...[
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 4,
+          runSpacing: 4,
+          children: selectedMachineIds.map((machineId) {
+            final machine = machines.firstWhere(
+              (m) => m.machineId == machineId,
+            );
+            return Chip(
+              label: Text(
+                machine.machineName,
+                style: const TextStyle(fontSize: 12),
+              ),
+              deleteIcon: const Icon(Icons.close, size: 16),
+              onDeleted: enabled
+                  ? () {
+                      onChanged(
+                        selectedMachineIds
+                            .where((id) => id != machineId)
+                            .toList(),
+                      );
+                    }
+                  : null,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            );
+          }).toList(),
+        ),
+      ],
     ],
   );
 }

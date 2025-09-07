@@ -13,6 +13,7 @@ class KpiLineChart extends StatelessWidget {
   final bool showLegend;
   final List<Color>? colors;
   final double? maxY;
+  final Map<String, String>? machineNames; // Map of machineId to machineName
 
   const KpiLineChart({
     super.key,
@@ -25,6 +26,7 @@ class KpiLineChart extends StatelessWidget {
     this.showLegend = true,
     this.colors,
     this.maxY,
+    this.machineNames,
   });
 
   @override
@@ -208,7 +210,7 @@ class KpiLineChart extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            'Machine ${series.machineId}',
+            _getMachineDisplayName(series.machineId),
             style: const TextStyle(fontSize: 14),
           ),
         ],
@@ -269,6 +271,13 @@ class KpiLineChart extends StatelessWidget {
 
     final sortedPoints = allPoints.toList()..sort();
     return sortedPoints;
+  }
+
+  String _getMachineDisplayName(String machineId) {
+    if (machineNames != null && machineNames!.containsKey(machineId)) {
+      return machineNames![machineId]!;
+    }
+    return 'Machine $machineId';
   }
 
   double _calculateMinY() {

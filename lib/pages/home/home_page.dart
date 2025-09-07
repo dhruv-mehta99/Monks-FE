@@ -68,7 +68,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   const SizedBox(height: 24),
 
                   // Charts Section - Only show when machine is selected
-                  if (filterState.machineId != null) ...[
+                  if (filterState.selectedMachineIds.isNotEmpty) ...[
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +125,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
-                                  'Select a Machine to View Charts',
+                                  'Select One or More Machines to View Charts',
                                   style: Theme.of(
                                     context,
                                   ).textTheme.headlineSmall,
@@ -228,26 +228,48 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   // Build the selected KPI chart
   Widget _buildSelectedKpiChart(FilterState filterState, WidgetRef ref) {
-    final outputDataAsync = ref.watch(outputTimeseriesProvider(filterState));
-    final availabilityDataAsync = ref.watch(
-      availabilityTimeseriesProvider(filterState),
-    );
+    // Use multi-machine providers if multiple machines are selected, otherwise use single machine
+    final useMultiMachine = filterState.selectedMachineIds.length > 1;
+
+    final outputDataAsync = useMultiMachine
+        ? ref.watch(multiMachineOutputTimeseriesProvider(filterState))
+        : ref.watch(outputTimeseriesProvider(filterState));
+    final availabilityDataAsync = useMultiMachine
+        ? ref.watch(multiMachineAvailabilityTimeseriesProvider(filterState))
+        : ref.watch(availabilityTimeseriesProvider(filterState));
 
     switch (_selectedKpi) {
       case KpiType.output:
         return outputDataAsync.when(
-          data: (data) => KpiLineChart(
-            title: 'Output Over Time - ${_getMachineName(filterState, ref)}',
-            data: data.series,
-            yAxisLabel: 'Output Quantity',
-            showLegend: true,
-            maxY: 100.0, // Set maximum Y-axis value to 100 for output KPI
-            colors: const [
-              Color(0xFF2196F3), // Material Blue
-              Color(0xFF1976D2), // Darker Blue
-              Color(0xFF42A5F5), // Light Blue
-            ],
-          ),
+          data: (data) {
+            // Handle both single and multi-machine data
+            final series = useMultiMachine
+                ? _combineMultiMachineOutputData(
+                    data as List<OutputTimeseriesResponse>,
+                  )
+                : (data as OutputTimeseriesResponse).series;
+
+            return KpiLineChart(
+              title: useMultiMachine
+                  ? 'Output Over Time - Multiple Machines'
+                  : 'Output Over Time - ${_getMachineName(filterState, ref)}',
+              data: series,
+              yAxisLabel: 'Output Quantity',
+              showLegend: true,
+              maxY: 100.0, // Set maximum Y-axis value to 100 for output KPI
+              colors: const [
+                Color(0xFF2196F3), // Blue
+                Color(0xFF4CAF50), // Green
+                Color(0xFFF44336), // Red
+                Color(0xFFFF9800), // Orange
+                Color(0xFF9C27B0), // Purple
+                Color(0xFF00BCD4), // Cyan
+                Color(0xFFFFEB3B), // Yellow
+                Color(0xFF795548), // Brown
+              ],
+              machineNames: _getMachineNamesMap(filterState, ref),
+            );
+          },
           loading: () => const Card(
             child: SizedBox.expand(
               child: Center(child: CircularProgressIndicator()),
@@ -280,10 +302,16 @@ class _HomePageState extends ConsumerState<HomePage> {
 
       case KpiType.availability:
         return availabilityDataAsync.when(
-          data: (data) => KpiLineChart(
-            title:
-                'Machine Availability Over Time - ${_getMachineName(filterState, ref)}',
-            data: data.series
+          data: (data) {
+            // Handle both single and multi-machine data
+            final series = useMultiMachine
+                ? _combineMultiMachineAvailabilityData(
+                    data as List<AvailabilityTimeseriesResponse>,
+                  )
+                : (data as AvailabilityTimeseriesResponse).series;
+
+            // Convert availability data to output format for chart display
+            final convertedSeries = series
                 .map(
                   (series) => OutputTimeseries(
                     machineId: series.machineId,
@@ -298,11 +326,28 @@ class _HomePageState extends ConsumerState<HomePage> {
                         .toList(),
                   ),
                 )
-                .toList(),
-            yAxisLabel: 'Availability %',
-            showLegend: true,
-            colors: const [Colors.green, Colors.blue, Colors.orange],
-          ),
+                .toList();
+
+            return KpiLineChart(
+              title: useMultiMachine
+                  ? 'Machine Availability Over Time - Multiple Machines'
+                  : 'Machine Availability Over Time - ${_getMachineName(filterState, ref)}',
+              data: convertedSeries,
+              yAxisLabel: 'Availability %',
+              showLegend: true,
+              colors: const [
+                Color(0xFF4CAF50), // Green
+                Color(0xFF2196F3), // Blue
+                Color(0xFFFF9800), // Orange
+                Color(0xFF9C27B0), // Purple
+                Color(0xFF00BCD4), // Cyan
+                Color(0xFFF44336), // Red
+                Color(0xFFFFEB3B), // Yellow
+                Color(0xFF795548), // Brown
+              ],
+              machineNames: _getMachineNamesMap(filterState, ref),
+            );
+          },
           loading: () => const Card(
             child: SizedBox.expand(
               child: Center(child: CircularProgressIndicator()),
@@ -333,5 +378,53 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         );
     }
+  }
+
+  // Helper method to combine multi-machine output data
+  List<OutputTimeseries> _combineMultiMachineOutputData(
+    List<OutputTimeseriesResponse> responses,
+  ) {
+    final List<OutputTimeseries> allSeries = [];
+    for (final response in responses) {
+      allSeries.addAll(response.series);
+    }
+    return allSeries;
+  }
+
+  // Helper method to combine multi-machine availability data
+  List<AvailabilityTimeseries> _combineMultiMachineAvailabilityData(
+    List<AvailabilityTimeseriesResponse> responses,
+  ) {
+    final List<AvailabilityTimeseries> allSeries = [];
+    for (final response in responses) {
+      allSeries.addAll(response.series);
+    }
+    return allSeries;
+  }
+
+  // Helper method to get machine names map for chart legend
+  Map<String, String> _getMachineNamesMap(
+    FilterState filterState,
+    WidgetRef ref,
+  ) {
+    final Map<String, String> machineNamesMap = {};
+
+    // Get machines from the current filter hierarchy
+    final machinesAsync = filterState.unitId != null
+        ? ref.watch(
+            machinesByUnitProvider(
+              filterState.unitId!,
+              lineId: filterState.lineId,
+            ),
+          )
+        : const AsyncValue.data(<Machine>[]);
+
+    machinesAsync.whenData((machines) {
+      for (final machine in machines) {
+        machineNamesMap[machine.machineId] = machine.machineName;
+      }
+    });
+
+    return machineNamesMap;
   }
 }

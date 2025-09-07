@@ -1571,6 +1571,285 @@ class _AvailabilityAggregateProviderElement
   FilterState get filters => (origin as AvailabilityAggregateProvider).filters;
 }
 
+String _$multiMachineOutputTimeseriesHash() =>
+    r'd168a0718ff3848064912c8ae8d1e0fc0382dcdf';
+
+/// See also [multiMachineOutputTimeseries].
+@ProviderFor(multiMachineOutputTimeseries)
+const multiMachineOutputTimeseriesProvider =
+    MultiMachineOutputTimeseriesFamily();
+
+/// See also [multiMachineOutputTimeseries].
+class MultiMachineOutputTimeseriesFamily
+    extends Family<AsyncValue<List<OutputTimeseriesResponse>>> {
+  /// See also [multiMachineOutputTimeseries].
+  const MultiMachineOutputTimeseriesFamily();
+
+  /// See also [multiMachineOutputTimeseries].
+  MultiMachineOutputTimeseriesProvider call(
+    FilterState filters,
+  ) {
+    return MultiMachineOutputTimeseriesProvider(
+      filters,
+    );
+  }
+
+  @override
+  MultiMachineOutputTimeseriesProvider getProviderOverride(
+    covariant MultiMachineOutputTimeseriesProvider provider,
+  ) {
+    return call(
+      provider.filters,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'multiMachineOutputTimeseriesProvider';
+}
+
+/// See also [multiMachineOutputTimeseries].
+class MultiMachineOutputTimeseriesProvider
+    extends AutoDisposeFutureProvider<List<OutputTimeseriesResponse>> {
+  /// See also [multiMachineOutputTimeseries].
+  MultiMachineOutputTimeseriesProvider(
+    FilterState filters,
+  ) : this._internal(
+          (ref) => multiMachineOutputTimeseries(
+            ref as MultiMachineOutputTimeseriesRef,
+            filters,
+          ),
+          from: multiMachineOutputTimeseriesProvider,
+          name: r'multiMachineOutputTimeseriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$multiMachineOutputTimeseriesHash,
+          dependencies: MultiMachineOutputTimeseriesFamily._dependencies,
+          allTransitiveDependencies:
+              MultiMachineOutputTimeseriesFamily._allTransitiveDependencies,
+          filters: filters,
+        );
+
+  MultiMachineOutputTimeseriesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.filters,
+  }) : super.internal();
+
+  final FilterState filters;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<OutputTimeseriesResponse>> Function(
+            MultiMachineOutputTimeseriesRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: MultiMachineOutputTimeseriesProvider._internal(
+        (ref) => create(ref as MultiMachineOutputTimeseriesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        filters: filters,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<OutputTimeseriesResponse>>
+      createElement() {
+    return _MultiMachineOutputTimeseriesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MultiMachineOutputTimeseriesProvider &&
+        other.filters == filters;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin MultiMachineOutputTimeseriesRef
+    on AutoDisposeFutureProviderRef<List<OutputTimeseriesResponse>> {
+  /// The parameter `filters` of this provider.
+  FilterState get filters;
+}
+
+class _MultiMachineOutputTimeseriesProviderElement
+    extends AutoDisposeFutureProviderElement<List<OutputTimeseriesResponse>>
+    with MultiMachineOutputTimeseriesRef {
+  _MultiMachineOutputTimeseriesProviderElement(super.provider);
+
+  @override
+  FilterState get filters =>
+      (origin as MultiMachineOutputTimeseriesProvider).filters;
+}
+
+String _$multiMachineAvailabilityTimeseriesHash() =>
+    r'048d9f7a810ba09dcea9a2367e3dbb746b32617b';
+
+/// See also [multiMachineAvailabilityTimeseries].
+@ProviderFor(multiMachineAvailabilityTimeseries)
+const multiMachineAvailabilityTimeseriesProvider =
+    MultiMachineAvailabilityTimeseriesFamily();
+
+/// See also [multiMachineAvailabilityTimeseries].
+class MultiMachineAvailabilityTimeseriesFamily
+    extends Family<AsyncValue<List<AvailabilityTimeseriesResponse>>> {
+  /// See also [multiMachineAvailabilityTimeseries].
+  const MultiMachineAvailabilityTimeseriesFamily();
+
+  /// See also [multiMachineAvailabilityTimeseries].
+  MultiMachineAvailabilityTimeseriesProvider call(
+    FilterState filters,
+  ) {
+    return MultiMachineAvailabilityTimeseriesProvider(
+      filters,
+    );
+  }
+
+  @override
+  MultiMachineAvailabilityTimeseriesProvider getProviderOverride(
+    covariant MultiMachineAvailabilityTimeseriesProvider provider,
+  ) {
+    return call(
+      provider.filters,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'multiMachineAvailabilityTimeseriesProvider';
+}
+
+/// See also [multiMachineAvailabilityTimeseries].
+class MultiMachineAvailabilityTimeseriesProvider
+    extends AutoDisposeFutureProvider<List<AvailabilityTimeseriesResponse>> {
+  /// See also [multiMachineAvailabilityTimeseries].
+  MultiMachineAvailabilityTimeseriesProvider(
+    FilterState filters,
+  ) : this._internal(
+          (ref) => multiMachineAvailabilityTimeseries(
+            ref as MultiMachineAvailabilityTimeseriesRef,
+            filters,
+          ),
+          from: multiMachineAvailabilityTimeseriesProvider,
+          name: r'multiMachineAvailabilityTimeseriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$multiMachineAvailabilityTimeseriesHash,
+          dependencies: MultiMachineAvailabilityTimeseriesFamily._dependencies,
+          allTransitiveDependencies: MultiMachineAvailabilityTimeseriesFamily
+              ._allTransitiveDependencies,
+          filters: filters,
+        );
+
+  MultiMachineAvailabilityTimeseriesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.filters,
+  }) : super.internal();
+
+  final FilterState filters;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<AvailabilityTimeseriesResponse>> Function(
+            MultiMachineAvailabilityTimeseriesRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: MultiMachineAvailabilityTimeseriesProvider._internal(
+        (ref) => create(ref as MultiMachineAvailabilityTimeseriesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        filters: filters,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<AvailabilityTimeseriesResponse>>
+      createElement() {
+    return _MultiMachineAvailabilityTimeseriesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MultiMachineAvailabilityTimeseriesProvider &&
+        other.filters == filters;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin MultiMachineAvailabilityTimeseriesRef
+    on AutoDisposeFutureProviderRef<List<AvailabilityTimeseriesResponse>> {
+  /// The parameter `filters` of this provider.
+  FilterState get filters;
+}
+
+class _MultiMachineAvailabilityTimeseriesProviderElement
+    extends AutoDisposeFutureProviderElement<
+        List<AvailabilityTimeseriesResponse>>
+    with MultiMachineAvailabilityTimeseriesRef {
+  _MultiMachineAvailabilityTimeseriesProviderElement(super.provider);
+
+  @override
+  FilterState get filters =>
+      (origin as MultiMachineAvailabilityTimeseriesProvider).filters;
+}
+
 String _$filterNotifierHash() => r'8aed88b6f6c87a18c6b006647961e2134b0fcd7d';
 
 /// See also [FilterNotifier].

@@ -28,7 +28,8 @@ class FilterState with _$FilterState {
     String? unitId,
     String? segmentId,
     String? lineId,
-    String? machineId,
+    String? machineId, // Keep for backward compatibility
+    @Default([]) List<String> selectedMachineIds, // New multi-machine selection
     @DateTimeRangeConverter() required DateTimeRange dateRange,
     // String? shiftId,
     // String? operatorId,

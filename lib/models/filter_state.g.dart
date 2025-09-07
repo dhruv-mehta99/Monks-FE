@@ -13,6 +13,10 @@ _$FilterStateImpl _$$FilterStateImplFromJson(Map<String, dynamic> json) =>
       segmentId: json['segmentId'] as String?,
       lineId: json['lineId'] as String?,
       machineId: json['machineId'] as String?,
+      selectedMachineIds: (json['selectedMachineIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       dateRange: const DateTimeRangeConverter()
           .fromJson(json['dateRange'] as Map<String, dynamic>),
     );
@@ -24,6 +28,7 @@ Map<String, dynamic> _$$FilterStateImplToJson(_$FilterStateImpl instance) =>
       'segmentId': instance.segmentId,
       'lineId': instance.lineId,
       'machineId': instance.machineId,
+      'selectedMachineIds': instance.selectedMachineIds,
       'dateRange': const DateTimeRangeConverter().toJson(instance.dateRange),
     };
 

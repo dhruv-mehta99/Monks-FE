@@ -200,3 +200,38 @@ Future<AvailabilityAggregateResponse> availabilityAggregate(
   final apiService = ref.read(apiServiceProvider);
   return apiService.getAvailabilityAggregate(filters);
 }
+
+// Multi-machine KPI Data Providers
+@riverpod
+Future<List<OutputTimeseriesResponse>> multiMachineOutputTimeseries(
+  MultiMachineOutputTimeseriesRef ref,
+  FilterState filters,
+) async {
+  final apiService = ref.read(apiServiceProvider);
+  final List<OutputTimeseriesResponse> responses = [];
+  
+  for (final machineId in filters.selectedMachineIds) {
+    final machineFilters = filters.copyWith(machineId: machineId);
+    final response = await apiService.getOutputTimeseries(machineFilters);
+    responses.add(response);
+  }
+  
+  return responses;
+}
+
+@riverpod
+Future<List<AvailabilityTimeseriesResponse>> multiMachineAvailabilityTimeseries(
+  MultiMachineAvailabilityTimeseriesRef ref,
+  FilterState filters,
+) async {
+  final apiService = ref.read(apiServiceProvider);
+  final List<AvailabilityTimeseriesResponse> responses = [];
+  
+  for (final machineId in filters.selectedMachineIds) {
+    final machineFilters = filters.copyWith(machineId: machineId);
+    final response = await apiService.getAvailabilityTimeseries(machineFilters);
+    responses.add(response);
+  }
+  
+  return responses;
+}

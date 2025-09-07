@@ -232,16 +232,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                                                         }
 
                                                         return Column(
-                                                          children: linesSnapshot.data!.map((
-                                                            line,
-                                                          ) => ExpansionTile(
-                                                              title: Text(
-                                                                line.lineName,
-                                                              ),
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets.only(
+                                                          children: linesSnapshot
+                                                              .data!
+                                                              .map(
+                                                                (
+                                                                  line,
+                                                                ) => ExpansionTile(
+                                                                  title: Text(
+                                                                    line.lineName,
+                                                                  ),
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(
                                                                         left:
                                                                             16.0,
                                                                         right:
@@ -249,74 +251,76 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                                                                         bottom:
                                                                             16.0,
                                                                       ),
-                                                                  child:
-                                                                      FutureBuilder<
-                                                                        List<
-                                                                          Machine
-                                                                        >
-                                                                      >(
-                                                                        future: ref
-                                                                            .read(
-                                                                              apiServiceProvider,
-                                                                            )
-                                                                            .getMachinesByLine(
-                                                                              line.lineId,
-                                                                            ),
-                                                                        builder:
-                                                                            (
-                                                                              context,
-                                                                              machinesSnapshot,
-                                                                            ) {
-                                                                              if (!machinesSnapshot.hasData) {
-                                                                                return const Center(
-                                                                                  child: CircularProgressIndicator(),
-                                                                                );
-                                                                              }
+                                                                      child:
+                                                                          FutureBuilder<
+                                                                            List<
+                                                                              Machine
+                                                                            >
+                                                                          >(
+                                                                            future: ref
+                                                                                .read(
+                                                                                  apiServiceProvider,
+                                                                                )
+                                                                                .getMachinesByLine(
+                                                                                  line.lineId,
+                                                                                ),
+                                                                            builder:
+                                                                                (
+                                                                                  context,
+                                                                                  machinesSnapshot,
+                                                                                ) {
+                                                                                  if (!machinesSnapshot.hasData) {
+                                                                                    return const Center(
+                                                                                      child: CircularProgressIndicator(),
+                                                                                    );
+                                                                                  }
 
-                                                                              return Column(
-                                                                                children: machinesSnapshot.data!.map(
-                                                                                  (
-                                                                                    machine,
-                                                                                  ) {
-                                                                                    final isSelected = selectedMachineIds.contains(
-                                                                                      machine.machineId,
-                                                                                    );
-                                                                                    return CheckboxListTile(
-                                                                                      title: Text(
-                                                                                        machine.machineName,
-                                                                                      ),
-                                                                                      subtitle: Text(
-                                                                                        'Status: ${machine.status.name}',
-                                                                                      ),
-                                                                                      value: isSelected,
-                                                                                      onChanged:
-                                                                                          (
-                                                                                            selected,
-                                                                                          ) {
-                                                                                            setState(
-                                                                                              () {
-                                                                                                if (selected ==
-                                                                                                    true) {
-                                                                                                  selectedMachineIds.add(
-                                                                                                    machine.machineId,
-                                                                                                  );
-                                                                                                } else {
-                                                                                                  selectedMachineIds.remove(
-                                                                                                    machine.machineId,
-                                                                                                  );
-                                                                                                }
+                                                                                  return Column(
+                                                                                    children: machinesSnapshot.data!.map(
+                                                                                      (
+                                                                                        machine,
+                                                                                      ) {
+                                                                                        final isSelected = selectedMachineIds.contains(
+                                                                                          machine.machineId,
+                                                                                        );
+                                                                                        return CheckboxListTile(
+                                                                                          title: Text(
+                                                                                            machine.machineName,
+                                                                                          ),
+                                                                                          subtitle: Text(
+                                                                                            'Status: ${machine.status.name}',
+                                                                                          ),
+                                                                                          value: isSelected,
+                                                                                          onChanged:
+                                                                                              (
+                                                                                                selected,
+                                                                                              ) {
+                                                                                                setState(
+                                                                                                  () {
+                                                                                                    if (selected ==
+                                                                                                        true) {
+                                                                                                      selectedMachineIds.add(
+                                                                                                        machine.machineId,
+                                                                                                      );
+                                                                                                    } else {
+                                                                                                      selectedMachineIds.remove(
+                                                                                                        machine.machineId,
+                                                                                                      );
+                                                                                                    }
+                                                                                                  },
+                                                                                                );
                                                                                               },
-                                                                                            );
-                                                                                          },
-                                                                                    );
-                                                                                  },
-                                                                                ).toList(),
-                                                                              );
-                                                                            },
-                                                                      ),
+                                                                                        );
+                                                                                      },
+                                                                                    ).toList(),
+                                                                                  );
+                                                                                },
+                                                                          ),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ],
-                                                            )).toList(),
+                                                              )
+                                                              .toList(),
                                                         );
                                                       },
                                                     ),
@@ -367,12 +371,16 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             yAxisLabel: 'Output',
             showLegend: true,
             colors: const [
-              Colors.blue,
-              Colors.green,
-              Colors.orange,
-              Colors.purple,
-              Colors.red,
+              Color(0xFF2196F3), // Blue
+              Color(0xFF4CAF50), // Green
+              Color(0xFFFF9800), // Orange
+              Color(0xFF9C27B0), // Purple
+              Color(0xFFF44336), // Red
+              Color(0xFF00BCD4), // Cyan
+              Color(0xFFFFEB3B), // Yellow
+              Color(0xFF795548), // Brown
             ],
+            machineNames: _getMachineNamesMap(ref),
           ),
         ),
 
@@ -438,5 +446,21 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     ]);
 
     return cards;
+  }
+
+  // Helper method to get machine names map for chart legend
+  Map<String, String> _getMachineNamesMap(WidgetRef ref) {
+    final Map<String, String> machineNamesMap = {};
+
+    // Get machines from the current unit if available
+    if (selectedMachineIds.isNotEmpty) {
+      // For now, we'll use a simple approach - you might want to enhance this
+      // to get actual machine names from the API
+      for (final machineId in selectedMachineIds) {
+        machineNamesMap[machineId] = 'Machine $machineId';
+      }
+    }
+
+    return machineNamesMap;
   }
 }

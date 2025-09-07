@@ -1287,9 +1287,7 @@ mixin _$OutputDataPoint {
   int? get totalOutputQty => throw _privateConstructorUsedError;
   int? get rejectedOutputQty => throw _privateConstructorUsedError;
   int? get goodOutputQty => throw _privateConstructorUsedError;
-  double? get yieldRatio =>
-      throw _privateConstructorUsedError; // For backward compatibility with charts
-  double? get value => throw _privateConstructorUsedError;
+  double? get yieldRatio => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1308,8 +1306,7 @@ abstract class $OutputDataPointCopyWith<$Res> {
       int? totalOutputQty,
       int? rejectedOutputQty,
       int? goodOutputQty,
-      double? yieldRatio,
-      double? value});
+      double? yieldRatio});
 }
 
 /// @nodoc
@@ -1330,7 +1327,6 @@ class _$OutputDataPointCopyWithImpl<$Res, $Val extends OutputDataPoint>
     Object? rejectedOutputQty = freezed,
     Object? goodOutputQty = freezed,
     Object? yieldRatio = freezed,
-    Object? value = freezed,
   }) {
     return _then(_value.copyWith(
       timestamp: null == timestamp
@@ -1353,10 +1349,6 @@ class _$OutputDataPointCopyWithImpl<$Res, $Val extends OutputDataPoint>
           ? _value.yieldRatio
           : yieldRatio // ignore: cast_nullable_to_non_nullable
               as double?,
-      value: freezed == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double?,
     ) as $Val);
   }
 }
@@ -1374,8 +1366,7 @@ abstract class _$$OutputDataPointImplCopyWith<$Res>
       int? totalOutputQty,
       int? rejectedOutputQty,
       int? goodOutputQty,
-      double? yieldRatio,
-      double? value});
+      double? yieldRatio});
 }
 
 /// @nodoc
@@ -1394,7 +1385,6 @@ class __$$OutputDataPointImplCopyWithImpl<$Res>
     Object? rejectedOutputQty = freezed,
     Object? goodOutputQty = freezed,
     Object? yieldRatio = freezed,
-    Object? value = freezed,
   }) {
     return _then(_$OutputDataPointImpl(
       timestamp: null == timestamp
@@ -1417,10 +1407,6 @@ class __$$OutputDataPointImplCopyWithImpl<$Res>
           ? _value.yieldRatio
           : yieldRatio // ignore: cast_nullable_to_non_nullable
               as double?,
-      value: freezed == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double?,
     ));
   }
 }
@@ -1433,8 +1419,7 @@ class _$OutputDataPointImpl extends _OutputDataPoint {
       this.totalOutputQty,
       this.rejectedOutputQty,
       this.goodOutputQty,
-      this.yieldRatio,
-      this.value})
+      this.yieldRatio})
       : super._();
 
   factory _$OutputDataPointImpl.fromJson(Map<String, dynamic> json) =>
@@ -1450,13 +1435,10 @@ class _$OutputDataPointImpl extends _OutputDataPoint {
   final int? goodOutputQty;
   @override
   final double? yieldRatio;
-// For backward compatibility with charts
-  @override
-  final double? value;
 
   @override
   String toString() {
-    return 'OutputDataPoint(timestamp: $timestamp, totalOutputQty: $totalOutputQty, rejectedOutputQty: $rejectedOutputQty, goodOutputQty: $goodOutputQty, yieldRatio: $yieldRatio, value: $value)';
+    return 'OutputDataPoint(timestamp: $timestamp, totalOutputQty: $totalOutputQty, rejectedOutputQty: $rejectedOutputQty, goodOutputQty: $goodOutputQty, yieldRatio: $yieldRatio)';
   }
 
   @override
@@ -1473,14 +1455,13 @@ class _$OutputDataPointImpl extends _OutputDataPoint {
             (identical(other.goodOutputQty, goodOutputQty) ||
                 other.goodOutputQty == goodOutputQty) &&
             (identical(other.yieldRatio, yieldRatio) ||
-                other.yieldRatio == yieldRatio) &&
-            (identical(other.value, value) || other.value == value));
+                other.yieldRatio == yieldRatio));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, timestamp, totalOutputQty,
-      rejectedOutputQty, goodOutputQty, yieldRatio, value);
+      rejectedOutputQty, goodOutputQty, yieldRatio);
 
   @JsonKey(ignore: true)
   @override
@@ -1503,8 +1484,7 @@ abstract class _OutputDataPoint extends OutputDataPoint {
       final int? totalOutputQty,
       final int? rejectedOutputQty,
       final int? goodOutputQty,
-      final double? yieldRatio,
-      final double? value}) = _$OutputDataPointImpl;
+      final double? yieldRatio}) = _$OutputDataPointImpl;
   const _OutputDataPoint._() : super._();
 
   factory _OutputDataPoint.fromJson(Map<String, dynamic> json) =
@@ -1520,8 +1500,6 @@ abstract class _OutputDataPoint extends OutputDataPoint {
   int? get goodOutputQty;
   @override
   double? get yieldRatio;
-  @override // For backward compatibility with charts
-  double? get value;
   @override
   @JsonKey(ignore: true)
   _$$OutputDataPointImplCopyWith<_$OutputDataPointImpl> get copyWith =>

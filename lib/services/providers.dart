@@ -16,17 +16,7 @@ ApiService apiService(ApiServiceRef ref) => ApiService();
 @riverpod
 Future<List<Plant>> plants(PlantsRef ref) async {
   final apiService = ref.read(apiServiceProvider);
-  try {
-    final plants = await apiService.getPlants();
-    print('DEBUG: Plants provider returned ${plants.length} plants');
-    for (final plant in plants) {
-      print('DEBUG: Plant - ID: ${plant.plantId}, Name: ${plant.plantName}');
-    }
-    return plants;
-  } catch (e) {
-    print('DEBUG: Plants provider error: $e');
-    rethrow;
-  }
+  return apiService.getPlants();
 }
 
 @riverpod
@@ -42,13 +32,7 @@ Future<List<Segment>> segmentsByUnit(
   String unitId,
 ) async {
   final apiService = ref.read(apiServiceProvider);
-  try {
-    final segments = await apiService.getSegmentsByUnit(unitId);
-    return segments;
-  } catch (e) {
-    print('DEBUG: Segments provider error: $e');
-    rethrow;
-  }
+  return apiService.getSegmentsByUnit(unitId);
 }
 
 @riverpod

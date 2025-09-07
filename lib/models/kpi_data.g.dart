@@ -135,7 +135,6 @@ _$OutputDataPointImpl _$$OutputDataPointImplFromJson(
       rejectedOutputQty: (json['rejectedOutputQty'] as num?)?.toInt(),
       goodOutputQty: (json['goodOutputQty'] as num?)?.toInt(),
       yieldRatio: (json['yieldRatio'] as num?)?.toDouble(),
-      value: (json['value'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$OutputDataPointImplToJson(
@@ -146,7 +145,6 @@ Map<String, dynamic> _$$OutputDataPointImplToJson(
       'rejectedOutputQty': instance.rejectedOutputQty,
       'goodOutputQty': instance.goodOutputQty,
       'yieldRatio': instance.yieldRatio,
-      'value': instance.value,
     };
 
 _$PerformanceAggregateResponseImpl _$$PerformanceAggregateResponseImplFromJson(

@@ -20,7 +20,7 @@ final apiServiceProvider = AutoDisposeProvider<ApiService>.internal(
 );
 
 typedef ApiServiceRef = AutoDisposeProviderRef<ApiService>;
-String _$plantsHash() => r'86acd51aff91568c196dac4c5183314762412e2c';
+String _$plantsHash() => r'5f674b2166ceb9d45162d83b63ed82c137de9e93';
 
 /// See also [plants].
 @ProviderFor(plants)
@@ -183,7 +183,7 @@ class _UnitsByPlantProviderElement
   String get plantId => (origin as UnitsByPlantProvider).plantId;
 }
 
-String _$segmentsByUnitHash() => r'd94c43aa97e311908ea1e2f7ff73c1e54fd06521';
+String _$segmentsByUnitHash() => r'ad0828689ff2d67678f356d2e2b1d1d366d6dcce';
 
 /// See also [segmentsByUnit].
 @ProviderFor(segmentsByUnit)

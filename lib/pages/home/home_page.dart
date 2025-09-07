@@ -236,17 +236,17 @@ class _HomePageState extends ConsumerState<HomePage> {
     switch (_selectedKpi) {
       case KpiType.output:
         return outputDataAsync.when(
-          data: (data) {
-            print(
-              'HomePage: Creating KpiLineChart with ${data.series.length} series',
-            );
-            return KpiLineChart(
-              title: 'Output Over Time - ${_getMachineName(filterState, ref)}',
-              data: data.series,
-              yAxisLabel: 'Output Quantity',
-              showLegend: true,
-            );
-          },
+          data: (data) => KpiLineChart(
+            title: 'Output Over Time - ${_getMachineName(filterState, ref)}',
+            data: data.series,
+            yAxisLabel: 'Output Quantity',
+            showLegend: true,
+            colors: const [
+              Color(0xFF2196F3), // Material Blue
+              Color(0xFF1976D2), // Darker Blue
+              Color(0xFF42A5F5), // Light Blue
+            ],
+          ),
           loading: () => const Card(
             child: SizedBox.expand(
               child: Center(child: CircularProgressIndicator()),
@@ -290,8 +290,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         .map(
                           (point) => OutputDataPoint(
                             timestamp: point.timestamp,
-                            value: (point.availabilityRatio * 100)
-                                .toDouble(), // Convert ratio to percentage
+                            totalOutputQty: (point.availabilityRatio * 100)
+                                .round(), // Convert ratio to percentage
                           ),
                         )
                         .toList(),

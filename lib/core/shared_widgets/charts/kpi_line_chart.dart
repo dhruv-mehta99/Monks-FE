@@ -27,20 +27,18 @@ class KpiLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('KpiLineChart build called with ${data.length} series');
     if (data.isEmpty) {
-      print('KpiLineChart: No data, showing empty state');
       return _buildEmptyState();
     }
 
     final defaultColors =
         colors ??
         [
-          primaryColor ?? Theme.of(context).primaryColor,
-          Colors.orange,
-          Colors.green,
-          Colors.purple,
-          Colors.red,
+          const Color(0xFF2196F3), // Material Blue
+          const Color(0xFF1976D2), // Darker Blue
+          const Color(0xFF42A5F5), // Light Blue
+          const Color(0xFF1565C0), // Deep Blue
+          const Color(0xFF64B5F6), // Lighter Blue
         ];
 
     return Card(
@@ -134,8 +132,6 @@ class KpiLineChart extends StatelessWidget {
                   lineTouchData: LineTouchData(
                     enabled: true,
                     touchTooltipData: LineTouchTooltipData(
-                      getTooltipColor: (touchedSpot) =>
-                          Colors.blueGrey.withOpacity(0.9),
                       getTooltipItems: (touchedSpots) =>
                           touchedSpots.map((touchedSpot) {
                             final timePoint =
@@ -218,37 +214,45 @@ class KpiLineChart extends StatelessWidget {
     }).toList(),
   );
 
-  List<LineChartBarData> _buildLineBarsData(List<Color> colors) {
-    print('_buildLineBarsData called with ${data.length} series');
-    return data.asMap().entries.map((entry) {
-      final index = entry.key;
-      final series = entry.value;
-      final color = colors[index % colors.length];
-      print('series.machineId: ${series.machineId}');
+  List<LineChartBarData> _buildLineBarsData(List<Color> colors) =>
+      data.asMap().entries.map((entry) {
+        final index = entry.key;
+        final series = entry.value;
+        final color = colors[index % colors.length];
 
-      final spots = series.data.asMap().entries.map((dataEntry) {
-        // [print only for 1st entry]
-        // if (dataEntry.key == 0) {
-        // print('series.machineId: ${series.machineId}');
-        // print('dataEntry.value: ${dataEntry.value}');
-        // print('dataEntry.key: ${dataEntry.key}');
-        // }
-        final dataIndex = dataEntry.key;
-        final dataPoint = dataEntry.value;
-        return FlSpot(dataIndex.toDouble(), dataPoint.chartValue);
+        final spots = series.data.asMap().entries.map((dataEntry) {
+          final dataIndex = dataEntry.key;
+          final dataPoint = dataEntry.value;
+          return FlSpot(dataIndex.toDouble(), dataPoint.chartValue);
+        }).toList();
+
+        return LineChartBarData(
+          spots: spots,
+          isCurved: true,
+          color: color,
+          barWidth: 3,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
+            getDotPainter: (spot, percent, barData, index) =>
+                FlDotCirclePainter(
+                  radius: 4,
+                  color: color,
+                  strokeWidth: 2,
+                  strokeColor: Colors.white,
+                ),
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            color: color.withOpacity(0.1),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [color.withOpacity(0.3), color.withOpacity(0.05)],
+            ),
+          ),
+        );
       }).toList();
-
-      return LineChartBarData(
-        spots: spots,
-        isCurved: true,
-        color: color,
-        barWidth: 3,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: true, color: color.withOpacity(0.1)),
-      );
-    }).toList();
-  }
 
   List<DateTime> _getAllTimePoints() {
     if (data.isEmpty) return [];
@@ -274,7 +278,11 @@ class KpiLineChart extends StatelessWidget {
         if (point.chartValue < minY) minY = point.chartValue;
       }
     }
-    return minY == double.infinity ? 0 : (minY * 0.9);
+    if (minY == double.infinity) return 0;
+
+    // Add small padding below minimum, but ensure it doesn't go below 0
+    final padding = (minY * 0.1).clamp(0.0, minY);
+    return (minY - padding).clamp(0.0, double.infinity);
   }
 
   double _calculateMaxY() {
@@ -286,13 +294,27 @@ class KpiLineChart extends StatelessWidget {
         if (point.chartValue > maxY) maxY = point.chartValue;
       }
     }
-    return maxY == double.negativeInfinity ? 100 : (maxY * 1.1);
+    if (maxY == double.negativeInfinity) return 100;
+
+    // Add small padding above maximum, but ensure it doesn't exceed reasonable bounds
+    final padding = (maxY * 0.1).clamp(0.0, maxY);
+    return maxY + padding;
   }
 
   double _calculateYInterval() {
     final range = _calculateMaxY() - _calculateMinY();
     if (range <= 0) return 1;
-    return range / 5;
+
+    // Calculate appropriate interval based on range
+    if (range <= 1) {
+      return 0.1; // For small ranges, use 0.1 intervals
+    } else if (range <= 10) {
+      return 1; // For medium ranges, use 1.0 intervals
+    } else if (range <= 100) {
+      return 10; // For larger ranges, use 10.0 intervals
+    } else {
+      return range / 5; // Fallback to 5 divisions
+    }
   }
 
   double _calculateXInterval() {

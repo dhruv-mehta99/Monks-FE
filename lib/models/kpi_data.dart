@@ -13,7 +13,8 @@ class KpiData with _$KpiData {
     required String unit,
   }) = _KpiData;
 
-  factory KpiData.fromJson(Map<String, dynamic> json) => _$KpiDataFromJson(json);
+  factory KpiData.fromJson(Map<String, dynamic> json) =>
+      _$KpiDataFromJson(json);
 }
 
 @freezed
@@ -111,12 +112,10 @@ class OutputDataPoint with _$OutputDataPoint {
     int? rejectedOutputQty,
     int? goodOutputQty,
     double? yieldRatio,
-    // For backward compatibility with charts
-    double? value,
   }) = _OutputDataPoint;
 
   // Computed property to ensure value is always available for charts
-  double get chartValue => value ?? totalOutputQty?.toDouble() ?? 0.0;
+  double get chartValue => yieldRatio?.toDouble() ?? 0.0;
 
   factory OutputDataPoint.fromJson(Map<String, dynamic> json) =>
       _$OutputDataPointFromJson(json);
